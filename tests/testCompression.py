@@ -1,6 +1,7 @@
 import unittest
 from unittest import TestCase
 from repair.node import Node
+from repair.compression import *
 
 class TestScanFunction(TestCase):
     directedGraph={}
@@ -22,16 +23,19 @@ class TestScanFunction(TestCase):
         self.directedGraph[6]=[]
         self.directedGraph[4]=[node3]
         self.directedGraph[8]=[]
-        self.directedGraph[1]=[node2]
+        self.directedGraph[1]=[node5,
+                                node6,
+                                node8]
+        self.directedGraph[3]=[node2]
                                      
 
     #testing test 
     def testScan(self):
         directedGraph=self.directedGraph
-        print(list(directedGraph[2]))
-        print(list(directedGraph[1]))
         
 
+    def testUpdateDic(self):
+        print(updateDictionary(self.directedGraph))
 
 
 
