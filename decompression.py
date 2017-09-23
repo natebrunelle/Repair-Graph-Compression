@@ -2,7 +2,7 @@ __author__ = "rt4hc"
 
 
 
-def decompress(graph):
+def decompress(graph, dictionary):
     """"Method which takes in a graph object and decompresses the compressed Re-Pair graph compression"""
     # The graph should be represented as a compressed adjacency list
     # Adjacency list format
@@ -11,6 +11,7 @@ def decompress(graph):
     # A: [2, 3]
     # B: [A, 4]
 
+    ## Todo: create the recursive function for recursively substituting the dictionary nodes into the adjacency list
     # Iterative solution
     keys = []
     for vertex in graph:       # Append all the keys of the adjacency list into another list
