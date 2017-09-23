@@ -8,3 +8,14 @@ Function 2: get the top pair from the dictionary and replace it with new node ev
 
 # "pair": [count, [[node #, index],[ ... ]]]
 repairDictionary={}
+
+def updateDictionary(adjList):
+    for i in len(adjList):
+        for j in len(adjList[i]):
+            numSet = set([adjList[j], adjList[j+1]])
+            if(numSet in repairDictionary):
+                repairDictionary[numSet][0] = repairDictionary[numSet][0]+1
+            else:
+                repairDictionary[numSet] = [1, [adjList[i].num, j]]
+    return repairDictionary
+
