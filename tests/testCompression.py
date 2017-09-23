@@ -1,21 +1,35 @@
 import unittest
 from unittest import TestCase
-import networkx as nx
-
+from repair.node import Node
 
 class TestScanFunction(TestCase):
-    directedGraph=nx.DiGraph()
+    directedGraph={}
     
     def setUp(self):
         #create graph
-        global directedGraph
-        directedGraph.add_edges_from([([2, True],[8, True]), (2,5), (2, 6), (2,9), (3,5), (3, 8), (3, 6), (1, 2), (4, 3)])
+        node2=Node(2, False)
+        node3=Node(3, False)
+        node1=Node(1, False)
+        node4=Node(4, False)
+        node5=Node(5, False)
+        node6=Node(6, False)
+        node8=Node(8, False)
+        
+        self.directedGraph[2]=[node5,
+                                node6,
+                                node8]
+        self.directedGraph[5]=[]
+        self.directedGraph[6]=[]
+        self.directedGraph[4]=[node3]
+        self.directedGraph[8]=[]
+        self.directedGraph[1]=[node2]
+                                     
 
     #testing test 
     def testScan(self):
-        global directedGraph
-        print(list(directedGraph.neighbors(2)))
-        print(list(directedGraph.neighbors(3)))
+        directedGraph=self.directedGraph
+        print(list(directedGraph[2]))
+        print(list(directedGraph[1]))
         
 
 
