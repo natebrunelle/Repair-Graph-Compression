@@ -126,6 +126,15 @@ class TestScanFunction(TestCase):
 
     #todo write actual tests for repair
     def testRepairWithTwo(self):
+        graphFile=open('repair/graphBeforeCompression.txt', 'w')
+        adjList=self.directedGraph
+        for key in adjList.keys():
+            graphFile.write(str(key)+" ")
+            for adjItem in adjList[key]:
+                graphFile.write(str(adjItem[0])+" ")
+                graphFile.write('\n')
+        graphFile.close()
+
         repaired=repair(self.directedGraph)
 
         print()
@@ -133,7 +142,7 @@ class TestScanFunction(TestCase):
             print(str(key)+"\t"+str(repaired[key]))
 
         
-
+    
 if __name__=='__main__':
     unittest.main()
 
