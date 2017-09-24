@@ -17,14 +17,14 @@ class TestScanFunction(TestCase):
         node8=(8, False)
 
 
-        self.directedGraph[1]=[node5,node6,node7,node8]        
-        self.directedGraph[2]=[node5,node6,node7,node8]
-        self.directedGraph[3]=[node5,node6,node7,node8]
-        self.directedGraph[4]=[node5,node6,node7,node8]
-        self.directedGraph[5]=[]
-        self.directedGraph[6]=[]
-        self.directedGraph[7]=[]
-        self.directedGraph[8]=[]
+        self.directedGraph[node1]=[node5,node6,node7,node8]        
+        self.directedGraph[node2]=[node5,node6,node7,node8]
+        self.directedGraph[node3]=[node5,node6,node7,node8]
+        self.directedGraph[node4]=[node5,node6,node7]
+        self.directedGraph[node5]=[]
+        self.directedGraph[node6]=[]
+        self.directedGraph[node7]=[]
+        self.directedGraph[node8]=[]
                                      
 
     def testUpdateDicCount(self):
@@ -42,15 +42,19 @@ class TestScanFunction(TestCase):
         self.assertEqual(expected,len(updateDictionary(directedGraph)))
 
     def testUpdateDicCountNoCommon(self):
+        node1=(1, False)
+        node2=(2, False)
+        node3=(3, False)
+        node4=(4, False)
         node5=(5, False)
         node6=(6, False)
         node7=(7, False)
         node8=(8, False)
 
-        self.directedGraph[1]=[node5,node6]        
-        self.directedGraph[2]=[node6,node7,node8]
-        self.directedGraph[3]=[node5,node7,node8]
-        self.directedGraph[4]=[node8]
+        self.directedGraph[node1]=[node5,node6]        
+        self.directedGraph[node2]=[node6,node7,node8]
+        self.directedGraph[node3]=[node5,node7,node8]
+        self.directedGraph[node4]=[node8]
 
         expected=1
 
@@ -60,15 +64,19 @@ class TestScanFunction(TestCase):
         self.assertEqual(expected, actual)
 
     def testUpdateOrderAffectsCount(self):
+        node1=(1, False)
+        node2=(2, False)
+        node3=(3, False)
+        node4=(4, False)
         node5=(5, False)
         node6=(6, False)
         node7=(7, False)
         node8=(8, False)
 
-        self.directedGraph[1]=[node6,node5,node8,node7]        
-        self.directedGraph[2]=[node7,node6,node8,node5]
-        self.directedGraph[3]=[node8,node6,node7,node5]
-        self.directedGraph[4]=[node5,node6,node7,node8]
+        self.directedGraph[node1]=[node6,node5,node8,node7]        
+        self.directedGraph[node2]=[node7,node6,node8,node5]
+        self.directedGraph[node3]=[node8,node6,node7,node5]
+        self.directedGraph[node4]=[node5,node6,node7,node8]
 
         expected=1
 
@@ -79,12 +87,50 @@ class TestScanFunction(TestCase):
 
         actual2=pairs[((6,False),(5,False))][0]
         self.assertEqual(expected, actual)
+
+
+    def testGetMostCommon(self):
+        repairDictionary=updateDictionary(self.directedGraph)
+        equal=((7,False), (8,False))
         
+        del repairDictionary[equal]
+        
+        mostCommonPair=getMostCommon(repairDictionary)
+        expected=((6,False),(7,False))
+
+        self.assertEqual(expected,mostCommonPair)
+        
+    
+    def testGetMostCommonWithEquals(self):
+        repairDictionary=updateDictionary(self.directedGraph)
+        mostCommonPair=getMostCommon(repairDictionary)
+
+        expected=((7,False), (8,False))
+
+        self.assertEqual(expected,mostCommonPair)
+        
+    def testReplacePairHappy(self):
+        nodeList=[(1,False), (2,False),(3,False)]
+        index=0
+        newNode=('1_2',True)
+
+        expected=[newNode, (3,False)]
+        actual=replacePair(nodeList, index,newNode)
+
+        self.assertEqual(expected, actual)
+
+    #todo test bound checking for replacePair
+
     
     def testRepairWithTwo(self):
         repaired=repair(self.directedGraph)
-        print(repaired)
+
+        print()
+        for key in repaired.keys():
+            print(str(key)+"\t"+str(repaired[key]))
+
         
 
 if __name__=='__main__':
     unittest.main()
+
