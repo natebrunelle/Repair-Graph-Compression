@@ -8,13 +8,13 @@ class TestScanFunction(TestCase):
     
     def setUp(self):
         #create graph
-        node2=Node(2, False)
-        node3=Node(3, False)
-        node1=Node(1, False)
-        node4=Node(4, False)
-        node5=Node(5, False)
-        node6=Node(6, False)
-        node8=Node(8, False)
+        node2=(2, False)
+        node3=(3, False)
+        node1=(1, False)
+        node4=(4, False)
+        node5=(5, False)
+        node6=(6, False)
+        node8=(8, False)
         
         self.directedGraph[2]=[node5,
                                 node6,
@@ -35,8 +35,9 @@ class TestScanFunction(TestCase):
         
 
     def testUpdateDic(self):
-        print(updateDictionary(self.directedGraph))
-
+        compDic=updateDictionary(self.directedGraph)
+        for key in compDic.keys():
+            print(str(key)+"\t"+str(compDic[key]))
 
 
 

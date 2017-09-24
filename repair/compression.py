@@ -10,15 +10,14 @@ Function 2: get the top pair from the dictionary and replace it with new node ev
 repairDictionary={}
 
 def updateDictionary(adjList):
-    for i in adjList.keys():
-        for j in range(0, len(adjList[i])-1):
-            
-            numSet = set([adjList[i][j], adjList[i][j+1]])
-            numSet=str(numSet)
+    for node in adjList.keys():
+        for j in range(0, len(adjList[node])-1):
+            numSet = (adjList[node][j],adjList[node][j+1])
 
-            if(numSet in repairDictionary.keys()):
+            if numSet in repairDictionary.keys():
                 repairDictionary[numSet][0] = repairDictionary[numSet][0]+1
+                repairDictionary[numSet][1].append((node, j))
             else:
-                repairDictionary[numSet] = [1, [adjList[i][j].data, j]]
+                repairDictionary[numSet] = [1, [(node, j)]]
     return repairDictionary
 
