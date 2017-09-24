@@ -51,7 +51,6 @@ def repair(adjList):
 
     #all unique, base case
     if repairDictionary[mostCommonPair][0]==1:
-        print('returning here: '+str(mostCommonPair))
         return adjList
 
     #create new node

@@ -6,6 +6,7 @@ class TestScanFunction(TestCase):
     directedGraph={}
     
     def setUp(self):
+        self.directedGraph={}
         #create graph
         node1=(1, False)
         node2=(2, False)
@@ -82,7 +83,7 @@ class TestScanFunction(TestCase):
 
         pairs=updateDictionary(self.directedGraph)
         actual=pairs[((5,False),(6,False))][0]
-        
+
         self.assertEqual(expected, actual)
 
         actual2=pairs[((6,False),(5,False))][0]
@@ -96,16 +97,17 @@ class TestScanFunction(TestCase):
         del repairDictionary[equal]
         
         mostCommonPair=getMostCommon(repairDictionary)
-        expected=((6,False),(7,False))
+        expected=((5,False),(6,False))
 
         self.assertEqual(expected,mostCommonPair)
         
     
     def testGetMostCommonWithEquals(self):
         repairDictionary=updateDictionary(self.directedGraph)
+        
         mostCommonPair=getMostCommon(repairDictionary)
 
-        expected=((7,False), (8,False))
+        expected=((5,False), (6,False))
 
         self.assertEqual(expected,mostCommonPair)
         
@@ -121,7 +123,8 @@ class TestScanFunction(TestCase):
 
     #todo test bound checking for replacePair
 
-    
+
+    #todo write actual tests for repair
     def testRepairWithTwo(self):
         repaired=repair(self.directedGraph)
 
