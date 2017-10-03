@@ -32,7 +32,8 @@ class TestStackScan(TestCase):
         self.directedGraph[self.node567]=[self.node56, self.node7]
         self.directedGraph[self.node5678]=[self.node567, self.node8]
         
-
+    def testDecompress(self):
+        decompress(self.directedGraph)
 
     
 if __name__=='__main__':
