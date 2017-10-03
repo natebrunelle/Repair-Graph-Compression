@@ -4,28 +4,29 @@ from repair.compression import *
 
 class TestScanFunction(TestCase):
     directedGraph={}
-    
+
+    node1=(1, False)
+    node2=(2, False)
+    node3=(3, False)
+    node4=(4, False)
+    node5=(5, False)
+    node6=(6, False)
+    node7=(7, False)
+    node8=(8, False)
+
     def setUp(self):
         self.directedGraph={}
+
         #create graph
-        node1=(1, False)
-        node2=(2, False)
-        node3=(3, False)
-        node4=(4, False)
-        node5=(5, False)
-        node6=(6, False)
-        node7=(7, False)
-        node8=(8, False)
-
-
-        self.directedGraph[node1]=[node5,node6,node7,node8]        
-        self.directedGraph[node2]=[node5,node6,node7,node8]
-        self.directedGraph[node3]=[node5,node6,node7,node8]
-        self.directedGraph[node4]=[node5,node6,node7]
-        self.directedGraph[node5]=[]
-        self.directedGraph[node6]=[]
-        self.directedGraph[node7]=[]
-        self.directedGraph[node8]=[]
+        
+        self.directedGraph[self.node1]=[self.node5,self.node6,self.node7,self.node8]        
+        self.directedGraph[self.node2]=[self.node5,self.node6,self.node7,self.node8]
+        self.directedGraph[self.node3]=[self.node5,self.node6,self.node7,self.node8]
+        self.directedGraph[self.node4]=[self.node5,self.node6,self.node7]
+        self.directedGraph[self.node5]=[]
+        self.directedGraph[self.node6]=[]
+        self.directedGraph[self.node7]=[]
+        self.directedGraph[self.node8]=[]
                                      
 
     def testUpdateDicCount(self):
@@ -43,19 +44,11 @@ class TestScanFunction(TestCase):
         self.assertEqual(expected,len(updateDictionary(directedGraph)))
 
     def testUpdateDicCountNoCommon(self):
-        node1=(1, False)
-        node2=(2, False)
-        node3=(3, False)
-        node4=(4, False)
-        node5=(5, False)
-        node6=(6, False)
-        node7=(7, False)
-        node8=(8, False)
 
-        self.directedGraph[node1]=[node5,node6]        
-        self.directedGraph[node2]=[node6,node7,node8]
-        self.directedGraph[node3]=[node5,node7,node8]
-        self.directedGraph[node4]=[node8]
+        self.directedGraph[self.node1]=[self.node5,self.node6]        
+        self.directedGraph[self.node2]=[self.node6,self.node7,self.node8]
+        self.directedGraph[self.node3]=[self.node5,self.node7,self.node8]
+        self.directedGraph[self.node4]=[self.node8]
 
         expected=1
 
@@ -65,19 +58,11 @@ class TestScanFunction(TestCase):
         self.assertEqual(expected, actual)
 
     def testUpdateOrderAffectsCount(self):
-        node1=(1, False)
-        node2=(2, False)
-        node3=(3, False)
-        node4=(4, False)
-        node5=(5, False)
-        node6=(6, False)
-        node7=(7, False)
-        node8=(8, False)
 
-        self.directedGraph[node1]=[node6,node5,node8,node7]        
-        self.directedGraph[node2]=[node7,node6,node8,node5]
-        self.directedGraph[node3]=[node8,node6,node7,node5]
-        self.directedGraph[node4]=[node5,node6,node7,node8]
+        self.directedGraph[self.node1]=[self.node6,self.node5,self.node8,self.node7]        
+        self.directedGraph[self.node2]=[self.node7,self.node6,self.node8,self.node5]
+        self.directedGraph[self.node3]=[self.node8,self.node6,self.node7,self.node5]
+        self.directedGraph[self.node4]=[self.node5,self.node6,self.node7,self.node8]
 
         expected=1
 
@@ -126,22 +111,10 @@ class TestScanFunction(TestCase):
 
     #todo write actual tests for repair
     def testRepairWithTwo(self):
-        graphFile=open('repair/graphBeforeCompression.txt', 'w')
         adjList=self.directedGraph
-        for key in adjList.keys():
-            graphFile.write('\''+str(key)+'\''+" ")
-            for adjItem in adjList[key]:
-                graphFile.write('\''+str(adjItem[0])+'\''+" ")
-                graphFile.write('\n')
-        graphFile.close()
 
         repaired=repair(self.directedGraph)
 
-        print()
-        for key in repaired.keys():
-            print(str(key)+"\t"+str(repaired[key]))
-
-        
     
 if __name__=='__main__':
     unittest.main()
