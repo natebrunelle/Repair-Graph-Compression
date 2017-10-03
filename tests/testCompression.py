@@ -129,9 +129,9 @@ class TestScanFunction(TestCase):
         graphFile=open('repair/graphBeforeCompression.txt', 'w')
         adjList=self.directedGraph
         for key in adjList.keys():
-            graphFile.write(str(key)+" ")
+            graphFile.write('\''+str(key)+'\''+" ")
             for adjItem in adjList[key]:
-                graphFile.write(str(adjItem[0])+" ")
+                graphFile.write('\''+str(adjItem[0])+'\''+" ")
                 graphFile.write('\n')
         graphFile.close()
 
