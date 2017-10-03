@@ -33,9 +33,10 @@ class TestStackScan(TestCase):
         self.directedGraph[self.node5678]=[self.node567, self.node8]
         
     def testDecompress(self):
-        decompress(self.directedGraph)
+        decompressedGraph=decompress(self.directedGraph)
+        for node in decompressedGraph.keys():
+            print(str(node)+"\t"+str(decompressedGraph[node]))
 
-    
 if __name__=='__main__':
     unittest.main()
 

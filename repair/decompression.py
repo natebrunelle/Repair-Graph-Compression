@@ -16,7 +16,7 @@ Method which takes in a graph_dict object and decompresses the compressed
 Re-Pair graph compression
 """
 def decompress(compressedGraph):
-    stack_list=[]
+    stack=[]
     
     for node in compressedGraph.keys():
         #doesn't connect to anything 
@@ -25,18 +25,30 @@ def decompress(compressedGraph):
         else:
             for alNode in reversed(compressedGraph[node]):
                 #add each node in the related AL to stack
-                stack_list.append(alNode)
+                stack.append(alNode)
 
-            while len(stack_list) >= 0:
-                #it's a literal
-                if stack_list[-1][1] == False:
-                    #!!!!todo!!!! doesn't work here down 
-                    stack_list.pop()
+            #empty the compressed AL
+            compressedGraph[node]=[]
+           
+            while len(stack)>=1:
+                #compression node; get replacement
+                if stack[-1][1]:
+                    replacement=compressedGraph[stack.pop()]
+                    for rNode in reversed(replacement):
+                        stack.append(rNode)
                 else:
-                    # push the dictionary node pair onto stack
-                    stack_list.append(compressedGraph[stack_list.pop()])  
-    return compressedGraph
+                    #literal, put it back
+                    compressedGraph[node].append(stack.pop())
 
+    decompressedGraph={}
+    #clean up compression nodes
+    for node in compressedGraph.keys():
+        if not node[1]:
+            decompressedGraph[node]=compressedGraph[node]
+            
+    return decompressedGraph
+                
+                
 # if __name__ == "__main__":
 #     print (decompression("compressed.txt"))
 
