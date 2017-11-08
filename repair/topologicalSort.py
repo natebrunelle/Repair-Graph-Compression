@@ -7,7 +7,7 @@ def topologicalSort(graph):
         if(visited[i]==False):
             graph.topSort(i, visited, stack)
 
-    print stack
+    print(stack)
 
 
 #recursive function that pushes elements into the stack
@@ -16,3 +16,6 @@ def topSort(graph, v, visted, stack):
 
     for i in graph[v]:
         if(visited[v] == False):
+            stack.append(v)
+
+            
