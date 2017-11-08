@@ -1,21 +1,21 @@
-#main function for the topological sort
-def topologicalSort(graph):
-    visited = [False]*self.visited
-    stack=[]
+def visit(node, visited, graph, stack): #list, dic, list
+    visited[node]=True #mark it permanently
+
+    for n in graph[node]:
+        if visited[n]== False:
+            visit(n, visited, graph, stack)
+        
+    stack.insert(0, node)
+
     
-    for i in range(graph.V):
-        if(visited[i]==False):
-            graph.topSort(i, visited, stack)
-
-    print(stack)
-
-
-#recursive function that pushes elements into the stack
-def topSort(graph, v, visted, stack):
-    visited[v] = True
-
-    for i in graph[v]:
-        if(visited[v] == False):
-            stack.append(v)
-
+def topSort(graph): #dic of node: [list of nodes]
+    visited={}
+    for node in graph.keys(): #mark all nodes not visited 
+        visited[node]=False
+    
+    stack=[]
+    for node in graph.keys():
+        if visited[node]==False:
+            visit(node, visited, graph, stack)
             
+    return stack
