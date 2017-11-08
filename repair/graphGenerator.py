@@ -18,9 +18,10 @@ def weaklyConnectedClusters(clusterSize, clusterNum, edgeNum):
             cluster2=random.randint(0, len(clusters.keys()))-1
 
             
-            while(cluster1==clusterNum):
+            while(cluster1==clusterNum or cluster2==clusterNum):
                 cluster1=random.randint(0, len(clusters.keys()))-1
-                
+                cluster2=random.randint(0, len(clusters.keys()))-1
+            
             cluster1=list(clusters.keys())[cluster1][1]
             cluster2=list(clusters.keys())[cluster2][1]
 
@@ -36,7 +37,7 @@ def weaklyConnectedClusters(clusterSize, clusterNum, edgeNum):
 
     for node in clusters.keys():
         for t in clusters[node]:
-            if t[0] !=0:
+            if t[0] ==-1:
                 n=clusters[node]
                 del n[0]
                 clusters[node]=n

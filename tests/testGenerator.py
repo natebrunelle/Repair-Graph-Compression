@@ -8,7 +8,7 @@ class TestWCC(TestCase):
         pass
 
     def testSimpleWCC(self):
-        graph=weaklyConnectedClusters(10, 8, 80)
+        graph=weaklyConnectedClusters(100, 25, 200)
 
         print("Node\t\tOutgoing\n")
         for node in graph.keys():
