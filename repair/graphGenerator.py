@@ -3,35 +3,47 @@ import string
 
 def weaklyConnectedClusters(clusterSize, clusterNum, edgeNum):
     clusters={}
-    ids=list(string.ascii_lowercase)
+    ids=list(string.ascii_lowercase) #todo this limits us to 26 characters fix with A1, A1...
+
+    #for testing only
+    random.seed(5)
     
+    #get all the individual clusters
     for c in range(clusterNum):
         id=ids[c]
         hub=createHub(clusterSize, id)
         for node in hub.keys():
             clusters[node]=hub[node]
 
-        
-    for e in range(edgeNum):
-        for i in range(clusterNum):
-            cluster1=random.randint(0, len(clusters.keys()))-1
-            cluster2=random.randint(0, len(clusters.keys()))-1
+    for node in clusters:
+        print(str(node)+"\t"+str(clusters[node]))
 
-            
-            while(cluster1==clusterNum or cluster2==clusterNum):
-                cluster1=random.randint(0, len(clusters.keys()))-1
-                cluster2=random.randint(0, len(clusters.keys()))-1
-            
+
+    for i in range(clusterNum):
+        for e in range(edgeNum):
+            #choose two random clusters
+            cluster1=random.randint(0, len(clusters.keys())-1)
+            cluster2=random.randint(0, len(clusters.keys())-1)
+
+            while(cluster1==cluster2):
+                cluster1=random.randint(0, len(clusters.keys())-1)
+                cluster2=random.randint(0, len(clusters.keys())-1)
+                
+
+            print("Cluster 1: "+str(cluster1)+"\t Cluster 2: "+str(cluster2))
+            #get clusters
             cluster1=list(clusters.keys())[cluster1][1]
             cluster2=list(clusters.keys())[cluster2][1]
 
 
-            node1=random.randint(1, clusterSize)-1
-            node2=random.randint(1, clusterSize)-1
+            #randomly pick nodes from the clusters
+            node1=random.randint(1, clusterSize-1)
+            node2=random.randint(1, clusterSize-1)
+
 
             node1=(node1, cluster1)
             node2=(node2, cluster2)
-
+            
             clusters[node1].append(node2)
 
 
