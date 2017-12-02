@@ -8,7 +8,7 @@ from pygraphml import GraphMLParser
 def cleanNode(node):
     return str(node[0])+str(node[1])
 
-def generateViz(adjList):
+def generateViz(adjList, name):
     g=Graph()
 
     lookup={}
@@ -27,4 +27,4 @@ def generateViz(adjList):
     parser = GraphMLParser()
     parser.write(g, "myGraph.graphml")
 
-    g.show()
+    g.savefig(name)
