@@ -3,25 +3,28 @@ Some common functions we will most likely be sharing
 '''
 
 from pygraphml import Graph
+from pygraphml import GraphMLParser
 
 def cleanNode(node):
-    clean=str(node[0])+str(node[1])
+    return str(node[0])+str(node[1])
 
 def generateViz(adjList):
     g=Graph()
-    
+
+    lookup={}
     for node in adjList.keys():
-        g.add_node(cleanNode(node))
-        
+        clean=cleanNode(node)
+        n=g.add_node(clean)
+        lookup[clean]=n
+
+    
     for n1 in adjList.keys():
         for n2 in adjList[n1]:
-            print(n1,n2)
-            try:
-                g.add_edge(cleanNode(n1),cleanNode(n2))
-            except:
-                pass
+            g.add_edge(lookup[cleanNode(n1)],lookup[cleanNode(n2)])
 
-    print("here")
+
+    
+    parser = GraphMLParser()
+    parser.write(g, "myGraph.graphml")
+
     g.show()
-
-

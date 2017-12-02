@@ -5,10 +5,20 @@ from repair.utils import generateViz
 
 def weaklyConnectedClusters(clusterSize, clusterNum, edgeNum):
     clusters={}
-    ids=list(string.ascii_lowercase) #todo this limits us to 26 characters fix with A1, A1...
+    bins=clusterNum%26
+
+    ids=[]
+    for char in list(string.ascii_lowercase):
+        for i in range(bins):
+            ids.append(char+str(i))
+
+            if len(ids)==clusterNum:
+                break
+        if len(ids)==clusterNum:
+            break
 
     #for testing only
-#    random.seed(15)
+    #random.seed(15)
     
     #get all the individual clusters
     for c in range(clusterNum):
@@ -23,15 +33,19 @@ def weaklyConnectedClusters(clusterSize, clusterNum, edgeNum):
         for e in range(edgeNum):
             #choose two random nodes
             cluster1=i*clusterSize
-            cluster2=random.randint(1, clusterNum+1)
+            cluster2=random.randint(1, clusterNum-1)
+
+            print("Cluster 1: "+str(cluster1)+"\t Cluster 2: "+str(cluster2))
+
 
             #get clusters
             cluster1=list(clusters.keys())[cluster1][1]
-            cluster2=list(clusters.keys())[clusterNum*cluster2][1]
+            cluster2=list(clusters.keys())[cluster2*clusterSize][1]
 
             while(cluster1==cluster2):
-                cluster2=random.randint(1, clusterNum+1)
-                cluster2=list(clusters.keys())[clusterNum*cluster2][1]
+                cluster2=random.randint(1, clusterNum-1)
+                cluster2=list(clusters.keys())[cluster2*clusterSize][1]
+
                 
             print("Cluster 1: "+str(cluster1)+"\t Cluster 2: "+str(cluster2))
 
@@ -47,7 +61,8 @@ def weaklyConnectedClusters(clusterSize, clusterNum, edgeNum):
             while(node2 in clusters[node1]):
                 node2=random.randint(1, clusterSize-1)
                 node2=(node2, cluster2)
-
+                print("inf in node")
+                
             clusters[node1].append(node2)
             print("----------------")
 
@@ -64,7 +79,7 @@ def weaklyConnectedClusters(clusterSize, clusterNum, edgeNum):
         print(str(node)+"\t"+str(clusters[node]))
 
     
-    generateViz(clusters)
+    #generateViz(clusters)
     return clusters
         
         
