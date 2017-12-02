@@ -7,7 +7,7 @@ def main():
     #generate graph
     generatedGraph=weaklyConnectedClusters(60, 10, 20)
     compressedGraph=repair(generatedGraph)
-    generateViz(generatedGraph, "generated.png")
-    generateViz(compressedGraph, "compressed.png")
+    generateViz(generatedGraph, "generated")
+    generateViz(compressedGraph, "compressed")
 
 main()

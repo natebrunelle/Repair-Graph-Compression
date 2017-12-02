@@ -25,6 +25,6 @@ def generateViz(adjList, name):
 
     
     parser = GraphMLParser()
-    parser.write(g, "myGraph.graphml")
+    parser.write(g, "name.graphml")
 
-    g.savefig(name)
+    g.show()
