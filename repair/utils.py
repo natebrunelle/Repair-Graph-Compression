@@ -2,21 +2,26 @@
 Some common functions we will most likely be sharing
 '''
 
-import networkx as nx
-import matplotlib.pyplot as plt
+from pygraphml import Graph
 
-#creates a vizualization of the graph using the adj list
-#the list should be in the form of a dictionary
-#nodeNumber: (neighbor 1, bool), (neighbor 2, bool)....
-def getViz():
-    graph=nx.read_adjlist('repair/graph.txt')
-    nx.draw(graph)
-    plt.show()
+def cleanNode(node):
+    clean=str(node[0])+str(node[1])
 
-def getViz2():
-    graph=nx.read_adjlist('repair/graphBeforeCompression.txt')
-    nx.draw(graph)
-    plt.show()
+def generateViz(adjList):
+    g=Graph()
+    
+    for node in adjList.keys():
+        g.add_node(cleanNode(node))
+        
+    for n1 in adjList.keys():
+        for n2 in adjList[n1]:
+            print(n1,n2)
+            try:
+                g.add_edge(cleanNode(n1),cleanNode(n2))
+            except:
+                pass
 
-getViz()
-getViz2()
+    print("here")
+    g.show()
+
+

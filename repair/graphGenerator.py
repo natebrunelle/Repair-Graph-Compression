@@ -1,6 +1,8 @@
 import random 
 import string
 
+from repair.utils import generateViz
+
 def weaklyConnectedClusters(clusterSize, clusterNum, edgeNum):
     clusters={}
     ids=list(string.ascii_lowercase) #todo this limits us to 26 characters fix with A1, A1...
@@ -15,8 +17,6 @@ def weaklyConnectedClusters(clusterSize, clusterNum, edgeNum):
         for node in hub.keys():
             clusters[node]=hub[node]
 
-    for node in clusters:
-        print(str(node)+"\t"+str(clusters[node]))
 
 
     for i in range(clusterNum):
@@ -58,6 +58,13 @@ def weaklyConnectedClusters(clusterSize, clusterNum, edgeNum):
                 del n[0]
                 clusters[node]=n
 
+
+
+    for node in clusters:
+        print(str(node)+"\t"+str(clusters[node]))
+
+    
+    generateViz(clusters)
     return clusters
         
         
