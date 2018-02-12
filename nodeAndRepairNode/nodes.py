@@ -9,9 +9,12 @@ class Node:
 	def add_edge(self, node):
 		self.edges.append(node)
 
+	def delete_edge(self, node):
+		self.edges.remove(node)
+
 class RepairNode(Node):
-	def __init__(self, node1, node2, isDictNode=True, u_id):
-		self.id = u_id
+	def __init__(self, value, node1, node2, isDictNode=True):
+		self.id = -1
 		self.isDictNode = isDictNode
 		self.edges = [node1, node2]
 
