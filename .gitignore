@@ -12,6 +12,12 @@ __pycache__/
 */.idea
 .idea/
 
+# visualizer stuff 
+*.graphml 
+
+# vim swp 
+# *.swp 
+
 # Distribution / packaging
 .Python
 env/
