@@ -25,6 +25,18 @@ class Graph(object):
         add additional rules for new graph implementations
         """
         n1.add_edge(n2)  # call add_edge() from node class (adds each node to the other node's adjacency list)
+        # should also...?
+        # n2.add_edge(n1)
+
+    def delete_edge(self, n1, n2):
+        n1.delete_edge(n2)
+        # should also n2.delete_edge(n1) ?
+
+    def delete_node(self, n):
+        # free uid or something?
+        for x in n.edges:
+            self.delete_edge(x, n)
+        # REALLY need to test this...
 
     def add_node(self, n):  # depends on implementation of Node class attr uid, i.e. n.uid assumed to be -1
         """
