@@ -8,10 +8,11 @@ class Node:
         self.uid = -1
 
     def add_edge(self, node):
-        self.edges.append(node)
+        self.edges.append(node)  # doesn't check if node is already in list, so ends up in list twice
+        node.edges.append(self)
 
     def delete_edge(self, node):
-        self.edges.remove(node)
+        self.edges.remove(node)  # doesn't check if node is in list at all
 
 
 class RepairNode(Node):
