@@ -24,12 +24,14 @@ class Graph(object):
         Needs to be redefined by other graphs to check for duplicates,
         add additional rules for new graph implementations
         """
-        n1.add_edge(n2)  # call add_edge() from node class
-        # now adds each node to the other node's adjacency list, so don't have to call n2.add_edge(n1)
+        n1.add_edge(n2)  # call add_edge() from Node class
+        # now adds each node to the other node's adjacency list, so don't have to call n2.add_edge(n1) here
 
     def delete_edge(self, n1, n2):
         n1.delete_edge(n2)
         # should also n2.delete_edge(n1) ? Do in Node class instead.
+        # what if that was the only edge attaching Node to graph?
+        # or is this too strict? use delete_node for that case instead?
 
     def delete_node(self, n):
         # free uid or something?

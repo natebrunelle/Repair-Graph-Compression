@@ -4,6 +4,7 @@ import unittest
 
 
 class TestNodeAndRepairNode(unittest.TestCase):
+
     def setUp(self):
         self.n1 = Node(1)
         self.n2 = Node(2)
@@ -12,15 +13,26 @@ class TestNodeAndRepairNode(unittest.TestCase):
         self.rnn = RepairNode(11, self.n1, self.n2)
         self.rrn = RepairNode(12, self.rnn, self.n3)
 
-    def test_add_node_edge(self):
+    def test_add_edge(self):
         self.n1.add_edge(self.n2)
         self.assertEqual(len(self.n1.edges), 1, "Edge not added")
         self.assertEqual(len(self.n2.edges), 1, "adj list not updated")  # both nodes should list the other node, right?
 
-    def test_delete_node_edge(self):
+    def test_delete_edge(self):
         self.n1.add_edge(self.n2)
         self.n1.delete_edge(self.n2)
         self.assertEqual(len(self.n1.edges), 0, "Edge not deleted")
+        self.assertEqual(len(self.n2.edges), 0, "adj list not updated")
+
+    def test_delete_nonexistent_edge(self):
+        self.n1.add_edge(self.n2)
+        self.n1.delete_edge(self.n3)  # should fail
+        self.assertEqual(self.n1.edges, [self.n2], "deleted nonexistent or wrong edge")
+
+    def test_duplicate_add_node(self):
+        self.n1.add_edge(self.n2)
+        self.n1.add_edge(self.n2) # n2 shouldn't end up in list twice
+        self.assertEqual(len(self.n1.edges), 1, "Re-added edge, resulted in duplicate in adj list")
 
 # def test_add_repair_node_edge():
 # 	self.rnn.
