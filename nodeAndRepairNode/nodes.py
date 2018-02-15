@@ -10,14 +10,17 @@ class Node:
     def add_edge(self, node):
         if node not in self.edges:
             self.edges.append(node)
-            node.add_edge(self)  # is this a good way of doing this? Rather than ...
-            # node.edges.append(self)  ... adds more checking this way. Shouldn't be necessary though.
+
+            # node.add_edge(self)  # inside the if - is this a good way? Rather than ...
+            # node.edges.append(self)  ... adds more checking w/add_edge. Shouldn't be necessary though.
             # could also shift the reversal to Graph class. Makes more sense that way.
 
     def delete_edge(self, node):
-        if node in self.edges:  # for should remove all instances, but could result in loop
+        if node in self.edges:  # for should remove all instances, but could result in loop/recursion
             self.edges.remove(node)
-            node.delete_edge(self)  # this will loop until all instances removed?
+
+            # below not necessary, implementation moved to Graph class for clarity.
+            # node.delete_edge(self)  # this will loop until all instances removed?
 
 
 class RepairNode(Node):

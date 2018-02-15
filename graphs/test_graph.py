@@ -59,7 +59,10 @@ class GraphTestCase(unittest.TestCase):
 
     def test_delete_node_delete_edge(self):
         self.g.add_edge(self.n2, self.n1)  # g initialized w/n1 and n2, but no connecting edges
+        # each should be added to other's adj list.
         self.g.delete_edge(self.n1, self.n2)
+        self.assertEqual(self.n1.edges, [])
+        self.assertEqual(self.n2.edges, [])
         # some assert here...
 
     # also test deleting non existent edges and nodes, deleting in various order

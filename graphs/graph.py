@@ -25,13 +25,14 @@ class Graph(object):
         add additional rules for new graph implementations
         """
         n1.add_edge(n2)  # call add_edge() from Node class
-        # now adds each node to the other node's adjacency list, so don't have to call n2.add_edge(n1) here
+        n2.add_edge(n1)
 
     def delete_edge(self, n1, n2):
         n1.delete_edge(n2)
-        # should also n2.delete_edge(n1) ? Do in Node class instead.
+        n2.delete_edge(n1)
         # what if that was the only edge attaching Node to graph?
         # or is this too strict? use delete_node for that case instead?
+        # In that case, it's a cluster. Our def of graph more limited.
 
     def delete_node(self, n):
         # free uid or something?
