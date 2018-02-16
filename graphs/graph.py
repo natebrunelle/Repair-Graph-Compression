@@ -25,20 +25,29 @@ class Graph(object):
         Needs to be redefined by other graphs to check for duplicates,
         add additional rules for new graph implementations
         """
-        n1.add_edge(n2)  # call add_edge() from Node class
-        n2.add_edge(n1)
+        if n1 in self.list_nodes and n2 in self.list_nodes:
+            n1.add_edge(n2)  # call add_edge() from Node class
+            n2.add_edge(n1)
+        else:
+            raise ValueError('Node(s) not in graph, use Graph.add_node first')
 
     def delete_edge(self, n1, n2):
-        n1.delete_edge(n2)
-        n2.delete_edge(n1)
+        if n1 in self.list_nodes and n2 in self.list_nodes:
+            n1.delete_edge(n2)
+            n2.delete_edge(n1)
+        else:
+            raise ValueError('Node(s) not in graph, cannot delete edges')  # try deleting from cluster instead?
         # what if that was the only edge attaching Node to graph? Use delete_node instead?
         # or is this too strict? use delete_node for that case instead?
         # In that case, it's a cluster. Our def of graph more limited.
 
     def delete_node(self, n):
         # free uid or something?
-        for x in n.edges:
-            self.delete_edge(x, n)
+        if n in self.list_nodes:
+            for x in n.edges:
+                self.delete_edge(x, n)
+        else:
+            raise ValueError('Node not in graph, cannot delete node')
         # REALLY need to test this...
 
     def add_node(self, n):  # depends on implementation of Node class attr uid, i.e. n.uid assumed to be -1
@@ -46,8 +55,9 @@ class Graph(object):
         # diff between add_node and add_edge is add_node updates both node_count and list_nodes
         """
         Randomly selects an internal node, calls add_edge on both.
-        Returns the external added node
-        New implementations should redefine this function... this is not that valuable a function.
+        Returns the external added node.
+        This does not add a node to the Graph data structures alone, but also adds a random edge.
+        New implementations should redefine this function.
         """
         # check uid is not -1, if != -1, throw error
         if n.uid == -1:
@@ -55,11 +65,14 @@ class Graph(object):
             # uuid.uuid1() or uuid.uuid4()  # 1 is based on host id and time, 4 is random
             # changing an int field to another class might be a problem?
             # set uid to some counter?
+
             rand_node = random.choice(self.list_nodes)
-            self.add_edge(n, rand_node)
-            # do I need to check that it can't be added twice since I'm using append()? Got to be a better method.
-            self.list_nodes.append(n)
-            self.node_count += 1
+            if n not in self.list_nodes:  # prevent from adding >1x
+                self.add_edge(n, rand_node)
+                self.list_nodes.append(n)
+                self.node_count += 1
+            else:
+                raise ValueError('Node already in graph, use Graph.add_edge instead')
             return n
         else:  # uid is not -1
             raise IndexError('Expected uid of -1, cannot assign new uid')

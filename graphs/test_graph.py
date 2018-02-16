@@ -33,20 +33,23 @@ class GraphTestCase(unittest.TestCase):
         self.g.add_edge(self.n1, self.n2)
         self.assertEqual(self.g.node_count(), x, "Graph's node_count changed")
         # both nodes should list the other node
-        self.assertIn(self.n1, self.n2.edges)
-        self.assertIn(self.n2, self.n1.edges)
+        self.assertIn(self.n1, self.n2.edges, "Adj lists not updated")
+        self.assertIn(self.n2, self.n1.edges, "Adj lists not updated")
+
+    def test_graph_duplicate_add_edge(self):
+        x = self.g.node_count()  # node count shouldn't change
+        self.g.add_edge(self.n1, self.n2)
+        self.g.add_edge(self.n1, self.n2)  # testing self.n2, self.n1 shouldn't change anything, see Graph
+        self.assertEqual(self.g.node_count(), x, "Graph's node_count changed")
+        # both nodes should list the other node only 1x
+        self.assertEqual(self.n2.edges.count(self.n1), 1)
+        self.assertEqual(self.n1.edges.count(self.n2), 1)
 
     def test_graph_add_node(self):  # should add to list_nodes, this is diff between add_node and add_edge
         self.g.add_node(self.n4)
         self.assertEqual(len(self.g.node_count()), 4, "node_count not updated")
         self.assertIn(self.n4, self.g.list_nodes, "list_nodes not updated")
-
-        self.assertEqual(0, 0)
-        # ...
-
-    def test_graph_duplicate_add_edge(self):
-        self.assertEqual(0, 0)
-        # ...
+        # TODO: need to test the uid or UUID here?
 
     def test_graph_duplicate_add_node(self):
         self.assertEqual(0, 0)
@@ -55,6 +58,7 @@ class GraphTestCase(unittest.TestCase):
     def test_graph_new_node_add_edge(self):
         self.g.add_edge(self.n1, self.n4)  # if new node added by edge, should be added to list_nodes? (Currently isn't)
         self.assertEqual(self.g.node_count(), 4)  # No, because that's how clusters work - not our def of graph
+        # also shouldn't be added to list_nodes b/c that's the job of add_node
 
     def test_cluster_graphs_linked(self):
         self.g.add_edge(self.n1, self.n4)  # n4 is node in another graph
