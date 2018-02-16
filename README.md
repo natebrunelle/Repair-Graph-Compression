@@ -1,7 +1,7 @@
 # Repair Compression for Graphs
 
-## Build Status 
- [![Build Status](https://travis-ci.com/yonathanF/Repair-Graph-Compression.svg?token=iEJ27eCnjKeFqxrBkzzA&branch=master)](https://travis-ci.com/yonathanF/Repair-Graph-Compression)
+ [![Master](https://travis-ci.com/yonathanF/Repair-Graph-Compression.svg?token=iEJ27eCnjKeFqxrBkzzA&branch=master)](https://travis-ci.com/yonathanF/Repair-Graph-Compression)
+ [![Dev](https://travis-ci.com/yonathanF/Repair-Graph-Compression.svg?token=iEJ27eCnjKeFqxrBkzzA&branch=development)](https://travis-ci.com/yonathanF/Repair-Graph-Compression)
 
 ### Setup
 
