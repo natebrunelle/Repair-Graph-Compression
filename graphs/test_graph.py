@@ -29,13 +29,18 @@ class GraphTestCase(unittest.TestCase):
         self.assertEqual(self.g.node_count(), 4)
 
     def test_graph_add_edge(self):
-        x = self.g.node_count()
+        x = self.g.node_count()  # node count shouldn't change
         self.g.add_edge(self.n1, self.n2)
         self.assertEqual(self.g.node_count(), x, "Graph's node_count changed")
-        self.assertEqual(self.n1.edges, [self.n2])
-        self.assertEqual(self.n2.edges, [self.n1])
+        # both nodes should list the other node
+        self.assertIn(self.n1, self.n2.edges)
+        self.assertIn(self.n2, self.n1.edges)
 
-    def test_graph_add_node(self):
+    def test_graph_add_node(self):  # should add to list_nodes, this is diff between add_node and add_edge
+        self.g.add_node(self.n4)
+        self.assertEqual(len(self.g.node_count()), 4, "node_count not updated")
+        self.assertIn(self.n4, self.g.list_nodes, "list_nodes not updated")
+
         self.assertEqual(0, 0)
         # ...
 
@@ -62,6 +67,9 @@ class GraphTestCase(unittest.TestCase):
         self.assertEqual(self.g.node_count(), 3, "Node_count for graph incorrect")
         # an edge, but not a node deleted, n4 still in list_nodes
         # what if that edge deleted was the only 1 attaching it to the graph? Still in cluster?
+        self.assertNotIn(self.n1, self.n2.edges, "All instances not removed from adj list")
+        self.assertNotIn(self.n2, self.n1.edges, "All instances not removed from adj list")
+
 
     def test_graph_delete_node(self):
         self.g.delete_node(self.n1)
@@ -92,3 +100,7 @@ class GraphTestCase(unittest.TestCase):
         # ...
 
     # also test deleting non existent edges and nodes, deleting in various order
+
+
+if __name__ == '__main__':
+        unittest.main()

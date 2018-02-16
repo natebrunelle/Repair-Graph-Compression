@@ -16,7 +16,9 @@ class TestNodeAndRepairNode(unittest.TestCase):
     def test_add_edge(self):
         self.n1.add_edge(self.n2)
         self.assertEqual(len(self.n1.edges), 1, "Edge not added")
-        self.assertEqual(len(self.n2.edges), 1, "adj list not updated")  # both nodes should list the other node, right?
+        self.assertIn(self.n2, self.n1.edges, "New node not found in other node's adj list")
+        # both nodes should list the other node.  This functionality and test moved to graph class.
+        # self.assertEqual(len(self.n2.edges), 1, "New node's adj list not updated")
 
     def test_duplicate_add_edge(self):
         self.n1.add_edge(self.n2)
@@ -27,7 +29,9 @@ class TestNodeAndRepairNode(unittest.TestCase):
         self.n1.add_edge(self.n2)
         self.n1.delete_edge(self.n2)
         self.assertEqual(len(self.n1.edges), 0, "Edge not deleted")
-        self.assertEqual(len(self.n2.edges), 0, "adj list not updated")
+        #  This functionality and test moved to graph class.
+        # self.assertEqual(len(self.n2.edges), 0, "adj list not updated")
+
         # TODO: better assert and checking here, don't just check len
 
     def test_delete_nonexistent_edge(self):

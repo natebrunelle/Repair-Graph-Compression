@@ -1,5 +1,6 @@
 
 import random
+import uuid
 
 
 class Graph(object):
@@ -30,7 +31,7 @@ class Graph(object):
     def delete_edge(self, n1, n2):
         n1.delete_edge(n2)
         n2.delete_edge(n1)
-        # what if that was the only edge attaching Node to graph?
+        # what if that was the only edge attaching Node to graph? Use delete_node instead?
         # or is this too strict? use delete_node for that case instead?
         # In that case, it's a cluster. Our def of graph more limited.
 
@@ -41,6 +42,8 @@ class Graph(object):
         # REALLY need to test this...
 
     def add_node(self, n):  # depends on implementation of Node class attr uid, i.e. n.uid assumed to be -1
+        # considering making this in Cluster class only... many implications
+        # diff between add_node and add_edge is add_node updates both node_count and list_nodes
         """
         Randomly selects an internal node, calls add_edge on both.
         Returns the external added node
@@ -48,12 +51,14 @@ class Graph(object):
         """
         # check uid is not -1, if != -1, throw error
         if n.uid == -1:
-            #################
             # TODO: CREATE UID HERE
-            #################
+            # uuid.uuid1() or uuid.uuid4()  # 1 is based on host id and time, 4 is random
+            # changing an int field to another class might be a problem?
             # set uid to some counter?
             rand_node = random.choice(self.list_nodes)
             self.add_edge(n, rand_node)
+            # do I need to check that it can't be added twice since I'm using append()? Got to be a better method.
+            self.list_nodes.append(n)
             self.node_count += 1
             return n
         else:  # uid is not -1
