@@ -25,11 +25,12 @@ class Graph(object):
         Needs to be redefined by other graphs to check for duplicates,
         add additional rules for new graph implementations
         """
-        if n1 in self.list_nodes and n2 in self.list_nodes:
-            n1.add_edge(n2)  # call add_edge() from Node class
-            n2.add_edge(n1)
-        else:
-            raise ValueError('Node(s) not in graph, use Graph.add_node first')
+        if n1 not in self.list_nodes or n2 not in self.list_nodes:
+            self.add_node(n1)
+            self.add_node(n2)  # add_node will prevent from adding 2x
+        n1.add_edge(n2)
+        n2.add_edge(n1)
+        # raise ValueError('Node(s) not in graph, use Graph.add_node first')
 
     def delete_edge(self, n1, n2):
         if n1 in self.list_nodes and n2 in self.list_nodes:
@@ -51,13 +52,32 @@ class Graph(object):
         # REALLY need to test this...
 
     def add_node(self, n):  # depends on implementation of Node class attr uid, i.e. n.uid assumed to be -1
-        # considering making this in Cluster class only... many implications
-        # diff between add_node and add_edge is add_node updates both node_count and list_nodes
+        """
+        Returns the external added node.
+        Adds a node to the Graph data structures, but it won't be connected by any edge.
+        New implementations should redefine this function.
+        """
+        # check uid is not -1, if != -1, throw error
+        if n.uid == -1:
+            # TODO: CREATE UID HERE
+            # uuid.uuid1() or uuid.uuid4()  # 1 is based on host id and time, 4 is random
+            # changing an int field to another class might be a problem?
+            # set uid to some counter?
+
+            if n not in self.list_nodes:  # prevent from adding >1x
+                self.list_nodes.append(n)
+                self.node_count += 1
+            else:
+                raise ValueError('Node already in graph, use Graph.add_edge instead')
+            return n
+        else:  # uid is not -1
+            raise IndexError('Expected uid of -1, cannot assign new uid')
+
+    def add_node_rand(self, n):
         """
         Randomly selects an internal node, calls add_edge on both.
         Returns the external added node.
         This does not add a node to the Graph data structures alone, but also adds a random edge.
-        New implementations should redefine this function.
         """
         # check uid is not -1, if != -1, throw error
         if n.uid == -1:
