@@ -1,16 +1,28 @@
 import unittest
 from unittest import TestCase
 
+from ddt import data, ddt, idata
+
 from repair.compression import *
 
 
+def get_dictionary_objects():
+    ''' Creates objects with defaults and injection '''
+    new_queue_dict = CompressionDictionary()
+    injected_dict = CompressionDictionary(None)
+
+    return [new_queue_dict, injected_dict]
+
+
+@ddt
 class TestCompressionDictionary(TestCase):
     ''' Test class for the compression dictionary class '''
 
     def setUp(self):
         pass
 
-    def test_is_empty(self):
+    @idata(get_dictionary_objects())
+    def test_is_empty(self, dictionary_obj):
         ''' simple test for empty '''
         self.fail("No test")
 
