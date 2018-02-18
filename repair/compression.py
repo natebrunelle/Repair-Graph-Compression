@@ -24,64 +24,30 @@ class compression_dictionary:
         ''' Returns the most common pairs '''
         return self.pair_queue.get_nowait()
 
-    def add_new_pair(self, pair, frequency):
+    def add_new_pair(self, pair, frequency=1):
         ''' Adds new pairs to the queue. prioritizes by frequency '''
-        ''' @note queue actually does lowest first, the negative flips this '''
-        self.pair_queue.put_nowait((-frequency, pair))
+        self.pair_queue.put_nowait((frequency, pair))
 
     def contains_pair(self, pair):
         ''' Checks if the queue already contains a given pair '''
         pass  #todo find away to impelment this. Queue is not iteratable
 
-    def update_dictionary(self, uncompressed_graph):
-        ''' Takes in a graph object, scans it, and updates the priority queue with
-        new pairs and their frequency '''
 
-        # for every node, loop through its edges and check pairs
-        for node in uncompressed_graph.list_nodes:
-            for index, adj_node in enumerate(node.edges):
-                if index + 1 == len(node.edges):
-                    break
+def update_dictionary(uncompressed_graph, dictionary):
+    ''' Takes in a graph object, scans it, and updates the priority queue with
+    new pairs and their frequency '''
 
-                pair = (adj_node, node.edges[index + 1])
-                # todo find a way to get current freq
+    # for every node, loop through its edges and check pairs
+    for node in uncompressed_graph.list_nodes:
+        for index, adj_node in enumerate(node.edges):
+            if index + 1 == len(node.edges):
+                break
 
+            # make a pair and pass it on
+            pair = (adj_node, node.edges[index + 1])
 
-def updateDictionary(adjList):
-    repairDictionary = {}
-    for node in adjList.keys():
-        for j in range(0, len(adjList[node]) - 1):
-            numSet = (adjList[node][j], adjList[node][j + 1])
-
-            if numSet in repairDictionary.keys():
-                repairDictionary[numSet][0] = repairDictionary[numSet][0] + 1
-                repairDictionary[numSet][1].append((node, j))
-            else:
-                repairDictionary[numSet] = [1, [(node, j)]]
-
-    return repairDictionary
-
-
-def getMostCommon(repairDictionary):
-    maxCount = 0
-    maxKey = ()
-
-    for key in repairDictionary.keys():
-        if repairDictionary[key][0] > maxCount:
-            maxKey = key
-            maxCount = repairDictionary[key][0]
-
-    return maxKey
-
-
-def replacePair(nodeList, index, newNode):
-    #remove the two neighbors
-    del nodeList[index]
-    del nodeList[index]
-
-    nodeList.insert(index, newNode)
-
-    return nodeList
+            # see our queue implementation on how duplicates are handled
+            dictionary.add_new_pair(pair)
 
 
 def repair(adjList):
