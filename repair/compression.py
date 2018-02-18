@@ -5,8 +5,8 @@ import math
 # queue is not thread safe
 from queue import PriorityQueue
 
-from graphs import graph
-from nodeAndRepairNode import nodes
+from graphs.graph import Graph
+from nodeAndRepairNode.nodes import Node, RepairNode
 
 
 class RepairPriorityQueue(PriorityQueue):
@@ -91,7 +91,7 @@ class Repair:
         node2 = most_common_pair[1][1]
 
         # create a dictionary node
-        dictionary_node = RepairNodes(math.inf, node1, node2)
+        dictionary_node = RepairNode(math.inf, node1, node2)
 
         # loop through all nodes and replace the pair
         for node in self.graph.list_nodes:

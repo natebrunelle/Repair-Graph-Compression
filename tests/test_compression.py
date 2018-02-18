@@ -5,6 +5,8 @@ from repair.compression import *
 
 
 class TestCompressionDictionary(TestCase):
+    ''' Test class for the compression dictionary class '''
+
     def setUp(self):
         pass
 
@@ -34,6 +36,8 @@ class TestCompressionDictionary(TestCase):
 
 
 class TestRepair(TestCase):
+    ''' Test class for the repair class '''
+
     def setUp(self):
         pass
 
@@ -41,11 +45,11 @@ class TestRepair(TestCase):
         ''' update dic with an empty graph '''
         self.fail("No test")
 
-    def test_update_dictionary_pair_occurs_once(self):
+    def test_update_dictionary_once(self):
         ''' update dictionary where the pair shows up only once in the graph '''
         self.fail("No test")
 
-    def test_update_dictionary_pair_occurs_multiple(self):
+    def test_update_dictionary_multiple(self):
         ''' update where a pair shows up multiple times in the graph '''
         self.fail("No test")
 
