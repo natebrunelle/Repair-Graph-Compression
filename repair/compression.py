@@ -1,5 +1,5 @@
 ''' Implementation of the Repair algorithm
-Uses the Graph and Node classes to compress a graph (the number of edges).
+Uses the Graph and Node classes to compress a graph.
 '''
 import math
 # queue is not thread safe
@@ -9,11 +9,24 @@ from graphs import graph
 from nodeAndRepairNode import Nodes, RepairNodes
 
 
+class RepairPriorityQueue(PriorityQueue):
+    ''' Implements the python priority queue to fix our issue with put '''
+
+    def __init__(self, node_list=None):
+        # todo implement this class
+        pass
+
+
 class CompressionDictionary:
     ''' Used to keep track of pairs which will be replaced '''
 
-    def __init__(self):
-        self.pair_queue = PriorityQueue()
+    def __init__(self, queue=None):
+
+        # inject the queue if needed
+        if not queue:
+            self.pair_queue = queue
+        else:
+            self.pair_queue = RepairPriorityQueue()
 
     def is_empty(self):
         ''' Just a wrapper for the empty method '''
