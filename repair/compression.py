@@ -6,7 +6,7 @@ import math
 from queue import PriorityQueue
 
 from graphs import graph
-from nodeAndRepairNode import Nodes, RepairNodes
+from nodeAndRepairNode import nodes
 
 
 class RepairPriorityQueue(PriorityQueue):

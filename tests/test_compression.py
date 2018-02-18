@@ -13,25 +13,46 @@ class TestCompressionDictionary(TestCase):
         self.fail("No test")
 
     def test_most_common(self):
-        ''' tests most common with no ties '''
+        ''' most common with no ties '''
         self.fail("No test")
 
     def test_most_common_duplicates(self):
-        ''' tests most common when there are ties'''
+        ''' most common when there are ties'''
         self.fail("No test")
 
     def test_most_common_empty(self):
-        ''' tests most common when there no nodes '''
+        ''' most common when there no nodes '''
         self.fail("No test")
 
+    def test_add_new_pair_first(self):
+        ''' adding a new pair '''
+        self.fail("No test")
+
+    def test_add_new_pair_duplicate(self):
+        ''' that duplicate's freq is incremented'''
+        self.fail("No test")
+
+
+class TestRepair(TestCase):
+    def setUp(self):
+        pass
+
     def test_update_dictionary_empty_graph(self):
-        ''' tests update dic with an empty graph '''
+        ''' update dic with an empty graph '''
         self.fail("No test")
 
     def test_update_dictionary_pair_occurs_once(self):
-        ''' tests update dictionary where the pair shows up only once in the graph '''
+        ''' update dictionary where the pair shows up only once in the graph '''
         self.fail("No test")
 
     def test_update_dictionary_pair_occurs_multiple(self):
-        ''' tests update where a pair shows up multiple times in the graph '''
+        ''' update where a pair shows up multiple times in the graph '''
+        self.fail("No test")
+
+    def test_compress_single_run(self):
+        ''' Compression that only requires a single run through the graph '''
+        self.fail("No test")
+
+    def test_compress_mutliple_runs(self):
+        ''' compression that requires multiple runs through the graph'''
         self.fail("No test")
