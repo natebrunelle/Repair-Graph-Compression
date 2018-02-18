@@ -6,6 +6,6 @@ install:
 script:
     - python -m unittest discover -s tests/
 notifications:
-        on_success: change
-        on_failure: change
-
+  email:
+      on_success: change
+      on_failure: change
