@@ -1,17 +1,11 @@
 ''' Implementation of the Repair algorithm
 Uses the Graph and Node classes to compress a graph (the number of edges).
 '''
-import sys
 # queue is not thread safe
 from queue import PriorityQueue
 
 from graphs import graph
 from nodeAndRepairNode import nodes
-
-# helps import stuff outside dir
-# might be platform depedent. Todo: use packages
-
-sys.path.append('../')
 
 # "pair": [count, [[node #, index],[ ... ]]]
 
