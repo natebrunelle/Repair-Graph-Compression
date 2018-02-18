@@ -1,16 +1,15 @@
 ''' Implementation of the Repair algorithm
 Uses the Graph and Node classes to compress a graph (the number of edges).
 '''
+import math
 # queue is not thread safe
 from queue import PriorityQueue
 
 from graphs import graph
-from nodeAndRepairNode import nodes
-
-# "pair": [count, [[node #, index],[ ... ]]]
+from nodeAndRepairNode import Nodes, RepairNodes
 
 
-class compression_dictionary:
+class CompressionDictionary:
     ''' Used to keep track of pairs which will be replaced '''
 
     def __init__(self):
@@ -33,48 +32,59 @@ class compression_dictionary:
         pass  #todo find away to impelment this. Queue is not iteratable
 
 
-def update_dictionary(uncompressed_graph, dictionary):
-    ''' Takes in a graph object, scans it, and updates the priority queue with
-    new pairs and their frequency '''
+class Repair:
+    ''' The main class that holds everything together '''
 
-    # for every node, loop through its edges and check pairs
-    for node in uncompressed_graph.list_nodes:
-        for index, adj_node in enumerate(node.edges):
-            if index + 1 == len(node.edges):
-                break
+    def __init__(self, uncompressed_graph, dictionary=None):
+        self.graph = uncompressed_graph
 
-            # make a pair and pass it on
-            pair = (adj_node, node.edges[index + 1])
+        # inject dictionary, or create new
+        if not dictionary:
+            self.dictionary = CompressionDictionary()
+        else:
+            self.dictionary = dictionary
 
-            # see our queue implementation on how duplicates are handled
-            dictionary.add_new_pair(pair)
+    def update_dictionary(self):
+        ''' Takes in a graph object, scans it, and updates the priority queue with
+        new pairs and their frequency '''
 
+        # for every node, loop through its edges and check pairs
+        for node in self.graph.list_nodes:
+            for index, adj_node in enumerate(node.edges):
+                if index + 1 == len(node.edges):
+                    break
 
-def repair(adjList):
-    #generate the repair dictionary
-    repairDictionary = updateDictionary(adjList)
+                # make a pair and pass it on
+                pair = (adj_node, node.edges[index + 1])
 
-    #get the most common pair
-    mostCommonPair = getMostCommon(repairDictionary)
+                # see our queue implementation on how duplicates are handled
+                self.dictionary.add_new_pair(pair)
 
-    #all unique, base case
-    if repairDictionary[mostCommonPair][0] == 1:
-        return adjList
+    def compress_graph(self):
+        ''' Compresses the graph passed into the class '''
 
-    #create new node
-    nodeKey = str(mostCommonPair[0][0]) + '_' + str(mostCommonPair[1][0])
-    newNode = (nodeKey, True)
+        # update dictionary
+        self.dictionary = self.update_dictionary()
 
-    for occurrence in repairDictionary[mostCommonPair][1]:
-        #node list where it appears
-        nodeList = adjList[occurrence[0]]
-        repairedNodeList = replacePair(nodeList, occurrence[1], newNode)
+        # get the most common pairs in the graph
+        most_common_pair = self.dictionary.get_most_common()
 
-        #put it back
-        adjList[occurrence[0]] = repairedNodeList
+        # recursion base case
+        if most_common_pair[0] == 1:
+            return self.graph
 
-    #add the new node to the adjList
-    adjList[newNode] = [mostCommonPair[0], mostCommonPair[1]]
+        # unpack the pair
+        node1 = most_common_pair[1][0]
+        node2 = most_common_pair[1][1]
 
-    #recurssion step
-    return repair(adjList)
+        # create a dictionary node
+        dictionary_node = RepairNodes(math.inf, node1, node2)
+
+        # loop through all nodes and replace the pair
+        for node in self.graph.list_nodes:
+            node.replace(dictionary_node, (node1, node2))
+
+        # add the dictionary node the graph
+        self.graph.add_node(dictionary_node)
+
+        return self.compress_graph()
