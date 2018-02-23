@@ -29,25 +29,25 @@ class GraphTestCase(unittest.TestCase):
     #     self.assertEqual(self.g.node_count(), 4)
 
     def test_graph_add_edge(self):
-        x = self.g.node_count()  # node count shouldn't change
+        x = self.g.node_count  # node count shouldn't change
         self.g.add_edge(self.n1, self.n2)
-        self.assertEqual(self.g.node_count(), x, "Graph's node_count changed")
+        self.assertEqual(self.g.node_count, x, "Graph's node_count changed")
         # both nodes should list the other node
         self.assertIn(self.n1, self.n2.edges, "Adj lists not updated")
         self.assertIn(self.n2, self.n1.edges, "Adj lists not updated")
 
     def test_graph_duplicate_add_edge(self):
-        x = self.g.node_count()  # node count shouldn't change
+        x = self.g.node_count  # node count shouldn't change
         self.g.add_edge(self.n1, self.n2)
         self.g.add_edge(self.n1, self.n2)  # testing self.n2, self.n1 shouldn't change anything, see Graph
-        self.assertEqual(self.g.node_count(), x, "Graph's node_count changed")
+        self.assertEqual(self.g.node_count, x, "Graph's node_count changed")
         # both nodes should list the other node only 1x
         self.assertEqual(self.n2.edges.count(self.n1), 1)
         self.assertEqual(self.n1.edges.count(self.n2), 1)
 
     def test_graph_add_node(self):  # should add to list_nodes, this is diff between add_node and add_edge
         self.g.add_node(self.n4)
-        self.assertEqual(len(self.g.node_count()), 4, "node_count not updated")
+        self.assertEqual(self.g.node_count, 4, "node_count not updated")
         self.assertIn(self.n4, self.g.list_nodes, "list_nodes not updated")
         # TODO: need to test the uid or UUID here?
 
@@ -57,29 +57,28 @@ class GraphTestCase(unittest.TestCase):
 
     def test_graph_new_node_add_edge(self):
         self.g.add_edge(self.n1, self.n4)  # if new node added by edge, should be added to list_nodes? (Currently isn't)
-        self.assertEqual(self.g.node_count(), 4)  # No, because that's how clusters work - not our def of graph
+        self.assertEqual(self.g.node_count, 4)  # No, because that's how clusters work - not our def of graph
         # also shouldn't be added to list_nodes b/c that's the job of add_node
 
     def test_cluster_graphs_linked(self):
-        self.g.add_edge(self.n1, self.n4)  # n4 is node in another graph
+        # self.g.add_edge(self.n1, self.n4)  # n4 is node in another graph
         self.assertEqual(0, 0)
         # ...
 
     def test_graph_delete_edge(self):
         self.g.add_edge(self.n1, self.n2)
         self.g.delete_edge(self.n1, self.n2)  # List.remove() throws error if remove non existing
-        self.assertEqual(self.g.node_count(), 3, "Node_count for graph incorrect")
+        self.assertEqual(self.g.node_count, 3, "Node_count for graph incorrect")
         # an edge, but not a node deleted, n4 still in list_nodes
         # what if that edge deleted was the only 1 attaching it to the graph? Still in cluster?
         self.assertNotIn(self.n1, self.n2.edges, "All instances not removed from adj list")
         self.assertNotIn(self.n2, self.n1.edges, "All instances not removed from adj list")
 
-
     def test_graph_delete_node(self):
         self.g.delete_node(self.n1)
         # TODO: check that n1 no longer listed in other nodes adj_lists() self.g.list_nodes
         # TODO: aka check that Node.delete_edge() worked  AssertNotIn(a, b) a not in b, don't use len only
-        self.assertEqual(self.g.node_count(), 2)
+        self.assertEqual(self.g.node_count, 2)
         self.assertEqual(self.g.list_nodes, [self.n2, self.n3], "Node not deleted")
 
     def test_delete_node_delete_edge(self):
