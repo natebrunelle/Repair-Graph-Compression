@@ -47,6 +47,8 @@ class Graph(object):
         if n in self.list_nodes:
             for x in n.edges:
                 self.delete_edge(x, n)
+                self.list_nodes.remove(x) # Maybe this needs to be a few lines further down?
+                # TODO: need to test the above line
         else:
             raise ValueError('Node not in graph, cannot delete node')
         # REALLY need to test this...
@@ -67,8 +69,8 @@ class Graph(object):
             if n not in self.list_nodes:  # prevent from adding >1x
                 self.list_nodes.append(n)
                 self.node_count += 1
-            else:
-                raise ValueError('Node already in graph, use Graph.add_edge instead')
+            # else:
+                # raise ValueError('Node already in graph, use Graph.add_edge instead')
             return n
         else:  # uid is not -1
             raise IndexError('Expected uid of -1, cannot assign new uid')

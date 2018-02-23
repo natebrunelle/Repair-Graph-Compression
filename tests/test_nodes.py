@@ -28,7 +28,7 @@ class TestNodeAndRepairNode(unittest.TestCase):
     def test_delete_edge(self):
         self.n1.add_edge(self.n2)
         self.n1.delete_edge(self.n2)
-        self.assertEqual(len(self.n1.edges), 0, "Edge not deleted")
+        self.assertEqual(self.n1.edges.count(), 0, "Edge not deleted")
         #  This functionality and test moved to graph class.
         # self.assertEqual(len(self.n2.edges), 0, "adj list not updated")
 
