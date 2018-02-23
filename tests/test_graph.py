@@ -49,6 +49,7 @@ class GraphTestCase(unittest.TestCase):
         self.g.add_node(self.n4)
         self.assertEqual(self.g.node_count, 4, "node_count not updated")
         self.assertIn(self.n4, self.g.list_nodes, "list_nodes not updated")
+        self.assertRaises(ValueError,"Should raise error b/c node already in graph")
         # TODO: need to test the uid or UUID here?
 
     def test_graph_duplicate_add_node(self):
@@ -80,6 +81,7 @@ class GraphTestCase(unittest.TestCase):
         # TODO: aka check that Node.delete_edge() worked  AssertNotIn(a, b) a not in b, don't use len only
         self.assertEqual(self.g.node_count, 2)
         self.assertEqual(self.g.list_nodes, [self.n2, self.n3], "Node not deleted")
+        self.assertRaises()
 
     def test_delete_node_delete_edge(self):
         self.g.add_edge(self.n2, self.n1)  # g initialized w/n1 and n2, but no connecting edges
