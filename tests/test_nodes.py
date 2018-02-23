@@ -17,7 +17,7 @@ class TestNodeAndRepairNode(unittest.TestCase):
         self.n1.add_edge(self.n2)
         self.assertEqual(len(self.n1.edges), 1, "Edge not added")
         self.assertIn(self.n2, self.n1.edges, "New node not found in other node's adj list")
-        # both nodes should list the other node.  This functionality and test moved to graph class.
+         # both nodes should list the other node.  This functionality and test moved to graph class.
         # self.assertEqual(len(self.n2.edges), 1, "New node's adj list not updated")
 
     def test_duplicate_add_edge(self):
@@ -39,7 +39,12 @@ class TestNodeAndRepairNode(unittest.TestCase):
         self.n1.delete_edge(self.n3)  # should fail
         self.assertEqual(self.n1.edges, [self.n2], "deleted nonexistent or wrong edge")
 
-
+    def test_replace_only_pair(self):
+        self.n3.add_edge(self.n1)
+        self.n3.add_edge(self.n2)
+        self.n3.replace(self.n1, self.n2, self.rnn)
+        self.assertEqual((self.rnn in self.n3.edges), True, "There is not only 1 node or repair_node not in edges")
+        self.assertEqual(len(self.n3.edges), 1, "There is not 1 edge in the AL")
 # def test_add_repair_node_edge():
 # 	self.rnn.
 
