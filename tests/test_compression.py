@@ -1,9 +1,10 @@
-import unittest
 from unittest import TestCase
 
 from ddt import data, ddt, idata
 
-from repair.compression import *
+from nodeAndRepairNode.nodes import Node, RepairNode
+from repair.compression import (CompressionDictionary, Repair,
+                                RepairPriorityQueue)
 
 
 def get_dictionary_objects():
@@ -12,6 +13,34 @@ def get_dictionary_objects():
     injected_dict = CompressionDictionary(None)
 
     return [new_queue_dict, injected_dict]
+
+
+class TestRepairPriorityQueue(TestCase):
+    ''' Tests the priority queue implementation '''
+
+    def setUp(self):
+        pass
+
+    def test_passed_list_queued(self):
+        ''' Tests that a list of points passed in are correctly queued '''
+        pair_list = list()
+        pair_list.append((9, (Node(1), Node(2))))
+        pair_list.append((20, (Node(3), Node(4))))
+        pair_list.append((87, (Node(5), Node(6))))
+        pair_list.append((4, (Node(7), Node(8))))
+
+        queue = RepairPriorityQueue(pair_list)
+
+        expected = [5, 6, 3, 4, 1, 2, 7, 8]
+        actual = list()
+
+        while not queue.empty():
+            node = queue.get()
+            actual.append(node[1][0].value)
+            actual.append(node[1][1].value)
+
+        self.assertEqual(actual, expected,
+                         "List injection doesn't get in the right order")
 
 
 @ddt

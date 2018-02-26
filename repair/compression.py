@@ -8,7 +8,11 @@ from queue import PriorityQueue
 
 class RepairPriorityQueue(PriorityQueue):
     ''' A priority queue implementation that overrides a few methods to make python's
-    queue implementation work the way we need it to '''
+    queue implementation work the way we need it to
+
+    Note that both put and get default block to False instead of true.
+    This makes the implementation closer to put_nowait and get_nowait.
+    It makes a difference in a multithreaded setup'''
 
     def __init__(self, pairs=None):
         super().__init__()
@@ -16,7 +20,8 @@ class RepairPriorityQueue(PriorityQueue):
 
         if pairs:
             for pair in pairs:
-                pair[0] = pair[0] * -1
+                inversed_freq = pair[0] * -1
+                pair = (inversed_freq, pair[1])
                 self.put(pair)
 
     def put(self, item, block=False, timeout=None):
@@ -27,8 +32,10 @@ class RepairPriorityQueue(PriorityQueue):
         Otherwise put into the queue '''
 
         # check dic
-        old_item = None
-        old_item = self.old_counts[item[0]]
+        try:
+            old_item = self.old_counts[item[0]]
+        except KeyError:
+            old_item = None
 
         # update the freq if needed
         if old_item:
@@ -39,9 +46,13 @@ class RepairPriorityQueue(PriorityQueue):
 
     def get(self, block=False, timeout=None):
         ''' Uses the priority queue to get the most freq. Then updates the dictionary as well. '''
-        freq_pair = super.get()
+        freq_pair = super(RepairPriorityQueue, self).get()
 
-        del self.old_counts[freq_pair[1]]
+        try:
+            del self.old_counts[freq_pair[1]]
+        except KeyError:
+            pass  # ignore if the value never existed
+
         return freq_pair
 
 
