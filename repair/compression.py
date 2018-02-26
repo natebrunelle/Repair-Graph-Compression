@@ -5,16 +5,44 @@ import math
 # queue is not thread safe
 from queue import PriorityQueue
 
-from graphs.graph import Graph
-from nodeAndRepairNode.nodes import Node, RepairNode
-
 
 class RepairPriorityQueue(PriorityQueue):
-    ''' Implements the python priority queue to fix our issue with put '''
+    ''' A priority queue implementation that overrides a few methods to make python's
+    queue implementation work the way we need it to '''
 
-    def __init__(self, node_list=None):
-        # todo implement this class
-        pass
+    def __init__(self, pairs=None):
+        super().__init__()
+        self.old_counts = dict()
+
+        if pairs:
+            for pair in pairs:
+                pair[0] = pair[0] * -1
+                self.put(pair)
+
+    def put(self, item, block=False, timeout=None):
+        ''' Uses a dictionary and the queue to handle duplicates
+
+        Get the pair from the dictionary which contains the same number of items.
+        If it finds the time, update the freq before inserting.
+        Otherwise put into the queue '''
+
+        # check dic
+        old_item = None
+        old_item = self.old_counts[item[0]]
+
+        # update the freq if needed
+        if old_item:
+            item[1] += old_item
+
+        # enqueue it
+        super().put(item)
+
+    def get(self, block=False, timeout=None):
+        ''' Uses the priority queue to get the most freq. Then updates the dictionary as well. '''
+        freq_pair = super.get()
+
+        del self.old_counts[freq_pair[1]]
+        return freq_pair
 
 
 class CompressionDictionary:
@@ -34,11 +62,11 @@ class CompressionDictionary:
 
     def get_most_common(self):
         ''' Returns the most common pairs '''
-        return self.pair_queue.get_nowait()
+        return self.pair_queue.dequeue()
 
     def add_new_pair(self, pair, frequency=1):
         ''' Adds new pairs to the queue. prioritizes by frequency '''
-        self.pair_queue.put_nowait((frequency, pair))
+        self.pair_queue.enqueue((frequency, pair))
 
     def contains_pair(self, pair):
         ''' Checks if the queue already contains a given pair '''
