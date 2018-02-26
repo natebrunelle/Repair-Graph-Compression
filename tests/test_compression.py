@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from graphs.graph import Graph
 from nodeAndRepairNode.nodes import Node, RepairNode
 from repair.compression import Repair, RepairPriorityQueue
 
@@ -71,11 +72,29 @@ class TestRepair(TestCase):
     ''' Test class for the repair class '''
 
     def setUp(self):
-        pass
+        self.node1 = Node(1)
+        self.node2 = Node(2)
+        self.node3 = Node(3)
+        self.node4 = Node(4)
+        self.node5 = Node(5)
+
+        # setup edges
+        self.node1.edges = [self.node2, self.node3, self.node4, self.node5]
+        self.node2.edges = [self.node1, self.node3, self.node4, self.node5]
+        self.node3.edges = [self.node1, self.node2, self.node4, self.node5]
+        self.node4.edges = [self.node1, self.node2, self.node3, self.node5]
+        self.node5.edges = [self.node1, self.node2, self.node3, self.node4]
+
+        self.node_list = [
+            self.node1, self.node2, self.node3, self.node4, self.node5
+        ]
+
+        # todo deprecated this constructor
+        self.graph = Graph(self.node_list, len(self.node_list))
 
     def test_update_dictionary_empty_graph(self):
         ''' update dic with an empty graph '''
-        self.fail("No test")
+        graph = Graph([], 0)
 
     def test_update_dictionary_once(self):
         ''' update dictionary where the pair shows up only once in the graph '''

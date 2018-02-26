@@ -100,7 +100,7 @@ class Repair:
         self.dictionary = self.update_dictionary()
 
         # get the most common pairs in the graph
-        most_common_pair = self.dictionary.get_most_common()
+        most_common_pair = self.dictionary.get()
 
         # recursion base case
         if most_common_pair[0] == 1:
@@ -115,7 +115,7 @@ class Repair:
 
         # loop through all nodes and replace the pair
         for node in self.graph.list_nodes:
-            node.replace(dictionary_node, (node1, node2))
+            node.replace(dictionary_node, node1, node2)
 
         # add the dictionary node the graph
         self.graph.add_node(dictionary_node)
