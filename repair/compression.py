@@ -20,8 +20,6 @@ class RepairPriorityQueue(PriorityQueue):
 
         if pairs:
             for pair in pairs:
-                inversed_freq = pair[0] * -1
-                pair = (inversed_freq, pair[1])
                 self.put(pair)
 
     def put(self, item, block=False, timeout=None):
@@ -31,6 +29,9 @@ class RepairPriorityQueue(PriorityQueue):
         If it finds the time, update the freq before inserting.
         Otherwise put into the queue '''
 
+        inversed_freq = item[0] * -1
+        item = (inversed_freq, item[1])
+
         # check dic
         try:
             old_item = self.old_counts[item[0]]
@@ -39,7 +40,7 @@ class RepairPriorityQueue(PriorityQueue):
 
         # update the freq if needed
         if old_item:
-            item[1] += old_item
+            item[1] -= old_item
 
         # enqueue it
         super().put(item)

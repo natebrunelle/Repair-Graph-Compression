@@ -19,7 +19,7 @@ class TestRepairPriorityQueue(TestCase):
     ''' Tests the priority queue implementation '''
 
     def setUp(self):
-        pass
+        self.queue = RepairPriorityQueue()
 
     def test_passed_list_queued(self):
         ''' Tests that a list of points passed in are correctly queued '''
@@ -41,6 +41,23 @@ class TestRepairPriorityQueue(TestCase):
 
         self.assertEqual(actual, expected,
                          "List injection doesn't get in the right order")
+
+    def test_put_unique_nodes(self):
+        ''' Tests the ability to insert unique nodes w/ unique freq '''
+        self.queue.put((9, (Node(1), Node(2))))
+        self.queue.put((3, (Node(88), Node(80))))
+        self.queue.put((7, (Node(3), Node(4))))
+
+        expected = [1, 2, 3, 4, 88, 80]
+        actual = list()
+
+        while not self.queue.empty():
+            node = self.queue.get()
+            actual.append(node[1][0].value)
+            actual.append(node[1][1].value)
+
+        self.assertEqual(actual, expected,
+                         "Manual insertion get the priority right")
 
 
 @ddt
