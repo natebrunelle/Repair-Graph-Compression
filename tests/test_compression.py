@@ -1,18 +1,7 @@
 from unittest import TestCase
 
-from ddt import data, ddt, idata
-
 from nodeAndRepairNode.nodes import Node, RepairNode
-from repair.compression import (CompressionDictionary, Repair,
-                                RepairPriorityQueue)
-
-
-def get_dictionary_objects():
-    ''' Creates objects with defaults and injection '''
-    new_queue_dict = CompressionDictionary()
-    injected_dict = CompressionDictionary(None)
-
-    return [new_queue_dict, injected_dict]
+from repair.compression import Repair, RepairPriorityQueue
 
 
 class TestRepairPriorityQueue(TestCase):
@@ -59,6 +48,7 @@ class TestRepairPriorityQueue(TestCase):
         self.assertEqual(actual, expected,
                          "Manual insertion doesn't get the priority right")
 
+    # todo: handle this soon
     def test_put_duplicate_freq(self):
         ''' Tests ability to handle duplicate frequency '''
 
@@ -75,39 +65,6 @@ class TestRepairPriorityQueue(TestCase):
             actual.append(node[1][1].value)
 
         self.assertEqual(actual, expected, "duplicates aren't handled well")
-
-
-@ddt
-class TestCompressionDictionary(TestCase):
-    ''' Test class for the compression dictionary class '''
-
-    def setUp(self):
-        pass
-
-    @idata(get_dictionary_objects())
-    def test_is_empty(self, dictionary_obj):
-        ''' simple test for empty '''
-        self.fail("No test")
-
-    def test_most_common(self):
-        ''' most common with no ties '''
-        self.fail("No test")
-
-    def test_most_common_duplicates(self):
-        ''' most common when there are ties'''
-        self.fail("No test")
-
-    def test_most_common_empty(self):
-        ''' most common when there no nodes '''
-        self.fail("No test")
-
-    def test_add_new_pair_first(self):
-        ''' adding a new pair '''
-        self.fail("No test")
-
-    def test_add_new_pair_duplicate(self):
-        ''' that duplicate's freq is incremented'''
-        self.fail("No test")
 
 
 class TestRepair(TestCase):

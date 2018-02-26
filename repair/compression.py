@@ -57,34 +57,6 @@ class RepairPriorityQueue(PriorityQueue):
         return freq_pair
 
 
-class CompressionDictionary:
-    ''' Used to keep track of pairs which will be replaced '''
-
-    def __init__(self, queue=None):
-
-        # inject the queue if needed
-        if not queue:
-            self.pair_queue = queue
-        else:
-            self.pair_queue = RepairPriorityQueue()
-
-    def is_empty(self):
-        ''' Just a wrapper for the empty method '''
-        return self.pair_queue.empty()
-
-    def get_most_common(self):
-        ''' Returns the most common pairs '''
-        return self.pair_queue.dequeue()
-
-    def add_new_pair(self, pair, frequency=1):
-        ''' Adds new pairs to the queue. prioritizes by frequency '''
-        self.pair_queue.enqueue((frequency, pair))
-
-    def contains_pair(self, pair):
-        ''' Checks if the queue already contains a given pair '''
-        pass  #todo find away to impelment this. Queue is not iteratable
-
-
 class Repair:
     ''' The main class that holds everything together '''
 
@@ -93,7 +65,7 @@ class Repair:
 
         # inject dictionary, or create new
         if not dictionary:
-            self.dictionary = CompressionDictionary()
+            self.dictionary = RepairPriorityQueue()
         else:
             self.dictionary = dictionary
 
