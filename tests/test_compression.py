@@ -57,7 +57,24 @@ class TestRepairPriorityQueue(TestCase):
             actual.append(node[1][1].value)
 
         self.assertEqual(actual, expected,
-                         "Manual insertion get the priority right")
+                         "Manual insertion doesn't get the priority right")
+
+    def test_put_duplicate_freq(self):
+        ''' Tests ability to handle duplicate frequency '''
+
+        self.queue.put((9, (Node(1), Node(2))))
+        self.queue.put((9, (Node(88), Node(80))))
+        self.queue.put((7, (Node(3), Node(4))))
+
+        expected = [1, 2, 88, 80, 3, 4]
+        actual = list()
+
+        while not self.queue.empty():
+            node = self.queue.get()
+            actual.append(node[1][0].value)
+            actual.append(node[1][1].value)
+
+        self.assertEqual(actual, expected, "duplicates aren't handled well")
 
 
 @ddt
