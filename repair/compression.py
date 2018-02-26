@@ -5,6 +5,8 @@ import math
 # queue is not thread safe
 from queue import PriorityQueue
 
+from nodeAndRepairNode.nodes import RepairNode
+
 
 class RepairPriorityQueue(PriorityQueue):
     ''' A priority queue implementation that overrides a few methods to make python's
@@ -70,8 +72,10 @@ class Repair:
             self.dictionary = dictionary
 
     def update_dictionary(self):
-        ''' Takes in a graph object, scans it, and updates the priority queue with
-        new pairs and their frequency '''
+        ''' Updates the internal dictionary
+
+        Takes in a graph object, scans it, and updates the priority queue with
+        new pairs and their frequency. Should only be called by compress_graph '''
 
         # for every node, loop through its edges and check pairs
         for node in self.graph.list_nodes:
@@ -80,13 +84,17 @@ class Repair:
                     break
 
                 # make a pair and pass it on
-                pair = (adj_node, node.edges[index + 1])
+                pair = (1, (adj_node, node.edges[index + 1]))
 
                 # see our queue implementation on how duplicates are handled
                 self.dictionary.add_new_pair(pair)
 
     def compress_graph(self):
-        ''' Compresses the graph passed into the class '''
+        ''' Compresses the graph passed into the class
+
+        It updates the iternal dictionary, creates a dictionary node for the most,
+        common pair, unless all are unique (freq == 1), recurse.
+        '''
 
         # update dictionary
         self.dictionary = self.update_dictionary()
