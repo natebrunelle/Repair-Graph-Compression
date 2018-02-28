@@ -47,7 +47,7 @@ class Graph(object):
         if n in self.list_nodes:
             for x in n.edges:
                 self.delete_edge(x, n)
-                self.list_nodes.remove(x) # Maybe this needs to be a few lines further down?
+                self.list_nodes.remove(x)  # Maybe this needs to be a few lines further down?
                 # TODO: need to test the above line
         else:
             raise ValueError('Node not in graph, cannot delete node')
