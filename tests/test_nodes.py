@@ -10,6 +10,7 @@ class TestNodeAndRepairNode(unittest.TestCase):
         self.n2 = Node(2)
         self.n3 = Node(3)
         self.n4 = Node(4)
+        self.n5 = Node(4)
         self.rnn = RepairNode(11, self.n1, self.n2)
         self.rrn = RepairNode(12, self.rnn, self.n3)
 
@@ -45,6 +46,13 @@ class TestNodeAndRepairNode(unittest.TestCase):
         self.n3.replace(self.n1, self.n2, self.rnn)
         self.assertEqual((self.rnn in self.n3.edges), True, "There is not only 1 node or repair_node not in edges")
         self.assertEqual(len(self.n3.edges), 1, "There is not 1 edge in the AL")
+
+    def test_equals_op_override(self):
+        self.assertEqual(self.n4==self.n5, 1, "The two nodes do not have the same value" )
+        self.assertEqual(self.n1==self.n2, 0, "The two nodes have the same values")
+        # self.assertEqual(self.n1==0,None, "Should be a node passed in, instead of a constant ")
+        # self.assertEqual(self.n1==1,1, "Should be a node passed in, instead of a constant ")        
+
 # def test_add_repair_node_edge():
 # 	self.rnn.
 
