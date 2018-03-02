@@ -82,7 +82,7 @@ class TestRepair(TestCase):
         self.node4 = Node(4)
         self.node5 = Node(5)
 
-        # setup edges
+        # setup edges, almost decided to use the add_edge method
         self.node1.edges = [self.node2, self.node3, self.node4, self.node5]
         self.node2.edges = [self.node1, self.node3, self.node4, self.node5]
         self.node3.edges = [self.node1, self.node2, self.node4, self.node5]
@@ -93,7 +93,6 @@ class TestRepair(TestCase):
             self.node1, self.node2, self.node3, self.node4, self.node5
         ]
 
-        # todo deprecated this constructor
         self.graph = Graph(self.node_list)
 
         self.repair = Repair(self.graph)
@@ -108,11 +107,21 @@ class TestRepair(TestCase):
                          "Empty graph is not empty when compressed")
 
     def test_repair_once(self):
-        ''' update dictionary where the pair shows up only once in the graph '''
-        self.fail("No test")
+        ''' repair where the pair shows up only once in the graph '''
+
+        # change the graph to avoid multiple pairing
+        self.node1.edges = [self.node2, self.node3, self.node4, self.node5]
+        self.node2.edges = [self.node1, self.node5]
+        self.node3.edges = [self.node1, self.node2]
+        self.node4.edges = [self.node3, self.node5]
+        self.node5.edges = []
+
+        self.graph = Graph(self.node_list)
+        self.repair = Repair(self.graph)
+        compressed_graph = self.repair.compress()
 
     def test_repair_multiple(self):
-        ''' update where a pair shows up multiple times in the graph '''
+        ''' repair where a pair shows up multiple times in the graph '''
         self.fail("No test")
 
     def test_compress_single_run(self):
