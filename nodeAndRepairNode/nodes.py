@@ -25,6 +25,10 @@ class Node:
                 self.delete_edge(node2)
                 self.edges.insert(index_node1, repairNode)
 
+    def __eq__(self, node2):
+        if node2:
+            return (self.value== node2.value)
+
     # TODO overwrite python operator
 
 

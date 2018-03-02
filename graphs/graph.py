@@ -92,3 +92,136 @@ class Cluster(Graph):
     #     Takes two nodes from both graphs and calls addEdge
     #     This would be totally redundant
     #     """
+
+
+"""
+These graphs will consist exclusively of nodes which
+are connected to every other node in the graph
+"""
+
+
+class CompleteGraph(Graph):
+    list_nodes = []
+    node_count = 0
+
+    def __init__(self, n_list, n_count):
+        Graph.__init__(self, n_list, n_count)
+
+    def add_edge(self, n1, n2):
+        if n1 not in self.list_nodes or n2 not in self.list_nodes:
+            self.add_node(n1)
+            self.add_node(n2)
+        if (n1 not in n2.edges) or (n2 not in n1.edges):
+            n1.add_edge(n2)
+            n2.add_edge(n1)
+        return 0
+
+    def delete_edge(self, n1, n2):
+        if n1 in self.list_nodes and n2 in self.list_nodes:
+            raise ValueError('Edge removal violates complete graph structure')
+        else:
+            n1.delete_edge(n2)
+            n2.delete_edge(n1)
+        return 0
+
+    def delete_node(self, n):
+        if n.uid == -1:
+            #TODO: create UID here
+
+            if n in self.list_nodes:
+                self.list_nodes.remove(n)
+                self.node_count -= 1
+                for x in n.edges:
+                    self.delete_edge(x, n)
+            else:
+                raise ValueError('Node already not in graph')
+        return 0
+
+    def add_node(self, n):
+        if n.uid == -1:
+            #TODO: create UID here
+
+            if n not in self.list_nodes:
+                self.list_nodes.append(n)
+                self.node_count += 1
+                for i in range(len(self.list_nodes)):
+                    self.list_nodes[i].add_edge(n)
+            else:
+                raise ValueError('Node already in graph')
+        return 0
+
+    """
+    Since every node ends up being connected to every other node
+    anyway, this method is effectively the same as add_node
+    """
+    # def add_node_rand(self, n):
+    #
+    #     return 0
+
+
+"""
+These graphs will consist of many nodes all connected
+only to one central hub node
+"""
+
+
+class HubAndSpokeGraph(Graph):
+    list_nodes = []
+    node_count = 0
+
+    def __init__(self, n_list, n_count, hub):
+        Graph.__init__(self, n_list, n_count)
+        self.hub_node = hub
+
+    def add_edge(self, n1, n2):
+        if self.hub_node not in (n1, n2):
+            raise ValueError('Hub node not targeted')
+        else:
+            if (n1 not in n2.edges) and (n2 not in n1.edges):
+                n1.add_edge(n2)
+                n2.add_edge(n1)
+        return 0
+
+    def delete_edge(self, n1, n2):
+
+        if (n1 in n2.edges) and (n2 in n1.edges):
+            n1.delete_edge(n2)
+            n2.delete_edge(n1)
+        else:
+            raise ValueError('Edge does not exist')
+        return 0
+
+    def delete_node(self, n):
+        if n.uid == -1:
+            # TODO: create UID here
+
+            if n in self.list_nodes:
+                self.list_nodes.remove(n)
+                for i in range(len(self.list_nodes)):
+                    self.list_nodes[i].delete_edge(n)
+            else:
+                raise ValueError('Node already does not exist in graph')
+
+        return 0
+
+    def add_node(self, n):
+        if n.uid == -1:
+            # TODO: create UID here
+
+            if n not in self.list_nodes:
+                self.list_nodes.append(n)
+                self.node_count += 1
+                n.add_edge(self.hub_node)
+            else:
+                raise ValueError('Node already exists in graph')
+
+        return 0
+
+    """
+    Not necessary since an add is not allowed unless the hub is
+    targeted; adding a random node is effectively no different
+    than adding a particular node
+    """
+    # def add_node_rand(self, n):
+    #
+    #     return 0
