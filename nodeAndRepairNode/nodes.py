@@ -69,3 +69,6 @@ class RepairNode(Node):
     def __init__(self, value, node1, node2, isDictNode=True):
         self.isDictNode = isDictNode
         self.edges = [node1, node2]
+
+        # init the parent class too
+        super(RepairNode, self).__init__(value)
