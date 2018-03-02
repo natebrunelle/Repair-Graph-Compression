@@ -5,19 +5,11 @@ import uuid
 
 class Graph(object):
     list_nodes = []
-    node_count = 0
+    # node_count = 0
 
-    def __init__(self, n_list, n_count):
+    def __init__(self, n_list):
         self.list_nodes = n_list
-        self.node_count = n_count
-
-    # @property
-    # def list_nodes(self):
-    #     return self.list_nodes
-    #
-    # @listNodes.setter
-    # def list_nodes(self, list):
-    #     self.list_nodes = list
+        # self.node_count = n_count  # this removed b/c have UUID's
 
     def add_edge(self, n1, n2):
         """
@@ -27,10 +19,8 @@ class Graph(object):
         """
         if n1 not in self.list_nodes or n2 not in self.list_nodes:
             self.add_node(n1)
-            self.add_node(n2)  # add_node will prevent from adding 2x
-        n1.add_edge(n2)
-        n2.add_edge(n1)
-        # raise ValueError('Node(s) not in graph, use Graph.add_node first')
+            self.add_node(n2)  # add_node will prevent from adding 2x, silently, no error
+        n1.add_edge(n2)  # directed graph, n2 doesn't add n1
 
     def delete_edge(self, n1, n2):
         if n1 in self.list_nodes and n2 in self.list_nodes:
@@ -59,21 +49,12 @@ class Graph(object):
         Adds a node to the Graph data structures, but it won't be connected by any edge.
         New implementations should redefine this function.
         """
-        # check uid is not -1, if != -1, throw error
-        if n.uid == -1:
-            # TODO: CREATE UID HERE
-            # uuid.uuid1() or uuid.uuid4()  # 1 is based on host id and time, 4 is random
-            # changing an int field to another class might be a problem?
-            # set uid to some counter?
-
-            if n not in self.list_nodes:  # prevent from adding >1x
-                self.list_nodes.append(n)
-                self.node_count += 1
-            # else:
-                # raise ValueError('Node already in graph, use Graph.add_edge instead')
-            return n
-        else:  # uid is not -1
-            raise IndexError('Expected uid of -1, cannot assign new uid')
+        if n not in self.list_nodes:  # prevent from adding >1x
+            self.list_nodes.append(n)
+            # self.node_count += 1
+        # else:
+        #     raise ValueError('Node already in graph, use Graph.add_edge instead')
+        return n
 
     def add_node_rand(self, n):
         """
@@ -81,23 +62,15 @@ class Graph(object):
         Returns the external added node.
         This does not add a node to the Graph data structures alone, but also adds a random edge.
         """
-        # check uid is not -1, if != -1, throw error
-        if n.uid == -1:
-            # TODO: CREATE UID HERE
-            # uuid.uuid1() or uuid.uuid4()  # 1 is based on host id and time, 4 is random
-            # changing an int field to another class might be a problem?
-            # set uid to some counter?
+        rand_node = random.choice(self.list_nodes)
+        if n not in self.list_nodes:  # prevent from adding >1x
+            self.add_edge(n, rand_node)
+            self.list_nodes.append(n)
+            # self.node_count += 1
+        else:
+            raise ValueError('Node already in graph, use Graph.add_edge instead')
+        return n
 
-            rand_node = random.choice(self.list_nodes)
-            if n not in self.list_nodes:  # prevent from adding >1x
-                self.add_edge(n, rand_node)
-                self.list_nodes.append(n)
-                self.node_count += 1
-            else:
-                raise ValueError('Node already in graph, use Graph.add_edge instead')
-            return n
-        else:  # uid is not -1
-            raise IndexError('Expected uid of -1, cannot assign new uid')
 
 
 class Cluster(Graph):
@@ -110,7 +83,7 @@ class Cluster(Graph):
         node1 = random.choice(self.list_nodes)
         node2 = random.choice(g.list_nodes)
         self.add_edge(node1, node2)
-        self.node_count += g.node_count
+        # self.node_count += g.node_count
 
     # cluster should call AddEdge from Graph, which calls from node. Or just calls node directly?
 
