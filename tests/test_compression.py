@@ -92,15 +92,22 @@ class TestRepair(TestCase):
         # todo deprecated this constructor
         self.graph = Graph(self.node_list, len(self.node_list))
 
-    def test_update_dictionary_empty_graph(self):
+        self.repair = Repair(self.graph)
+
+    def test_repair_empty_graph(self):
         ''' update dic with an empty graph '''
         graph = Graph([], 0)
+        repair = Repair(graph)
 
-    def test_update_dictionary_once(self):
+        compressed = repair.compress()
+        self.assertEqual(graph, compressed,
+                         "Empty graph is not empty when compressed")
+
+    def test_repair_once(self):
         ''' update dictionary where the pair shows up only once in the graph '''
         self.fail("No test")
 
-    def test_update_dictionary_multiple(self):
+    def test_repair_multiple(self):
         ''' update where a pair shows up multiple times in the graph '''
         self.fail("No test")
 
@@ -110,4 +117,6 @@ class TestRepair(TestCase):
 
     def test_compress_mutliple_runs(self):
         ''' compression that requires multiple runs through the graph'''
+        compressed_actual = self.repair.compress()
+        print(compressed_actual)
         self.fail("No test")

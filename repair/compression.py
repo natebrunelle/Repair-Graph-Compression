@@ -3,7 +3,7 @@ Uses the Graph and Node classes to compress a graph.
 '''
 import math
 # queue is not thread safe
-from queue import PriorityQueue
+from queue import Empty, PriorityQueue
 
 from nodeAndRepairNode.nodes import RepairNode
 
@@ -55,6 +55,8 @@ class RepairPriorityQueue(PriorityQueue):
             del self.old_counts[freq_pair[1]]
         except KeyError:
             pass  # ignore if the value never existed
+        except Empty:
+            raise Exception("Empty")
 
         return freq_pair
 
@@ -66,10 +68,10 @@ class Repair:
         self.graph = uncompressed_graph
 
         # inject dictionary, or create new
-        if not dictionary:
-            self.dictionary = RepairPriorityQueue()
-        else:
+        if dictionary:
             self.dictionary = dictionary
+        else:
+            self.dictionary = RepairPriorityQueue()
 
     def update_dictionary(self):
         ''' Updates the internal dictionary
@@ -87,9 +89,9 @@ class Repair:
                 pair = (1, (adj_node, node.edges[index + 1]))
 
                 # see our queue implementation on how duplicates are handled
-                self.dictionary.add_new_pair(pair)
+                self.dictionary.put(pair)
 
-    def compress_graph(self):
+    def compress(self):
         ''' Compresses the graph passed into the class
 
         It updates the iternal dictionary, creates a dictionary node for the most,
@@ -97,7 +99,11 @@ class Repair:
         '''
 
         # update dictionary
-        self.dictionary = self.update_dictionary()
+        self.update_dictionary()
+
+        # check for empty dict
+        if self.dictionary.empty():
+            return self.graph
 
         # get the most common pairs in the graph
         most_common_pair = self.dictionary.get()
@@ -120,4 +126,4 @@ class Repair:
         # add the dictionary node the graph
         self.graph.add_node(dictionary_node)
 
-        return self.compress_graph()
+        return self.compress()
