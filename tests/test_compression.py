@@ -120,14 +120,34 @@ class TestRepair(TestCase):
         self.repair = Repair(self.graph)
         compressed_graph = self.repair.compress()
 
+        #TODO update this when the equal method is provided
+
+        self.assertEqual(compressed_graph, self.graph)
+
     def test_repair_multiple(self):
         ''' repair where a pair shows up multiple times in the graph '''
-        self.fail("No test")
 
-    def test_compress_single_run(self):
-        ''' Compression that only requires a single run through the graph '''
-        self.fail("No test")
+        self.node1.edges = [self.node2, self.node3, self.node4, self.node5]
+        self.node2.edges = [self.node1, self.node4, self.node5]
+        self.node3.edges = [self.node1, self.node2, self.node4, self.node5]
+        self.node4.edges = [self.node3, self.node5]
+        self.node5.edges = []
+
+        self.graph = Graph(self.node_list)
+        self.repair = Repair(self.graph)
+        compressed_graph = self.repair.compress()
+
+        #TODO update this when the equal method is provided
+
+        self.assertEqual(compressed_graph, self.graph)
 
     def test_compress_mutliple_runs(self):
         ''' compression that requires multiple runs through the graph'''
-        self.fail("No test")
+
+        compressed_graph = self.repair.compress()
+
+        print("-------------compressed---------------")
+
+        print(str(compressed_graph))
+
+        self.assertEqual(compressed_graph, self.graph)

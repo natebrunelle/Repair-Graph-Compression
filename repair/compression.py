@@ -115,8 +115,14 @@ class Repair:
         common pair, unless all are unique (freq == 1), recurse.
         '''
 
+        print("------incoming------")
+        print(str(self.graph))
+
         # update dictionary
         self.update_dictionary()
+
+        print("-----------updated the dic--------------")
+        print(str(self.dictionary))
 
         # check for empty dict
         if self.dictionary.empty():
@@ -125,7 +131,9 @@ class Repair:
         # get the most common pairs in the graph
         most_common_pair = self.dictionary.get()
 
-        # recursion base case
+        print(str(most_common_pair[0]))
+
+        # recursion base case, all unique
         if most_common_pair[0] == -1:
             return self.graph
 
@@ -136,6 +144,7 @@ class Repair:
         # create a dictionary node
         dictionary_node = RepairNode(math.inf, node1, node2)
 
+        # TODO move this to graph
         # loop through all nodes and replace the pair
         for node in self.graph.list_nodes:
             node.replace(dictionary_node, node1, node2)
@@ -143,4 +152,7 @@ class Repair:
         # add the dictionary node the graph
         self.graph.add_node(dictionary_node)
 
-        return self.compress()
+        print("----added a new dic node------")
+        print(str(self.graph))
+
+        self.compress()
