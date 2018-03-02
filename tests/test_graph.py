@@ -108,6 +108,8 @@ class GraphTestCase(unittest.TestCase):
 
     # also test deleting non existent edges and nodes, deleting in various order
 
+    # TODO: ADD TESTS FOR HUB AND SPOKE AND COMPLETE GRAPHS HERE
+
 
 if __name__ == '__main__':
         unittest.main()

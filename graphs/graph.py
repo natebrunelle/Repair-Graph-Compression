@@ -72,7 +72,6 @@ class Graph(object):
         return n
 
 
-
 class Cluster(Graph):
 
     # ONLY one cluster at a time in our system (otherwise more uid's)
@@ -102,53 +101,39 @@ are connected to every other node in the graph
 
 class CompleteGraph(Graph):
     list_nodes = []
-    node_count = 0
 
-    def __init__(self, n_list, n_count):
-        Graph.__init__(self, n_list, n_count)
+    def __init__(self, n_list):
+        Graph.__init__(self, n_list)
 
     def add_edge(self, n1, n2):
         if n1 not in self.list_nodes or n2 not in self.list_nodes:
             self.add_node(n1)
             self.add_node(n2)
-        if (n1 not in n2.edges) or (n2 not in n1.edges):
+        if n1 not in n2.edges:
             n1.add_edge(n2)
-            n2.add_edge(n1)
-        return 0
 
     def delete_edge(self, n1, n2):
         if n1 in self.list_nodes and n2 in self.list_nodes:
-            raise ValueError('Edge removal violates complete graph structure')
+            raise ValueError('Edge removal violates complete graph structure')  # TODO:check this. good error. Is right?
         else:
             n1.delete_edge(n2)
             n2.delete_edge(n1)
-        return 0
 
     def delete_node(self, n):
-        if n.uid == -1:
-            #TODO: create UID here
-
-            if n in self.list_nodes:
-                self.list_nodes.remove(n)
-                self.node_count -= 1
-                for x in n.edges:
-                    self.delete_edge(x, n)
-            else:
-                raise ValueError('Node already not in graph')
-        return 0
+        if n in self.list_nodes:
+            self.list_nodes.remove(n)
+            for x in n.edges:
+                self.delete_edge(x, n)
+        else:
+            raise ValueError('Node not in graph')  # TODO: call add_node here instead
 
     def add_node(self, n):
-        if n.uid == -1:
-            #TODO: create UID here
-
-            if n not in self.list_nodes:
-                self.list_nodes.append(n)
-                self.node_count += 1
-                for i in range(len(self.list_nodes)):
-                    self.list_nodes[i].add_edge(n)
-            else:
-                raise ValueError('Node already in graph')
-        return 0
+        if n not in self.list_nodes:
+            self.list_nodes.append(n)
+            for i in range(len(self.list_nodes)):
+                self.list_nodes[i].add_edge(n)
+        else:
+            raise ValueError('Node already in graph')
 
     """
     Since every node ends up being connected to every other node
@@ -167,55 +152,40 @@ only to one central hub node
 
 class HubAndSpokeGraph(Graph):
     list_nodes = []
-    node_count = 0
 
-    def __init__(self, n_list, n_count, hub):
-        Graph.__init__(self, n_list, n_count)
+    def __init__(self, n_list, hub):
+        Graph.__init__(self, n_list)
         self.hub_node = hub
 
     def add_edge(self, n1, n2):
         if self.hub_node not in (n1, n2):
-            raise ValueError('Hub node not targeted')
+            raise ValueError('Hub node not targeted')  # wouldn't it be easier to change the parameters?
+            # Or overriding, so can't? IDK.
         else:
-            if (n1 not in n2.edges) and (n2 not in n1.edges):
-                n1.add_edge(n2)
-                n2.add_edge(n1)
-        return 0
+            if n2 not in n1.edges:  # TODO: fix other classes so they look like this
+                n1.add_edge(n2)  # n2 is appended to n1's list
 
     def delete_edge(self, n1, n2):
-
-        if (n1 in n2.edges) and (n2 in n1.edges):
+        if n1 in n2.edges:
             n1.delete_edge(n2)
-            n2.delete_edge(n1)
         else:
-            raise ValueError('Edge does not exist')
-        return 0
+            raise ValueError('Edge does not exist')  # TODO: should exit quietly instead?
 
     def delete_node(self, n):
-        if n.uid == -1:
-            # TODO: create UID here
-
-            if n in self.list_nodes:
-                self.list_nodes.remove(n)
-                for i in range(len(self.list_nodes)):
-                    self.list_nodes[i].delete_edge(n)
-            else:
-                raise ValueError('Node already does not exist in graph')
-
-        return 0
+        if n in self.list_nodes:
+            self.list_nodes.remove(n)
+            for i in range(len(self.list_nodes)):
+                self.list_nodes[i].delete_edge(n)
+        else:
+            raise ValueError('Node already does not exist in graph')  # TODO: call add_node here instead
 
     def add_node(self, n):
-        if n.uid == -1:
-            # TODO: create UID here
-
-            if n not in self.list_nodes:
-                self.list_nodes.append(n)
-                self.node_count += 1
-                n.add_edge(self.hub_node)
-            else:
-                raise ValueError('Node already exists in graph')
-
-        return 0
+        if n not in self.list_nodes:
+            self.list_nodes.append(n)
+            n.add_edge(self.hub_node)
+        else:
+            raise ValueError('Node already exists in graph')
+            # TODO: exit/fail quietly w/out error b/c called by other functions
 
     """
     Not necessary since an add is not allowed unless the hub is
@@ -224,4 +194,3 @@ class HubAndSpokeGraph(Graph):
     """
     # def add_node_rand(self, n):
     #
-    #     return 0

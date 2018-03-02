@@ -1,10 +1,13 @@
 # Rahul Tuladhar Nick Taylor 2/12/18
 import uuid
 
+
 class Node:
+
     def __init__(self, value):
         self.value = value
-        self.edges = []
+        self.edges = []  # TODO: NEW POLICY/clarification: as of 3/2 we have declared .edges holds outgoing edges,
+                            # or a list of outgoing nodes
         self.uid = uuid.uuid4()
 
     def add_edge(self, node):
@@ -27,12 +30,13 @@ class Node:
 
     def __eq__(self, node2):
         if node2:
-            return (self.value== node2.value)
+            return self.value == node2.value
 
     # TODO overwrite python operator
 
 
 class RepairNode(Node):
+
     def __init__(self, value, node1, node2, isDictNode= True):
         self.id = -1
         self.isDictNode = isDictNode
