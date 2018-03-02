@@ -28,20 +28,32 @@ class Node:
 
     def __eq__(self, node2):
         ''' overrides the equals method '''
-        if node2 and self.uid == node2.uid:
+
+        if not isinstance(node2, Node):
+            return False
+
+        if self.uid == node2.uid:
             return True
 
         return False
 
     def __gt__(self, node2):
-        ''' overrides the gt  method '''
-        if node2 and self.uid > node2.uid:
+        ''' overrides the greater than method '''
+
+        if not isinstance(node2, Node):
+            return False
+
+        if self.uid > node2.uid:
             return True
 
         return False
 
     def __lt__(self, node2):
-        ''' overrides the le method '''
+        ''' overrides the less than method '''
+
+        if not isinstance(node2, Node):
+            return False
+
         if node2 and self.uid < node2.uid:
             return True
 

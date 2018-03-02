@@ -69,13 +69,27 @@ class TestNodeAndRepairNode(unittest.TestCase):
 
         self.assertTrue(self.n5 > self.n4, "Greater than doesn't hold")
 
-    def test_le_op(self):
+    def test_lt_op(self):
         ''' tests the less than method override '''
 
         self.n4.uid = 4
         self.n5.uid = 5
 
         self.assertTrue(self.n4 < self.n5)
+
+    def test_wrong_type_comp(self):
+        ''' tests that wrong types are rejected '''
+
+        self.assertFalse(self.n4 < 5)
+        self.assertFalse(self.n4 > 5)
+        self.assertFalse(self.n4 == 5)
+
+    def test_none_comp(self):
+        ''' tests that none is treated as unequal '''
+
+        self.assertFalse(self.n4 < None)
+        self.assertFalse(self.n4 > None)
+        self.assertFalse(self.n4 == None)
 
 
 # def test_add_repair_node_edge():
