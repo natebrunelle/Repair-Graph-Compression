@@ -59,9 +59,13 @@ class Node:
 
         return False
 
+    def __hash__(self):
+        ''' Makes node objects hashable so they can be used as keys in dict '''
+
+        return hash((self.uid))
+
 
 class RepairNode(Node):
     def __init__(self, value, node1, node2, isDictNode=True):
-        self.id = -1
         self.isDictNode = isDictNode
         self.edges = [node1, node2]
