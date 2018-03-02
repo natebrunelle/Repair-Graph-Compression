@@ -57,7 +57,9 @@ class TestRepairPriorityQueue(TestCase):
         self.queue.put((9, (Node(88), Node(80))))
         self.queue.put((7, (Node(3), Node(4))))
 
-        expected = [1, 2, 88, 80, 3, 4]
+        expected = [88, 80, 1, 2, 3, 4]
+        expected_alternative = [1, 2, 88, 80, 3, 4]
+
         actual = list()
 
         while not self.queue.empty():
@@ -65,7 +67,9 @@ class TestRepairPriorityQueue(TestCase):
             actual.append(node[1][0].value)
             actual.append(node[1][1].value)
 
-        self.assertEqual(actual, expected, "duplicates aren't handled well")
+        self.assertTrue(
+            ((actual == expected) or (actual == expected_alternative)),
+            "duplicates aren't handled well")
 
 
 class TestRepair(TestCase):
@@ -90,13 +94,13 @@ class TestRepair(TestCase):
         ]
 
         # todo deprecated this constructor
-        self.graph = Graph(self.node_list, len(self.node_list))
+        self.graph = Graph(self.node_list)
 
         self.repair = Repair(self.graph)
 
     def test_repair_empty_graph(self):
         ''' update dic with an empty graph '''
-        graph = Graph([], 0)
+        graph = Graph([])
         repair = Repair(graph)
 
         compressed = repair.compress()
@@ -117,6 +121,4 @@ class TestRepair(TestCase):
 
     def test_compress_mutliple_runs(self):
         ''' compression that requires multiple runs through the graph'''
-        compressed_actual = self.repair.compress()
-        print(compressed_actual)
         self.fail("No test")
