@@ -35,7 +35,7 @@ class RepairPriorityQueue(PriorityQueue):
         inversed_freq = item[0] * -1
         item = (inversed_freq, item[1])
 
-        # check dic todo: find something more better this is O(n)
+        # check dic TODO: find something more better this is O(n)
         try:
             old_item = self.old_counts[item[0]]
         except KeyError:
@@ -62,6 +62,20 @@ class RepairPriorityQueue(PriorityQueue):
             raise Exception("Empty")
 
         return freq_pair
+
+    def __str__(self):
+        ''' prints the dictionary in a nice format
+
+        This will hopefully be helpful in understanding the heap's state
+        since we cannot directly iterate on that '''
+
+        formatted_string = " "
+
+        for key in self.old_counts:
+            formatted_string += str(key) + "\t\t" + str(
+                self.old_counts[key]) + "\n"
+
+        return formatted_string
 
 
 class Repair:
@@ -112,7 +126,7 @@ class Repair:
         most_common_pair = self.dictionary.get()
 
         # recursion base case
-        if most_common_pair[0] == 1:
+        if most_common_pair[0] == -1:
             return self.graph
 
         # unpack the pair
