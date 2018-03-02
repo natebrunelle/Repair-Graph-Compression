@@ -20,6 +20,7 @@ class RepairPriorityQueue(PriorityQueue):
         super().__init__()
         self.old_counts = dict()
 
+        # TODO run a regex or something to make sure the pairing is right
         if pairs:
             for pair in pairs:
                 self.put(pair)
@@ -34,7 +35,7 @@ class RepairPriorityQueue(PriorityQueue):
         inversed_freq = item[0] * -1
         item = (inversed_freq, item[1])
 
-        # check dic
+        # check dic todo: find something more better this is O(n)
         try:
             old_item = self.old_counts[item[0]]
         except KeyError:
@@ -48,7 +49,9 @@ class RepairPriorityQueue(PriorityQueue):
         super().put(item)
 
     def get(self, block=False, timeout=None):
-        ''' Uses the priority queue to get the most freq. Then updates the dictionary as well. '''
+        ''' Uses the priority queue to get the most freq.
+        Then updates the dictionary as well. '''
+
         freq_pair = super(RepairPriorityQueue, self).get()
 
         try:
@@ -68,7 +71,7 @@ class Repair:
         self.graph = uncompressed_graph
 
         # inject dictionary, or create new
-        if dictionary:
+        if dictionary and isinstance(RepairPriorityQueue, dictionary):
             self.dictionary = dictionary
         else:
             self.dictionary = RepairPriorityQueue()
