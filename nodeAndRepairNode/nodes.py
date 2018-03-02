@@ -1,6 +1,7 @@
 # Rahul Tuladhar Nick Taylor 2/12/18
 import uuid
 
+
 class Node:
     def __init__(self, value):
         self.value = value
@@ -19,22 +20,36 @@ class Node:
         if node1 in repairNode.edges and node2 in repairNode.edges:
             index_node1 = self.edges.index(node1)
             index_node2 = self.edges.index(node2)
-            if index_node1+1 == index_node2:
-                
+            if index_node1 + 1 == index_node2:
+
                 self.delete_edge(node1)
                 self.delete_edge(node2)
                 self.edges.insert(index_node1, repairNode)
 
     def __eq__(self, node2):
-        if node2:
-            return (self.value== node2.value)
+        ''' overrides the equals method '''
+        if node2 and self.uid == node2.uid:
+            return True
 
-    # TODO overwrite python operator
+        return False
+
+    def __gt__(self, node2):
+        ''' overrides the gt  method '''
+        if node2 and self.uid > node2.uid:
+            return True
+
+        return False
+
+    def __lt__(self, node2):
+        ''' overrides the le method '''
+        if node2 and self.uid < node2.uid:
+            return True
+
+        return False
 
 
 class RepairNode(Node):
-    def __init__(self, value, node1, node2, isDictNode= True):
+    def __init__(self, value, node1, node2, isDictNode=True):
         self.id = -1
         self.isDictNode = isDictNode
         self.edges = [node1, node2]
-
