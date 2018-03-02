@@ -64,6 +64,12 @@ class Node:
 
         return hash((self.uid))
 
+    def __str__(self):
+        ''' overriding the str method, helps when debugging '''
+
+        return "ID: " + str(self.uid.int) + "\tValue: [" + str(
+            self.value) + "]"
+
 
 class RepairNode(Node):
     def __init__(self, value, node1, node2, isDictNode=True):
