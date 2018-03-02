@@ -1,10 +1,10 @@
-
 import random
 import uuid
 
 
 class Graph(object):
     list_nodes = []
+
     # node_count = 0
 
     def __init__(self, n_list):
@@ -19,7 +19,8 @@ class Graph(object):
         """
         if n1 not in self.list_nodes or n2 not in self.list_nodes:
             self.add_node(n1)
-            self.add_node(n2)  # add_node will prevent from adding 2x, silently, no error
+            self.add_node(
+                n2)  # add_node will prevent from adding 2x, silently, no error
         n1.add_edge(n2)  # directed graph, n2 doesn't add n1
 
     def delete_edge(self, n1, n2):
@@ -27,7 +28,8 @@ class Graph(object):
             n1.delete_edge(n2)
             n2.delete_edge(n1)
         else:
-            raise ValueError('Node(s) not in graph, cannot delete edges')  # try deleting from cluster instead?
+            raise ValueError('Node(s) not in graph, cannot delete edges'
+                             )  # try deleting from cluster instead?
         # what if that was the only edge attaching Node to graph? Use delete_node instead?
         # or is this too strict? use delete_node for that case instead?
         # In that case, it's a cluster. Our def of graph more limited.
@@ -37,13 +39,16 @@ class Graph(object):
         if n in self.list_nodes:
             for x in n.edges:
                 self.delete_edge(x, n)
-                self.list_nodes.remove(x)  # Maybe this needs to be a few lines further down?
+                self.list_nodes.remove(
+                    x)  # Maybe this needs to be a few lines further down?
                 # TODO: need to test the above line
         else:
             raise ValueError('Node not in graph, cannot delete node')
         # REALLY need to test this...
 
-    def add_node(self, n):  # depends on implementation of Node class attr uid, i.e. n.uid assumed to be -1
+    def add_node(
+            self, n
+    ):  # depends on implementation of Node class attr uid, i.e. n.uid assumed to be -1
         """
         Returns the external added node.
         Adds a node to the Graph data structures, but it won't be connected by any edge.
@@ -68,9 +73,20 @@ class Graph(object):
             self.list_nodes.append(n)
             # self.node_count += 1
         else:
-            raise ValueError('Node already in graph, use Graph.add_edge instead')
+            raise ValueError(
+                'Node already in graph, use Graph.add_edge instead')
         return n
 
+    def __str__(self):
+        ''' Prints out graphs in a nice format '''
+        formatted = " "
+
+        for node in self.list_nodes:
+            formatted += str(node) + "\n"
+            for adj_node in node.edges:
+                formatted += "\t" + str(adj_node) + "\n"
+
+        return formatted
 
 
 class Cluster(Graph):
