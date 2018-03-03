@@ -6,6 +6,7 @@ from pdb import set_trace as bp
 # queue is not thread safe
 from queue import Empty, PriorityQueue
 
+from graphs.graph import Graph
 from nodeAndRepairNode.nodes import RepairNode
 
 
@@ -84,8 +85,8 @@ class RepairPriorityQueue(PriorityQueue):
 class Repair:
     ''' The main class that holds everything together '''
 
-    def __init__(self, uncompressed_graph, dictionary=None):
-        self.graph = uncompressed_graph
+    def __init__(self, graph, dictionary=None):
+        self.graph = graph
 
         # inject dictionary, or create new
         if dictionary and isinstance(RepairPriorityQueue, dictionary):
@@ -152,3 +153,55 @@ class Repair:
         self.graph.add_node(dictionary_node)
 
         return self.compress()
+
+    def remove_compression_nodes(self):
+        ''' clean up the decompression nodes '''
+
+        # get the data nodes
+        data_nodes = []
+        for node in self.graph.list_nodes:
+            if not isinstance(RepairNode, node):
+                data_nodes.append(node)
+
+        # wrap it up
+        decompressed_graph = Graph(data_nodes)
+
+        return decompressed_graph
+
+    def decompress(self):
+        ''' Decompression for Repair compressed graphs
+
+        It takes the graph passed into the class and decompress it.
+        A graph that gets compressed with the compress method above
+        and gets decompressed with this method should be back to
+        the original graph  '''
+
+        # will stack up nodes and pop them while getting replacements
+        stack = []
+
+        for node in self.graph.list_nodes:
+            for adj_node in reversed(node.edges):
+                # add the adj nodes to the stack
+                stack.append(adj_node)
+
+            # empty out the compressed adj list
+            node.edges = list
+
+            while len(stack) >= 1:
+                # a compression node; get replacement
+                if isinstance(RepairNode, stack[-1]):
+                    replacement = self.graph.list_nodes[stack.pop()]
+                    for rep_node in reversed(replacement):
+                        stack.append(rep_node)
+
+                # data node, put it back
+                else:
+                    node.edges.append(stack.pop())
+
+        # remove the compression nodes still left over with empty edges
+        decompressed_graph = self.remove_compression_nodes()
+
+        # set the interal graph too
+        self.graph = decompressed_graph
+
+        return decompressed_graph
