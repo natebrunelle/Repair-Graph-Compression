@@ -2,6 +2,7 @@
 Uses the Graph and Node classes to compress a graph.
 '''
 import math
+from pdb import set_trace as bp
 # queue is not thread safe
 from queue import Empty, PriorityQueue
 
@@ -38,11 +39,11 @@ class RepairPriorityQueue(PriorityQueue):
         # check dic TODO: find something more better this is O(n)
         try:
             old_freq = self.old_counts[item[1]]
+            item_new_freq = old_freq - 1
         except KeyError:
-            old_freq = 0
+            item_new_freq = item[0]
 
         # update the freq if needed
-        item_new_freq = old_freq - item[0]
         item = (item_new_freq, item[1])
 
         # add it to the dict
@@ -56,7 +57,6 @@ class RepairPriorityQueue(PriorityQueue):
         Then updates the dictionary as well. '''
 
         freq_pair = super(RepairPriorityQueue, self).get()
-
         try:
             del self.old_counts[freq_pair[1]]
         except KeyError:
@@ -99,6 +99,10 @@ class Repair:
         Takes in a graph object, scans it, and updates the priority queue with
         new pairs and their frequency. Should only be called by compress_graph '''
 
+        # this is really bad...we shouldn't reconstruct the thing every time
+        # but I can't think if anything better for now ...
+        self.dictionary = RepairPriorityQueue()
+
         # for every node, loop through its edges and check pairs
         for node in self.graph.list_nodes:
             for index, adj_node in enumerate(node.edges):
@@ -118,14 +122,8 @@ class Repair:
         common pair, unless all are unique (freq == 1), recurse.
         '''
 
-        print("------incoming------")
-        print(str(self.graph))
-
         # update dictionary
         self.update_dictionary()
-
-        print("-----------updated the dic--------------")
-        print(str(self.dictionary))
 
         # check for empty dict
         if self.dictionary.empty():
@@ -134,11 +132,8 @@ class Repair:
         # get the most common pairs in the graph
         most_common_pair = self.dictionary.get()
 
-        print(str(most_common_pair[0]))
-        print(str(most_common_pair[1][0]) + "\t" + str(most_common_pair[1][1]))
-
         # recursion base case, all unique
-        if most_common_pair[0] == 1:
+        if most_common_pair[0] == -1:
             return self.graph
 
         # unpack the pair
@@ -151,12 +146,9 @@ class Repair:
         # TODO move this to graph
         # loop through all nodes and replace the pair
         for node in self.graph.list_nodes:
-            node.replace(dictionary_node, node1, node2)
+            node.replace(node1, node2, dictionary_node)
 
         # add the dictionary node the graph
         self.graph.add_node(dictionary_node)
 
-        print("----added a new dic node------")
-        print(str(self.graph))
-
-        self.compress()
+        return self.compress()
