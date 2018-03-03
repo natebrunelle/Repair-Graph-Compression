@@ -22,9 +22,7 @@ class Node:
         for node in self.edges:
             print(node)
 
-        print("the dict node: " + str(repairNode.edges[0]) +
-              str(repairNode.edges[1]))
-        if node1 in repairNode.edges and node2 in repairNode.edges:
+        if node1 in self.edges and node2 in self.edges:
             index_node1 = self.edges.index(node1)
             index_node2 = self.edges.index(node2)
             print("got the index")
