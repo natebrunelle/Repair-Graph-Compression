@@ -37,14 +37,13 @@ class RepairPriorityQueue(PriorityQueue):
 
         # check dic TODO: find something more better this is O(n)
         try:
-            old_item = self.old_counts[item[1]]
+            old_freq = self.old_counts[item[1]]
         except KeyError:
-            old_item = None
+            old_freq = 0
 
         # update the freq if needed
-        if old_item:
-            item_new_freq = item[0] - old_item
-            item = (item_new_freq, item[1])
+        item_new_freq = old_freq - item[0]
+        item = (item_new_freq, item[1])
 
         # add it to the dict
         self.old_counts[item[1]] = item[0]
@@ -76,8 +75,8 @@ class RepairPriorityQueue(PriorityQueue):
         formatted_string = " "
 
         for key in self.old_counts:
-            formatted_string += str(key) + "\t\t" + str(
-                self.old_counts[key]) + "\n"
+            formatted_string += "[" + str(key[0]) + ", " + str(
+                key[1]) + "]\t\t" + str(self.old_counts[key]) + "\n"
 
         return formatted_string
 
@@ -139,7 +138,7 @@ class Repair:
         print(str(most_common_pair[1][0]) + "\t" + str(most_common_pair[1][1]))
 
         # recursion base case, all unique
-        if most_common_pair[0] == -1:
+        if most_common_pair[0] == 1:
             return self.graph
 
         # unpack the pair
