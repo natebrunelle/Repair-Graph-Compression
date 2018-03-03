@@ -1,8 +1,7 @@
 # Repair Compression for Graphs
 
 ## Build Status 
- [![Build Status](https://travis-ci.com/yonathanF/Repair-Graph-Compression.svg?token=iEJ27eCnjKeFqxrBkzzA&branch=master)](https://travis-ci.com/yonathanF/Repair-Graph-Compression)
-
+[![Build Status](https://travis-ci.com/yonathanF/Repair-Graph-Compression.svg?token=iEJ27eCnjKeFqxrBkzzA&branch=repair_refactor)](https://travis-ci.com/yonathanF/Repair-Graph-Compression)
 ### Setup
 
 1. Make sure you have pip (check version, current version is 9.0) 
