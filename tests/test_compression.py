@@ -107,7 +107,7 @@ class TestRepair(TestCase):
                          "Empty graph is not empty when compressed")
 
     def test_repair_once(self):
-        ''' repair where the pair shows up only once in the graph '''
+        ''' repair where pairs show up only once in the graph '''
 
         # change the graph to avoid multiple pairing
         self.node1.edges = [self.node2, self.node3, self.node4, self.node5]
@@ -117,15 +117,18 @@ class TestRepair(TestCase):
         self.node5.edges = []
 
         self.graph = Graph(self.node_list)
+        expected_graph = self.graph
+
         self.repair = Repair(self.graph)
         compressed_graph = self.repair.compress()
 
         #TODO update this when the equal method is provided
 
-        self.assertEqual(compressed_graph, self.graph)
+        #self.assertEqual(compressed_graph, expected_graph)
+        self.fail("Update when the equals method is ready in graph")
 
     def test_repair_multiple(self):
-        ''' repair where a pair shows up multiple times in the graph '''
+        ''' repair where pairs show up multiple times in the graph '''
 
         self.node1.edges = [self.node2, self.node3, self.node4, self.node5]
         self.node2.edges = [self.node1, self.node4, self.node5]
@@ -138,17 +141,20 @@ class TestRepair(TestCase):
         compressed_graph = self.repair.compress()
 
         #TODO update this when the equal method is provided
+        expected_graph = None
 
-        self.assertEqual(compressed_graph, self.graph)
+        #self.assertEqual(compressed_graph, expected_graph)
+        self.fail("Update when the equals method is ready in graph")
 
     def test_compress_mutliple_runs(self):
         ''' compression that requires multiple runs through the graph'''
 
-        print(self.graph)
         compressed_graph = self.repair.compress()
 
-        print("-------------compressed---------------")
+        print(compressed_graph)
 
-        print(str(compressed_graph))
+        #TODO update this soon. They are not actually equal
+        expected_graph = None
 
-        self.assertEqual(compressed_graph, self.graph)
+        #self.assertEqual(compressed_graph, expected_graph)
+        self.fail("Update when the equals method is ready in graph")
