@@ -3,9 +3,9 @@ import uuid
 
 
 class Node:
-    def __init__(self, value):
+    def __init__(self, value, edges=list):
         self.value = value
-        self.edges = []
+        self.edges = edges
         self.uid = uuid.uuid4()
 
     def add_edge(self, node):
@@ -17,14 +17,26 @@ class Node:
             self.edges.remove(node)
 
     def replace(self, node1, node2, repairNode):
+        print("Node 1: " + str(node1) + "\tNode 2:" + str(node2))
+        print("----node before delete----")
+        for node in self.edges:
+            print(node)
+
+        print("the dict node: " + str(repairNode.edges[0]) +
+              str(repairNode.edges[1]))
         if node1 in repairNode.edges and node2 in repairNode.edges:
             index_node1 = self.edges.index(node1)
             index_node2 = self.edges.index(node2)
+            print("got the index")
             if index_node1 + 1 == index_node2:
 
                 self.delete_edge(node1)
                 self.delete_edge(node2)
                 self.edges.insert(index_node1, repairNode)
+
+        print("----node after delete-----")
+        for node in self.edges:
+            print(node)
 
     def __eq__(self, node2):
         ''' overrides the equals method '''
@@ -74,7 +86,7 @@ class Node:
 class RepairNode(Node):
     def __init__(self, value, node1, node2, isDictNode=True):
         self.isDictNode = isDictNode
-        self.edges = [node1, node2]
+        edges = [node1, node2]
 
         # init the parent class too
-        super(RepairNode, self).__init__(value)
+        super(RepairNode, self).__init__(value, edges)
