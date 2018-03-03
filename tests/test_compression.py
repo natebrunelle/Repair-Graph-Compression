@@ -153,7 +153,7 @@ class TestRepair(TestCase):
 
         print(compressed_graph)
 
-        #TODO update this soon. They are not actually equal
+        #TODO update this soon.
         expected_graph = None
 
         #self.assertEqual(compressed_graph, expected_graph)
