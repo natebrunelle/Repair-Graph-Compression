@@ -144,6 +144,7 @@ class TestRepair(TestCase):
     def test_compress_mutliple_runs(self):
         ''' compression that requires multiple runs through the graph'''
 
+        print(self.graph)
         compressed_graph = self.repair.compress()
 
         print("-------------compressed---------------")

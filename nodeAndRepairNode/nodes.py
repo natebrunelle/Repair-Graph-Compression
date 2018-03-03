@@ -17,24 +17,15 @@ class Node:
             self.edges.remove(node)
 
     def replace(self, node1, node2, repairNode):
-        print("Node 1: " + str(node1) + "\tNode 2:" + str(node2))
-        print("----node before delete----")
-        for node in self.edges:
-            print(node)
-
         if node1 in self.edges and node2 in self.edges:
             index_node1 = self.edges.index(node1)
             index_node2 = self.edges.index(node2)
-            print("got the index")
+
             if index_node1 + 1 == index_node2:
 
                 self.delete_edge(node1)
                 self.delete_edge(node2)
                 self.edges.insert(index_node1, repairNode)
-
-        print("----node after delete-----")
-        for node in self.edges:
-            print(node)
 
     def __eq__(self, node2):
         ''' overrides the equals method '''
