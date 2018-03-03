@@ -160,7 +160,7 @@ class Repair:
         # get the data nodes
         data_nodes = []
         for node in self.graph.list_nodes:
-            if not isinstance(RepairNode, node):
+            if not isinstance(node, RepairNode):
                 data_nodes.append(node)
 
         # wrap it up
@@ -185,13 +185,13 @@ class Repair:
                 stack.append(adj_node)
 
             # empty out the compressed adj list
-            node.edges = list
+            node.edges = []
 
             while len(stack) >= 1:
                 # a compression node; get replacement
-                if isinstance(RepairNode, stack[-1]):
-                    replacement = self.graph.list_nodes[stack.pop()]
-                    for rep_node in reversed(replacement):
+                if isinstance(stack[-1], RepairNode):
+                    replacement = stack.pop()
+                    for rep_node in reversed(replacement.edges):
                         stack.append(rep_node)
 
                 # data node, put it back
