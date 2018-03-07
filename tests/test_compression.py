@@ -1,8 +1,32 @@
+import math
 from unittest import TestCase
 
 from graphs.graph import Graph
 from nodeAndRepairNode.nodes import Node, RepairNode
 from repair.compression import Repair, RepairPriorityQueue
+
+
+def compare_by_value(graph1, graph2):
+    ''' compares two graphs by their values
+
+    The UUID based comparison is hard to test since the id's are generated
+    randomly on each run. Therefore, the test cases can not properly create
+    the expected compressed graph. This method solves that problem for now.
+
+    A better approach might be to find a way to seed the UUID. Will update this
+    if I get that to work/if it is possible to do so. '''
+
+    # check length
+    if len(graph1.list_nodes) != len(graph2.list_nodes):
+        return False
+
+    # check values
+    for index in range(len(graph1.list_nodes)):
+        if graph1.list_nodes[index].value != graph2.list_nodes[index].value:
+            return False
+
+    # they must be equal
+    return True
 
 
 class TestRepairPriorityQueue(TestCase):
@@ -122,10 +146,7 @@ class TestRepairCompress(TestCase):
         self.repair = Repair(self.graph)
         compressed_graph = self.repair.compress()
 
-        #TODO update this when the equal method is provided
-
-        #self.assertEqual(compressed_graph, expected_graph)
-        self.fail("Update when the equals method is ready in graph")
+        self.assertEqual(compressed_graph, expected_graph)
 
     def test_repair_multiple(self):
         ''' repair where pairs show up multiple times in the graph '''
@@ -140,19 +161,79 @@ class TestRepairCompress(TestCase):
         self.repair = Repair(self.graph)
         compressed_graph = self.repair.compress()
 
-        #TODO update this when the equal method is provided
-        expected_graph = None
+        n1 = Node(1)
+        n2 = Node(2)
+        n3 = Node(3)
+        n4 = Node(4)
+        n5 = Node(5)
+        inf_node = Node(math.inf)
 
-        #self.assertEqual(compressed_graph, expected_graph)
-        self.fail("Update when the equals method is ready in graph")
+        n1.add_edge(n2)
+        n1.add_edge(n3)
+        n1.add_edge(inf_node)
+
+        n2.add_edge(inf_node)
+        n2.add_edge(n1)
+
+        n3.add_edge(n1)
+        n3.add_edge(n2)
+        n3.add_edge(inf_node)
+
+        n4.add_edge(n3)
+        n4.add_edge(n5)
+
+        inf_node.add_edge(n4)
+        inf_node.add_edge(n5)
+
+        expected_graph = Graph([n1, n2, n3, n4, n5, inf_node])
+
+        self.assertTrue(
+            compare_by_value(expected_graph, compressed_graph),
+            "Single run compression lossing values or positions")
 
     def test_compress_mutliple_runs(self):
         ''' compression that requires multiple runs through the graph'''
 
         compressed_graph = self.repair.compress()
 
-        #TODO update this soon.
-        expected_graph = None
+        n1 = Node(1)
+        n2 = Node(2)
+        n3 = Node(3)
+        n4 = Node(4)
+        n5 = Node(5)
+        inf_node1 = Node(math.inf)
+        inf_node2 = Node(math.inf)
+        inf_node3 = Node(math.inf)
 
-        #self.assertEqual(compressed_graph, expected_graph)
-        self.fail("Update when the equals method is ready in graph")
+        n1.add_edge(n2)
+        n1.add_edge(inf_node1)
+
+        n2.add_edge(inf_node1)
+        n2.add_edge(n1)
+
+        n3.add_edge(n4)
+        n3.add_edge(n5)
+        n3.add_edge(inf_node2)
+
+        n4.add_edge(n3)
+        n4.add_edge(n5)
+        n4.add_edge(inf_node2)
+
+        n5.add_edge(inf_node2)
+        n5.add_edge(inf_node3)
+
+        inf_node3.add_edge(n3)
+        inf_node3.add_edge(n4)
+
+        inf_node2.add_edge(n1)
+        inf_node2.add_edge(n2)
+
+        inf_node1.add_edge(inf_node3)
+        inf_node1.add_edge(n5)
+
+        expected_graph = Graph(
+            [n1, n2, n3, n4, n5, inf_node3, inf_node2, inf_node1])
+
+        self.assertTrue(
+            compare_by_value(expected_graph, compressed_graph),
+            "Multiple runs through the graphs lossing nodes or positions.")
