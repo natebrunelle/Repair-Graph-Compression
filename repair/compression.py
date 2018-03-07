@@ -37,7 +37,7 @@ class RepairPriorityQueue(PriorityQueue):
         inversed_freq = item[0] * -1
         item = (inversed_freq, item[1])
 
-        # check dic TODO: find something more better this is O(n)
+        # TODO: find something better this is O(n)
         try:
             old_freq = self.old_counts[item[1]]
             item_new_freq = old_freq - 1
