@@ -91,12 +91,14 @@ class Graph(object):
     def __eq__(self, other):
         ''' compares two graphs for equality
 
+        @warning can be very slow. Don't compare two graphs unless in a test setting
+
         Two graphs are considered equal iff they have the same exact nodes, in the same
         exactly positions. The ordering of nodes makes a difference to our algorithms
         so graphs w/ the same nodes in different positions within the lists
         should be considered different. '''
 
-        # type check it
+        # type check
         if not isinstance(other, Graph):
             return False
 
@@ -104,9 +106,20 @@ class Graph(object):
         if len(self.list_nodes) != len(other.list_nodes):
             return False
 
-        for index in range(len(self.list_nodes)):
-            if self.list_nodes[index].uid != other.list_nodes[index].uid:
+        for node_index, node1 in enumerate(self.list_nodes):
+
+            node2 = other.list_nodes[node_index]
+
+            # check ids of "parent nodes"
+            if node1.uid != node2.uid:
                 return False
+
+            # check ids of out going nodes
+            for edge_index, edge1 in enumerate(node1.edges):
+                edge2 = node2.edges[edge_index]
+
+                if edge1.uid != edge2.uid:
+                    return False
 
         # they must be equal
         return True
