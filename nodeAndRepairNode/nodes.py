@@ -3,7 +3,7 @@ import uuid
 
 
 class Node:
-    def __init__(self, value, edges=list):
+    def __init__(self, value, edges=[]):
         self.value = value
         self.edges = edges
         self.uid = uuid.uuid4()
