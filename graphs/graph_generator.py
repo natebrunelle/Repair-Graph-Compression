@@ -1,27 +1,44 @@
+'''
+Creates a cluster of graphs.
+
+The graphs will be connected as specified by the parameters of the
+function.
+'''
 import random
 import string
 
 from graphs.graph import Graph
 from nodeAndRepairNode.nodes import Node
 
-#We are particularly interested in:
-#number of clusters (groups of graphs),
-#the density of connection within these clusters,
-#the density of edges between the clusters,
-#some form of randomization (how the connections happen etc).
 
-def weaklyConnectedClusters(number_of_connections, graphSize, graphNum,
-                            edgeNum, graphName):
+def weakly_connected_graphs(connection_num, graph_size, graph_num,
+                            edge_num, graph_factory):
+    '''
+    generates a group of connected graphs as specified by the parameters:
 
-    clusters = [ [] for a in range(graphNum) ]
+    connection_num: the number of connections we expect to see on ave
+    graph_size: the number of nodes we expect in each graph
+    graph_num: the number of graphs we expect in the cluster
+    edge_num: the number of edges we expect to see within each graph on ave
+    graph_factory: an instance of a graph factory to specify the kind of graphs
+    '''
 
+    # if bad input, silently correct it
+    # need a min of graph_num connections to ensure everything is connected
+    if connection_num < graph_num:
+        connection_num = graph_num
 
-    #clusters = {}
+    if edge_num < graph_size:
+        edge_num = graph_size
 
-    for i in range(graphNum):
-        for j in range(graphSize):
-            self.n = Node(random.choice(string.letters))
-            clusters[i].append(n)
+    # place holder for the graphs we will create
+    # will help ensure every graph is connected at least once
+    graphs = [ [] for a in range(graph_num) ]
+
+    # create all the graphs
+    for graph_index in range(graph_num):
+        graphs.append(graph_factory.get_graph())
+
 
     graphs = []
     for nodeList in clusters:
@@ -45,30 +62,3 @@ def weaklyConnectedClusters(number_of_connections, graphSize, graphNum,
         #NEED TO CHECK IF THEY ARE ALREADY CONNECTED --> if they are connected then repeat until you find a pair that hasn't been connected && connect them
         graphs[random1].add_edge(random.choice(graphs[random1].list_nodes), random.choice(graphs[random2].list_nodes))
         counter ++
-
-
-
-
-def createHub(number_of_connections, size, clusterID):
-    hub = {}
-    center = (0, clusterID)
-    hub[center] = []
-
-    for node in range(1, size):
-        n1 = (node, clusterID)
-        hub[center].append(n1)
-        hub[n1] = [(-1, clusterID)]
-
-    for connection in range(0, number_of_connections):
-        node1 = random.randint(1, size - 1)
-        node2 = random.randint(1, size - 1)
-
-        node1 = (node1, clusterID)
-        node2 = (node2, clusterID)
-
-        while node1 in hub[node2]:
-            node1 = random.randint(1, size - 1)
-            node1 = (node1, clusterID)
-        hub[node1].append(node2)
-
-    return hub
