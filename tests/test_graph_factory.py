@@ -72,7 +72,15 @@ class TestFactoryNoData(TestCase):
             isinstance(graph, Graph), "Not creating the correct type")
         self.assertTrue(
             len(graph.list_nodes) == 0,
-            "You shouldn't be creating nodes in this factory")
+            " 0 shouldn't be creating nodes in this factory")
+
+    def test_with_nodes(self):
+        ''' tests that we can create the correct number of nodes '''
+        factory = GraphFactoryNoData(GraphTypes.generic, 5)
+        graph = factory.get_graph()
+
+        self.assertTrue(
+            len(graph.list_nodes) == 5, "Should have created 5 nodes")
 
 
 class TestGraphFactoryAlphaNumeric(TestCase):

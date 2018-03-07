@@ -26,13 +26,15 @@ class GraphTypes(enum.Enum):
 class GraphFactory(object):
     ''' This the base class for the factories. '''
 
-    def __init__(self, graph_type):
+    def __init__(self, graph_type, num_of_nodes=0):
 
         # type check
         if not isinstance(graph_type, GraphTypes):
             raise Exception("Use the GraphTypes enum as a param")
         else:
             self.graph_type = graph_type
+
+        self.num_of_nodes = num_of_nodes
 
     def get_graph(self):
         ''' sub classes must implement this method '''
@@ -41,23 +43,29 @@ class GraphFactory(object):
 
 class GraphFactoryNoData(GraphFactory):
     ''' A graph  factory that doesn't add any data. It wil generate graphs
-    with empty nodes list. You probably want to use the other implementations
+    with empty nodes or empty node lists. You probably want to use the other implementations
     since they can also add randomized data and take # of nodes as an argument '''
 
-    def __init__(self, graph_type):
-        super().__init__(graph_type)
+    def __init__(self, graph_type, num_of_nodes=0):
+        super().__init__(graph_type, num_of_nodes)
 
     def get_graph(self):
         ''' Creates graphs of different type based on the parameter '''
 
         if self.graph_type.value == 1:
-            return CompleteGraph()
+            graph = CompleteGraph()
 
-        if self.graph_type.value == 2:
-            return HubAndSpoke()
+        elif self.graph_type.value == 2:
+            graph = HubAndSpoke()
 
-        if self.graph_type.value == 3:
-            return Graph([])
+        else:
+            graph = Graph([])
+
+        # create the nodes
+        for _ in range(self.num_of_nodes):
+            graph.add_node(Node(""))
+
+        return graph
 
 
 class GraphFactoryAlphaNumeric(GraphFactory):
@@ -75,8 +83,7 @@ class GraphFactoryAlphaNumeric(GraphFactory):
         if random_seed != -1:
             random.seed(random_seed)
 
-        self.num_of_nodes = num_of_nodes
-        super().__init__(graph_type)
+        super().__init__(graph_type, num_of_nodes)
 
     def get_random_alpha_numeric(self, upper_num=1000, lower_num=0):
         ''' returns a string with a randomized, not necessarily unique,
