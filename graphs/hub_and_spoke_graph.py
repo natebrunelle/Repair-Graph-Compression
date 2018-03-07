@@ -1,3 +1,8 @@
-class HubAndSpoke:
+from graphs.graph import Graph
+
+
+class HubAndSpoke(Graph):
     ''' add the hub and spoke implementation here '''
-    pass
+
+    def __init__(self, nodes=None):
+        pass
