@@ -3,6 +3,7 @@ from unittest import TestCase
 from graphs.graph import Graph
 from nodeAndRepairNode.nodes import Node, RepairNode
 from repair.compression import Repair
+from tests.test_compression import compare_by_value
 
 
 class RepairDecompress(TestCase):
@@ -51,6 +52,10 @@ class RepairDecompress(TestCase):
         self.node4.edges = [self.node3, self.node5]
         self.node5.edges = []
 
+        self.node_list = [
+            self.node1, self.node2, self.node3, self.node4, self.node5
+        ]
+
         self.graph = Graph(self.node_list)
         expected_graph = self.graph
 
@@ -58,8 +63,8 @@ class RepairDecompress(TestCase):
         self.repair.compress()
 
         decompressed_graph = self.repair.decompress()
-        # self.assertEqual(decompressed_graph,expected_graph, "no compression nodes but graph changed"
-        self.fail("Update when the graph equal method is ready")
+        self.assertEqual(decompressed_graph, expected_graph,
+                         "no compression nodes but graph changed")
 
     def test_multiple_compression_nodes(self):
         ''' Test decompression when multiple compression nodes exist '''
@@ -70,20 +75,53 @@ class RepairDecompress(TestCase):
         self.node4.edges = [self.node3, self.node5]
         self.node5.edges = []
 
+        self.node_list = [
+            self.node1, self.node2, self.node3, self.node4, self.node5
+        ]
+
         self.graph = Graph(self.node_list)
+
         self.repair = Repair(self.graph)
-        self.repair.compress()
+        self.repair.compress()  # really shouldn't be using it here
 
-        compressed_graph = self.repair.decompress()
+        decompressed_graph = self.repair.decompress()
 
-        expected_graph = None
+        self.node1.edges = [self.node2, self.node3, self.node4, self.node5]
+        self.node2.edges = [self.node1, self.node4, self.node5]
+        self.node3.edges = [self.node1, self.node2, self.node4, self.node5]
+        self.node4.edges = [self.node3, self.node5]
+        self.node5.edges = []
 
-        self.fail("No useful test yet")
+        self.node_list = [
+            self.node1, self.node2, self.node3, self.node4, self.node5
+        ]
+        self.graph = Graph(self.node_list)
+
+        self.assertTrue(
+            compare_by_value(self.graph, decompressed_graph),
+            "multiple compression nodes seem to lose value or position")
 
     def test_multiple_run(self):
         ''' Tests a graph that has three compression nodes '''
 
         compressed_graph = self.repair.compress()
+        self.repair = Repair(compressed_graph)
+
         decompressed_graph = self.repair.decompress()
 
-        self.fail("No useful test yet")
+        self.node1.edges = [self.node2, self.node3, self.node4, self.node5]
+        self.node2.edges = [self.node1, self.node3, self.node4, self.node5]
+        self.node3.edges = [self.node1, self.node2, self.node4, self.node5]
+        self.node4.edges = [self.node1, self.node2, self.node3, self.node5]
+        self.node5.edges = [self.node1, self.node2, self.node3, self.node4]
+
+        self.node_list = [
+            self.node1, self.node2, self.node3, self.node4, self.node5
+        ]
+
+        self.graph = Graph(self.node_list)
+
+        self.assertTrue(
+            compare_by_value(self.graph, decompressed_graph),
+            "A compression that requires multiple runs through the graph seems to lose value or position"
+        )
