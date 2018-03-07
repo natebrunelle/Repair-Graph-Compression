@@ -88,6 +88,29 @@ class Graph(object):
 
         return formatted
 
+    def __eq__(self, other):
+        ''' compares two graphs for equality
+
+        Two graphs are considered equal iff they have the same exact nodes, in the same
+        exactly positions. The ordering of nodes makes a difference to our algorithms
+        so graphs w/ the same nodes in different positions within the lists
+        should be considered different. '''
+
+        # type check it
+        if not isinstance(other, Graph):
+            return False
+
+        # check for number of nodes
+        if len(self.list_nodes) != len(other.list_nodes):
+            return False
+
+        for index in range(len(self.list_nodes)):
+            if self.list_nodes[index].uid != other.list_nodes[index].uid:
+                return False
+
+        # they must be equal
+        return True
+
 
 class Cluster(Graph):
 
