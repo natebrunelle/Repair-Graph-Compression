@@ -48,11 +48,11 @@ def weakly_connected_graphs(connection_num, graph_size,
             graphs[random1].add_edge(random.choice(graphs[random1].list_nodes), random.choice(graphs[random2].list_nodes))
             connected[random1] = True
             connected[random2] = True
-            counter++
+            counter = counter+1
 
     while(counter < number_of_connections):
         random1 = random.randint(0, graphNum-1)
         random2 = random.randint(0, graphNum-1)
         #NEED TO CHECK IF THEY ARE ALREADY CONNECTED --> if they are connected then repeat until you find a pair that hasn't been connected && connect them
         graphs[random1].add_edge(random.choice(graphs[random1].list_nodes), random.choice(graphs[random2].list_nodes))
-        counter ++
+        counter=counter+1
