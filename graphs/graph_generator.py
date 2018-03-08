@@ -11,13 +11,13 @@ from graphs.graph import Graph
 from nodeAndRepairNode.nodes import Node
 
 
-def weakly_connected_graphs(connection_num, graph_size,
+def weakly_connected_graphs(connection_num, graph_num,
                             edge_num, graph_factory):
     '''
     generates a group of connected graphs as specified by the parameters:
 
     connection_num: the number of connections we expect to see on ave
-    graph_size: the number of nodes we expect in each graph
+    graph_num: the number of graph in the cluster
     edge_num: the number of edges we expect to see within each graph on ave
     graph_factory: an instance of a graph factory to specify the kind of graphs
     '''
@@ -27,6 +27,7 @@ def weakly_connected_graphs(connection_num, graph_size,
     if connection_num < graph_num:
         connection_num = graph_num
 
+    #TODO find a way to find the graph size
     if edge_num < graph_size:
         edge_num = graph_size
 
