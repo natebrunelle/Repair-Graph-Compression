@@ -7,6 +7,7 @@ class Node:
         self.value = value
         self.edges = edges
         self.uid = uuid.uuid4()
+        self.graph_id = 0
 
     def add_edge(self, node):
         if node not in self.edges:
@@ -33,8 +34,9 @@ class Node:
         if not isinstance(node2, Node):
             return False
 
-        if self.uid == node2.uid:
-            return True
+        if self.graph_id == node2.graph_id:
+            if self.uid == node2.uid:
+                return True
 
         return False
 
@@ -44,8 +46,15 @@ class Node:
         if not isinstance(node2, Node):
             return False
 
-        if self.uid > node2.uid:
+        if self.graph_id > node2.graph_id:
             return True
+
+        if self.graph_id < node2.graph_id:
+            return False
+
+        if self.graph_id == node2.graph_id:
+            if self.uid > node2.uid:
+                return True
 
         return False
 
@@ -55,8 +64,15 @@ class Node:
         if not isinstance(node2, Node):
             return False
 
-        if node2 and self.uid < node2.uid:
+        if self.graph_id < node2.graph_id:
             return True
+
+        if self.graph_id > node2.graph_id:
+            return False
+
+        if self.graph_id == node2.graph_id:
+            if node2 and self.uid < node2.uid:
+                return True
 
         return False
 

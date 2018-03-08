@@ -33,25 +33,30 @@ def weakly_connected_graphs(connection_num, graph_num,
 
     # place holder for the graphs we will create
     # will help ensure every graph is connected at least once
-    graphs = [ [] for a in range(graph_num) ]
+    graphs = [[] for a in range(graph_num)]
 
     # create all the graphs
     for graph_index in range(graph_num):
         graphs.append(graph_factory.get_graph())
 
-    #------------what's happening lol---------------
+    # ------------what's happening lol---------------
     counter = 0
-    connected = [ false for i in range(graphNum)]
-    while(counter < graphNum):
-        random1 = random.randint(0, graphNum-1)
-        random2 = random.randint(0, graphNum-1)
-        if(random1 != random2 && (connected[random1] == false || connected[random2] == false)):
-            graphs[random1].add_edge(random.choice(graphs[random1].list_nodes), random.choice(graphs[random2].list_nodes))
-            counter++
+    connected = [False for i in range(graphNum)]
+    while (counter < graphNum):
+        random1 = random.randint(0, graphNum - 1)
+        random2 = random.randint(0, graphNum - 1)
+        if (random1 != random2 and (connected[random1] == false or connected[random2] == false)):
+            graphs[random1].add_edge(random.choice(graphs[random1].list_nodes),
+                                     random.choice(graphs[random2].list_nodes))
+            connected[random1] = True
+            connected[random2] = True
+            counter = counter + 1
 
-    while(counter < number_of_connections):
-        random1 = random.randint(0, graphNum-1)
-        random2 = random.randint(0, graphNum-1)
-        #NEED TO CHECK IF THEY ARE ALREADY CONNECTED --> if they are connected then repeat until you find a pair that hasn't been connected && connect them
-        graphs[random1].add_edge(random.choice(graphs[random1].list_nodes), random.choice(graphs[random2].list_nodes))
-        counter ++
+    while (counter < number_of_connections):
+        random1 = random.randint(0, graphNum - 1)
+        random2 = random.randint(0, graphNum - 1)
+        # NEED TO CHECK IF THEY ARE ALREADY CONNECTED --> if they are connected
+        #  then repeat until you find a pair that hasn't been connected && connect them
+        graphs[random1].add_edge(random.choice(graphs[random1].list_nodes),
+                                 random.choice(graphs[random2].list_nodes))
+        counter = counter + 1

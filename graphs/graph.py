@@ -9,6 +9,7 @@ class Graph(object):
 
     def __init__(self, n_list):
         self.list_nodes = n_list
+        self.graph_id = uuid.uuid4()
         # self.node_count = n_count  # this removed b/c have UUID's
 
     def add_edge(self, n1, n2):
@@ -19,8 +20,7 @@ class Graph(object):
         """
         if n1 not in self.list_nodes or n2 not in self.list_nodes:
             self.add_node(n1)
-            self.add_node(
-                n2)  # add_node will prevent from adding 2x, silently, no error
+            self.add_node(n2)  # add_node will prevent from adding 2x, silently, no error
         n1.add_edge(n2)  # directed graph, n2 doesn't add n1
 
     def delete_edge(self, n1, n2):
@@ -46,15 +46,14 @@ class Graph(object):
             raise ValueError('Node not in graph, cannot delete node')
         # REALLY need to test this...
 
-    def add_node(
-            self, n
-    ):  # depends on implementation of Node class attr uid, i.e. n.uid assumed to be -1
+    def add_node(self, n):
         """
         Returns the external added node.
         Adds a node to the Graph data structures, but it won't be connected by any edge.
         New implementations should redefine this function.
         """
         if n not in self.list_nodes:  # prevent from adding >1x
+            n.graph_id = self.graph_id
             self.list_nodes.append(n)
             # self.node_count += 1
         # else:
