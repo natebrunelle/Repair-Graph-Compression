@@ -84,6 +84,7 @@ class TestNodeAndRepairNode(unittest.TestCase):
         self.n5.uid = 5
 
         self.assertTrue(self.n5 > self.n4, "Greater than doesn't hold")
+        self.assertFalse(self.n5 < self.n4, "Greater than doesn't hold")
 
     def test_lt_op(self):
         ''' tests the less than method override '''
@@ -92,6 +93,10 @@ class TestNodeAndRepairNode(unittest.TestCase):
         self.n5.uid = 5
 
         self.assertTrue(self.n4 < self.n5)
+        self.assertFalse(self.n4 > self.n5)
+
+    # def test_hash(self):
+
 
     def test_wrong_type_comp(self):
         ''' tests that wrong types are rejected '''
@@ -107,6 +112,10 @@ class TestNodeAndRepairNode(unittest.TestCase):
         self.assertFalse(self.n4 > None)
         self.assertFalse(self.n4 == None)
 
+    # def test_node_str(self):
+    #     ''' tests that the node has the right string output '''
+    #     node1 = Node(5, [])
+    #     self.assertEqual(str(node1), 'ID:' + str(node1.uid.int) + '\tValue: [5]', 'Wrong string outputed')
 
 # def test_add_repair_node_edge():
 # 	self.rnn.
