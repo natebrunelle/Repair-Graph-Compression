@@ -6,6 +6,7 @@ three graph implementations we have right now. '''
 import enum
 import random
 import string
+import time
 from random import randint
 
 from graphs.complete_graph import CompleteGraph
@@ -83,11 +84,17 @@ class GraphFactoryAlphaNumeric(GraphFactory):
         if random_seed != -1:
             random.seed(random_seed)
 
+        self.seed = random_seed
+
         super().__init__(graph_type, num_of_nodes)
 
     def get_random_alpha_numeric(self, upper_num=1000, lower_num=0):
         ''' returns a string with a randomized, not necessarily unique,
         value containing numbers and characters '''
+
+        # randomize on each generation
+        if self.seed != -1:
+            random.seed(time.time())
 
         number = randint(lower_num, upper_num)
 

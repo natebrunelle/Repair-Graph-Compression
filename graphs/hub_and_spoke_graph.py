@@ -5,4 +5,7 @@ class HubAndSpoke(Graph):
     ''' add the hub and spoke implementation here '''
 
     def __init__(self, nodes=None):
-        pass
+        if nodes:
+            super().__init__(nodes)
+        else:
+            super().__init__([])

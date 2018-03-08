@@ -114,3 +114,14 @@ class TestGraphFactoryAlphaNumeric(TestCase):
 
         self.assertTrue(
             len(graph.list_nodes) == 5, "Should have created 5 nodes")
+
+    def test_each_graph_is_new(self):
+        ''' tests that when randomized, each graph is new '''
+
+        factory = GraphFactoryAlphaNumeric(
+            GraphTypes.complete, 5, random_seed=-1)
+
+        graph = factory.get_graph()
+        graph2 = factory.get_graph()
+
+        self.assertFalse(graph == graph2, "random graphs shouldn't be equal")
