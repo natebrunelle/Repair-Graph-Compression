@@ -34,14 +34,26 @@ class TestRepairPriorityQueue(TestCase):
 
     def setUp(self):
         self.queue = RepairPriorityQueue()
+        self.graph = Graph([])
 
     def test_passed_list_queued(self):
         ''' Tests that a list of points passed in are correctly queued '''
         pair_list = list()
-        pair_list.append((9, (Node(1), Node(2))))
-        pair_list.append((20, (Node(3), Node(4))))
-        pair_list.append((87, (Node(5), Node(6))))
-        pair_list.append((4, (Node(7), Node(8))))
+        node1 = Node(1)
+        node2 = Node(2)
+        node3 = Node(3)
+        node4 = Node(4)
+        node5 = Node(5)
+        node6 = Node(6)
+        node7 = Node(7)
+        node8 = Node(8)
+
+        graph = Graph([node1, node2, node3, node4, node5, node6, node7, node8])
+
+        pair_list.append((9, (node1, node2)))
+        pair_list.append((20, (node3, node4)))
+        pair_list.append((87, (node5, node6)))
+        pair_list.append((4, (node7, node8)))
 
         queue = RepairPriorityQueue(pair_list)
 

@@ -7,9 +7,15 @@ class Graph(object):
 
     # node_count = 0
 
-    def __init__(self, n_list):
-        self.list_nodes = n_list
+    def __init__(self, n_list=None):
+
         self.graph_id = uuid.uuid4()
+
+        # add the nodes passed in
+        if n_list:
+            for node in n_list:
+                self.add_node(node)
+
         # self.node_count = n_count  # this removed b/c have UUID's
 
     def add_edge(self, n1, n2):
@@ -20,7 +26,8 @@ class Graph(object):
         """
         if n1 not in self.list_nodes or n2 not in self.list_nodes:
             self.add_node(n1)
-            self.add_node(n2)  # add_node will prevent from adding 2x, silently, no error
+            self.add_node(
+                n2)  # add_node will prevent from adding 2x, silently, no error
         n1.add_edge(n2)  # directed graph, n2 doesn't add n1
 
     def delete_edge(self, n1, n2):
