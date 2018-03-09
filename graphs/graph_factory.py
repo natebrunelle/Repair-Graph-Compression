@@ -106,6 +106,7 @@ class GraphFactoryAlphaNumeric(GraphFactory):
     def get_graph(self):
         ''' implementation of the factory '''
 
+        graph = None
         # create a graph object
         if self.graph_type.value == 1:
             graph = CompleteGraph()
@@ -120,7 +121,6 @@ class GraphFactoryAlphaNumeric(GraphFactory):
         for _ in range(self.num_of_nodes):
             # get value for node
             node_value = self.get_random_alpha_numeric()
-
             graph.add_node(Node(node_value))
 
         return graph

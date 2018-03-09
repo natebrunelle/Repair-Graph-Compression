@@ -119,7 +119,7 @@ class TestGraphFactoryAlphaNumeric(TestCase):
         ''' tests that when randomized, each graph is new '''
 
         factory = GraphFactoryAlphaNumeric(
-            GraphTypes.complete, 5, random_seed=-1)
+            GraphTypes.complete, 5, random_seed=self.seed)
 
         graph = factory.get_graph()
         graph2 = factory.get_graph()

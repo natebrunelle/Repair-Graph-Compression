@@ -3,12 +3,12 @@ import uuid
 
 
 class Graph(object):
-    list_nodes = []
 
     # node_count = 0
 
     def __init__(self, n_list=None):
 
+        self.list_nodes = []
         self.graph_id = uuid.uuid4()
 
         # add the nodes passed in
@@ -59,13 +59,13 @@ class Graph(object):
         Adds a node to the Graph data structures, but it won't be connected by any edge.
         New implementations should redefine this function.
         """
+
         if n not in self.list_nodes:  # prevent from adding >1x
             n.graph_id = self.graph_id
             self.list_nodes.append(n)
             # self.node_count += 1
         # else:
         #     raise ValueError('Node already in graph, use Graph.add_edge instead')
-        return n
 
     def add_node_rand(self, n):
         """
