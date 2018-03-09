@@ -89,9 +89,18 @@ class TestRepairPriorityQueue(TestCase):
     def test_put_duplicate_freq(self):
         ''' Tests ability to handle duplicate frequency '''
 
-        self.queue.put((9, (Node(1), Node(2))))
-        self.queue.put((9, (Node(88), Node(80))))
-        self.queue.put((7, (Node(3), Node(4))))
+        node1 = Node(1)
+        node2 = Node(2)
+        node3 = Node(88)
+        node4 = Node(80)
+        node5 = Node(3)
+        node6 = Node(4)
+
+        graph = Graph([node1, node2, node3, node4, node5, node6])
+
+        self.queue.put((9, (node1, node2)))
+        self.queue.put((9, (node3, node4)))
+        self.queue.put((7, (node5, node6)))
 
         expected = [88, 80, 1, 2, 3, 4]
         expected_alternative = [1, 2, 88, 80, 3, 4]
