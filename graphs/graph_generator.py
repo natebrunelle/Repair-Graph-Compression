@@ -59,10 +59,13 @@ def weakly_connected_graphs(connection_num, graph_num, edge_num,
     while counter < connection_num:
         random1 = random.randint(0, graph_num - 1)
         random2 = random.randint(0, graph_num - 1)
-        #NEED TO CHECK IF THEY ARE ALREADY CONNECTED -->
-        # if they are connected then repeat until you find a pair that
-        # hasn't been connected && connect them
-        graphs[random1].add_edge(
-            random.choice(graphs[random1].list_nodes),
-            random.choice(graphs[random2].list_nodes))
-        counter += 1
+
+        randomNode1 = random.choice(graphs[random1].list_nodes)
+        randomNode2 = random.choice(graphs[random2].list_nodes)
+
+        if (randomNode1 in random1.list_nodes
+                or randomNode2 in random2.list_nodes):
+            continue
+        else:
+            graphs[random1].add_edge(randomNode1, randomNode2)
+            counter = counter + 1
