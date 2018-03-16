@@ -9,6 +9,8 @@ class Node:
         self.edges = []  # TODO: NEW POLICY/clarification: as of 3/2 we have declared .edges holds outgoing edges,
                             # or a list of outgoing nodes
         self.uid = uuid.uuid4()
+        # TODO: implement second Unique id that it inheirted from graph as it gets added to the graph
+        # graph could modify unique id's when node gets added to graph
 
     def add_edge(self, node):
         if node not in self.edges:
