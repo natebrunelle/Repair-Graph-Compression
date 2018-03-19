@@ -40,7 +40,7 @@ pip install -r requirements.txt
 ### Helpful commands 
 - Running tests 
 ```python
-python -m unittest Tests.testXXX 
+python -m unittest tests.test_XXX 
 ```
 - Running coverage (see coverage of the repair folder for example)
 ```python 
