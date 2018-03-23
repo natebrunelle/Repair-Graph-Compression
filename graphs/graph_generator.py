@@ -36,38 +36,36 @@ def weakly_connected_graphs(connection_num, graph_num, edge_num,
 
     # place holder for the graphs we will create
     # will help ensure every graph is connected at least once
-    graphs = [[] for a in range(graph_num)]
+    graphs = []
 
-    # create all the graphs
+# create all the graphs
     for _ in range(graph_num):
         graphs.append(graph_factory.get_graph())
-
-    counter = 0
-    connected = [False for i in range(graph_num)]
+    
+        counter = 0
+        connected = [False for i in range(graph_num)]
+    
+    
     while counter < graph_num:
         random1 = random.randint(0, graph_num - 1)
         random2 = random.randint(0, graph_num - 1)
-        if (random1 != random2 and
-            (connected[random1] is False or connected[random2] is False)):
-            graphs[random1].add_edge(
-                random.choice(graphs[random1].list_nodes),
-                random.choice(graphs[random2].list_nodes))
+        if (random1 != random2 and (connected[random1] is False or connected[random2] is False)):
+            graphs[random1].add_edge(random.choice(graphs[random1].list_nodes),random.choice(graphs[random2].list_nodes))
             connected[random1] = True
             connected[random2] = True
             counter += 1
 
+
     while counter < connection_num:
         random1 = random.randint(0, graph_num - 1)
         random2 = random.randint(0, graph_num - 1)
-
+    
         randomNode1 = random.choice(graphs[random1].list_nodes)
         randomNode2 = random.choice(graphs[random2].list_nodes)
-
-        if (randomNode1 in graphs[random1].list_nodes
-                or randomNode2 in graphs[random2].list_nodes):
+        
+        if (randomNode2 in graphs[random1].list_nodes or randomNode1 in graphs[random2].list_nodes):
             continue
         else:
             graphs[random1].add_edge(randomNode1, randomNode2)
             counter = counter + 1
     return graphs[0]
-
