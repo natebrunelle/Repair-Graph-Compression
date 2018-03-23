@@ -1,13 +1,8 @@
 coverage==4.5.1
 cycler==0.10.0
+ddt==1.1.1
 decorator==4.1.2
-Mako==1.0.7
-Markdown==2.4.1
-MarkupSafe==1.0
-matplotlib==2.1.0
 networkx==2.0
-numpy==1.13.3
-pdoc==0.3.2
 pygraphml==2.2
 pyparsing==2.2.0
 python-dateutil==2.6.1

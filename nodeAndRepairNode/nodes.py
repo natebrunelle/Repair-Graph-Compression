@@ -4,13 +4,11 @@ import uuid
 
 class Node:
 
-    def __init__(self, value):
+    def __init__(self, value, edges=[]):
         self.value = value
-        self.edges = []  # TODO: NEW POLICY/clarification: as of 3/2 we have declared .edges holds outgoing edges,
-                            # or a list of outgoing nodes
+        self.edges = edges
         self.uid = uuid.uuid4()
-        # TODO: implement second Unique id that it inheirted from graph as it gets added to the graph
-        # graph could modify unique id's when node gets added to graph
+        self.graph_id = None
 
     def add_edge(self, node):
         if node not in self.edges:
@@ -20,27 +18,81 @@ class Node:
         if node in self.edges:
             self.edges.remove(node)
 
-    def replace(self, node1, node2, repairNode):
-        if node1 in repairNode.edges and node2 in repairNode.edges:
+    def replace(self, node1, node2, repair_node):
+        if node1 in self.edges and node2 in self.edges:
             index_node1 = self.edges.index(node1)
             index_node2 = self.edges.index(node2)
-            if index_node1+1 == index_node2:
-                
+
+            if index_node1 + 1 == index_node2:
+
                 self.delete_edge(node1)
                 self.delete_edge(node2)
-                self.edges.insert(index_node1, repairNode)
+                self.edges.insert(index_node1, repair_node)
 
     def __eq__(self, node2):
-        if node2:
-            return self.value == node2.value
+        """overrides the equals method"""
 
-    # TODO overwrite python operator
+        if not isinstance(node2, Node):
+            return False
+
+        if self.graph_id == node2.graph_id:
+            if self.uid == node2.uid:
+                return True
+
+        return False
+
+    def __gt__(self, node2):
+        """overrides the greater than method """
+
+        if not isinstance(node2, Node):
+            return False
+
+        if self.graph_id.int > node2.graph_id.int:
+            return True
+
+        if self.graph_id < node2.graph_id:
+            return False
+
+        if self.graph_id == node2.graph_id:
+            if self.uid > node2.uid:
+                return True
+
+        return False
+
+    def __lt__(self, node2):
+        """overrides the less than method"""
+
+        if not isinstance(node2, Node):
+            return False
+
+        if self.graph_id < node2.graph_id:
+            return True
+
+        if self.graph_id > node2.graph_id:
+            return False
+
+        if self.graph_id == node2.graph_id:
+            if node2 and self.uid < node2.uid:
+                return True
+
+        return False
+
+    def __hash__(self):
+        """Makes node objects hashable so they can be used as keys in dict """
+
+        return hash(self.uid)
+
+    def __str__(self):
+        """overriding the str method, helps when debugging """
+
+        return "ID: " + str(self.uid.int) + "\tValue: [" + str(
+            self.value) + "]"
 
 
 class RepairNode(Node):
-
-    def __init__(self, value, node1, node2, isDictNode= True):
-        self.id = -1
+    def __init__(self, value, node1, node2, isDictNode=True):
         self.isDictNode = isDictNode
-        self.edges = [node1, node2]
+        edges = [node1, node2]
 
+        # init the parent class too
+        super(RepairNode, self).__init__(value, edges)

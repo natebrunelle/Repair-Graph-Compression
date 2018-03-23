@@ -1,16 +1,22 @@
-
 import random
+import uuid
+
 
 class Graph(object):
-    list_nodes = []
-    # node_count = 0
+
     # TODO: Graph needs it's own unique ID, it will inject to every node as it gets added
     # then stable sort by each graph uuid, then sort by each node uuid so nodes in the same graph will be closer,
     # needed for compression algorithm
 
-    def __init__(self, n_list=None):  # TODO: check usage of None
-        self.list_nodes = n_list
-        # self.node_count = n_count  # this removed b/c have UUID's
+    def __init__(self, n_list=None):
+
+        self.list_nodes = []
+        self.graph_id = uuid.uuid4()  #
+
+        # add the nodes passed in
+        if n_list:
+            for node in n_list:
+                self.add_node(node)
 
     def add_edge(self, n1, n2):
         """
@@ -21,42 +27,40 @@ class Graph(object):
         if n1 not in self.list_nodes or n2 not in self.list_nodes:
             self.add_node(n1)
             self.add_node(n2)  # add_node will prevent from adding 2x, silently, no error
-        n1.add_edge(n2)  # directed graph, n2 doesn't add n1
+        n1.add_edge(n2)  # n2 is added to n1's list, directed graph, n2 doesn't add n1
 
     def delete_edge(self, n1, n2):
         if n1 in self.list_nodes and n2 in self.list_nodes:
-            n1.delete_edge(n2)
-            n2.delete_edge(n1)
+            n1.delete_edge(n2)  # List.remove() also throws error if remove non existing
+            # n2.delete_edge(n1) directed graph, must call delete_edge 2x if want no connections at all
         else:
-            raise ValueError('Node(s) not in graph, cannot delete edges')  # try deleting from cluster instead?
+            raise ValueError('Node(s) not in graph, cannot delete edges')
+            # try deleting from cluster instead?
         # what if that was the only edge attaching Node to graph? Use delete_node instead?
         # or is this too strict? use delete_node for that case instead?
         # In that case, it's a cluster. Our def of graph more limited.
 
     def delete_node(self, n):
+        """removes the node from the graph,
+        clears the adj list therein,
+        DOES NOT remove external references to the node"""
         # free uid or something?
         if n in self.list_nodes:
-            for x in n.edges:
+            # the node and it's list of edges is deleted
+            self.list_nodes.remove(n)  # delete the node
+            for x in n.edges:  # clear the adj list
                 self.delete_edge(x, n)
-                self.list_nodes.remove(x)  # Maybe this needs to be a few lines further down?
-                # TODO: need to test the above line
         else:
             raise ValueError('Node not in graph, cannot delete node')
-        # REALLY need to test this...
 
-    def add_node(self, n):  # depends on implementation of Node class attr uid, i.e. n.uid assumed to be -1
+    def add_node(self, n):
         """
-        Returns the external added node.
         Adds a node to the Graph data structures, but it won't be connected by any edge.
         New implementations should redefine this function.
         """
         if n not in self.list_nodes:  # prevent from adding >1x
+            n.graph_id = self.graph_id
             self.list_nodes.append(n)
-            # self.node_count += 1
-        # else:
-        #     raise ValueError('Node already in graph, use Graph.add_edge instead')
-        # TODO: add Warnings here instead so fail quietly but is still tracked
-        return n
 
     def add_node_rand(self, n):
         """
@@ -70,8 +74,56 @@ class Graph(object):
             self.list_nodes.append(n)
             # self.node_count += 1
         else:
-            raise ValueError('Node already in graph, use Graph.add_edge instead')
+            raise ValueError(
+                'Node already in graph, use Graph.add_edge instead')
         return n
+
+    def __str__(self):
+        """ Prints out graphs in a nice format """
+        formatted = " "
+
+        for node in self.list_nodes:
+            formatted += str(node) + "\n"
+            for adj_node in node.edges:
+                formatted += "\t" + str(adj_node) + "\n"
+
+        return formatted
+
+    def __eq__(self, other):
+        """ compares two graphs for equality
+
+        @warning can be very slow. Don't compare two graphs unless in a test setting
+
+        Two graphs are considered equal iff they have the same exact nodes, in the same
+        exactly positions. The ordering of nodes makes a difference to our algorithms
+        so graphs w/ the same nodes in different positions within the lists
+        should be considered different. """
+
+        # type check
+        if not isinstance(other, Graph):
+            return False
+
+        # check for number of nodes
+        if len(self.list_nodes) != len(other.list_nodes):
+            return False
+
+        for node_index, node1 in enumerate(self.list_nodes):
+
+            node2 = other.list_nodes[node_index]
+
+            # check ids of "parent nodes"
+            if node1.uid != node2.uid:
+                return False
+
+            # check ids of out going nodes
+            for edge_index, edge1 in enumerate(node1.edges):
+                edge2 = node2.edges[edge_index]
+
+                if edge1.uid != edge2.uid:
+                    return False
+
+        # they must be equal
+        return True
 
 
 class Cluster(Graph):
@@ -127,12 +179,20 @@ class CompleteGraph(Graph):
             n1.delete_edge(n2)  # directed graph
 
     def delete_node(self, n):
+        """removes the node from the graph,
+        clears the adj list therein,
+        and removes all references other nodes hold to the deleted node"""
         if n in self.list_nodes:
+            # the node and it's list of edges is deleted
             self.list_nodes.remove(n)
             for x in n.edges:
                 self.delete_edge(x, n)
+            # every outside reference to the node is deleted - costly
+            for x in self.list_nodes:  # for all other nodes
+                while self.list_nodes[x].edges.count(n) != 0:  # remove n as many times as it appears in edges
+                    self.list_nodes[x].edges.remove(n)
         else:
-            raise ValueError('Node not in graph')  # TODO: call add_node here instead
+            raise ValueError('Node not in graph')
 
     def add_node(self, n):  # TODO: Simonne check this
         if n not in self.list_nodes:
