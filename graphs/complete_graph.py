@@ -21,48 +21,42 @@ class CompleteGraph(Graph):
             # we may not want to support this
 
     def add_edge(self, n1, n2):
-        if n1 not in self.list_nodes or n2 not in self.list_nodes:
-            self.add_node(n1)
-            self.add_node(n2)
-        if n1 not in n2.edges:
-            n1.add_edge(n2)  # directed graph
+        """
+        n1 MUST be a node in the CompleteGraph
+        n2 MUST be a node outside the graph (in another graph)
+        for connecting a CompleteGraph to other graphs,
+        NOT for connecting a Complete graph internally.
+        """
+        if n1.graph_id == self.graph_id and n2.graph_id != self.graph_id:
+            n1.add_edge(n2)  # n2 is appended to n1's list, n1->n2
 
     def delete_edge(self, n1, n2):
-        if n1 in self.list_nodes and n2 in self.list_nodes:  # if edge inside graph and not out into cluster
+        if n1.graph_id == self.graph_id and n2.graph_id == self.graph_id:  # internal edge and not out into cluster
             raise ValueError('Edge removal violates complete graph structure')
-            # TODO: maybe this should be a warning, not an error, so it doesn't stop the program?
+            # maybe this should be a warning, not an error, so it doesn't stop the program?
         else:
-            n1.delete_edge(n2)  # directed graph
+            n1.delete_edge(n2)  # n1->n2, directed graph
 
     def delete_node(self, n):
         """removes the node from the graph,
         clears the adj list therein,
+        resets the node.graph_id to None,
         and removes all references other nodes hold to the deleted node"""
-        if n in self.list_nodes:
-            # the node and it's list of edges is deleted
-            self.list_nodes.remove(n)
-            for x in n.edges:
-                self.delete_edge(x, n)
-            # every outside reference to the node is deleted - costly
-            for x in self.list_nodes:  # for all other nodes
-                while self.list_nodes[x].edges.count(n) != 0:  # remove n as many times as it appears in edges
-                    self.list_nodes[x].edges.remove(n)
-        else:
-            raise ValueError('Node not in graph')
+        # original implementation here moved to graph class b/c general graphs should use it too
+        super().delete_node(n)
 
-    def add_node(self, n):  # TODO: Simonne check this
+
+    def add_node(self, n):
+        """
+        Adds a node and connects it to all other nodes in the complete graph
+        Duplicate nodes fail silently.
+        """
+
         if n not in self.list_nodes:
+            n.graph_id = self.graph_id
             self.list_nodes.append(n)
             for i in range(len(self.list_nodes)):
-                self.list_nodes[i].add_edge(n)
-        else:
-            raise ValueError('Node already in graph')
-
-    """
-    Since every node ends up being connected to every other node
-    anyway, this method is effectively the same as add_node
-    """
-    # def add_node_rand(self, n):
-    #
-    #     return 0
+                self.list_nodes[i].add_edge(n)  # should call Node.add_edge
+        # else:
+        #     raise ValueError('Node already in graph')
 

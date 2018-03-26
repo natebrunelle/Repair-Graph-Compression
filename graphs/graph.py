@@ -32,7 +32,7 @@ class Graph(object):
         """
         if n1.graph_id != self.graph_id:  # check if n1 not in graph
             self.add_node(n1)
-        n1.add_edge(n2)  # n2 is added to n1's list, directed graph, n2 doesn't add n1
+        n1.add_edge(n2)  # n2 is appended to n1's list, not vice versa, directed graph
 
     def delete_edge(self, n1, n2):
         """
@@ -50,7 +50,7 @@ class Graph(object):
         and removes external references to the node"""
 
         if n.graph_id == self.graph_id:
-            
+
             # the node and it's list of edges is deleted
             self.list_nodes.remove(n)  # delete the node, error if nonexistent
             n.graph_id = None  # reset uid to reflect outside the graph
@@ -61,6 +61,12 @@ class Graph(object):
             for x in self.list_nodes:  # for all other nodes
                     while self.list_nodes[x].edges.count(n) != 0:  # remove n as many times as it appears in edges
                         self.list_nodes[x].edges.remove(n)
+                        # TODO: call delete_edge here instead?
+            # # every outside reference to the node is deleted -
+            # # TODO: IS THIS A FASTER WAY?
+            # for i in range(len(self.list_nodes)):
+            #     self.list_nodes[i].delete_edge(n)  # TODO: test this, if works, change other graph classes
+
         else:
             raise ValueError('Node not in graph, cannot delete node')
 
