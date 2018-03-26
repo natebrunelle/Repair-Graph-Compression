@@ -40,6 +40,7 @@ class GraphTestCase(unittest.TestCase):
         self.assertEquals(self.g.list_nodes.count(self.n3), 1)
         self.assertEquals(self.g.list_nodes, self.testList3)
         # TODO: self.assertRaises(ValueError, "Should raise error b/c node already in graph")
+        # or should fail quietly?
 
     def test_graph_add_node_edge(self):
         self.g.add_node(self.n4)

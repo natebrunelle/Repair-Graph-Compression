@@ -22,7 +22,7 @@ class Graph(object):
             for node in n_list:
                 self.add_node(node)
 
-    def add_edge(self, n1, n2):
+    def add_edge(self, n1, n2):  # TODO: changed params here, notify group
         """
         n1 must be/will be a node in the graph (1st param), if it isn't, it's added to the graph
         n2 can be in graph, doesn't have to be (add_node not called)
@@ -47,14 +47,20 @@ class Graph(object):
         """removes the node from the graph,
         clears the adj list therein,
         resets the node.graph_id = None,
-        DOES NOT remove external references to the node"""
-        # TODO: remove external references to the node? See complete graph
+        and removes external references to the node"""
+
         if n.graph_id == self.graph_id:
+            
             # the node and it's list of edges is deleted
             self.list_nodes.remove(n)  # delete the node, error if nonexistent
             n.graph_id = None  # reset uid to reflect outside the graph
             for x in n.edges:  # clear the adj list
                 self.delete_edge(x, n)
+
+            # every outside reference to the node is deleted - costly
+            for x in self.list_nodes:  # for all other nodes
+                    while self.list_nodes[x].edges.count(n) != 0:  # remove n as many times as it appears in edges
+                        self.list_nodes[x].edges.remove(n)
         else:
             raise ValueError('Node not in graph, cannot delete node')
 
@@ -136,122 +142,3 @@ class Cluster(Graph):
         rand_node = random.choice(self.list_nodes)
         self.add_edge(n, rand_node)
 
-
-"""
-These graphs will consist exclusively of nodes which
-are connected to every other node in the graph
-"""
-
-
-class CompleteGraph(Graph):
-    list_nodes = []
-
-    def __init__(self, n_list=None):  # n_list = None allows us to optionally pass all the nodes we want at start
-        if n_list:
-            Graph.__init__(n_list)  # this is a placeholder
-            # connect all nodes in n_list here
-            # may need to redesign functions or add new functions here.
-            # Maybe a hub and spoke function called recursively?
-        Graph.__init__(self, n_list)
-
-    def add_edge(self, n1, n2):
-        if n1 not in self.list_nodes or n2 not in self.list_nodes:
-            self.add_node(n1)
-            self.add_node(n2)
-        if n1 not in n2.edges:
-            n1.add_edge(n2)  # directed graph
-
-    def delete_edge(self, n1, n2):
-        if n1 in self.list_nodes and n2 in self.list_nodes:  # if edge inside graph and not out into cluster
-            raise ValueError('Edge removal violates complete graph structure')
-            # TODO: maybe this should be a warning, not an error, so it doesn't stop the program?
-        else:
-            n1.delete_edge(n2)  # directed graph
-
-    def delete_node(self, n):
-        """removes the node from the graph,
-        clears the adj list therein,
-        and removes all references other nodes hold to the deleted node"""
-        if n in self.list_nodes:
-            # the node and it's list of edges is deleted
-            self.list_nodes.remove(n)
-            for x in n.edges:
-                self.delete_edge(x, n)
-            # every outside reference to the node is deleted - costly
-            for x in self.list_nodes:  # for all other nodes
-                while self.list_nodes[x].edges.count(n) != 0:  # remove n as many times as it appears in edges
-                    self.list_nodes[x].edges.remove(n)
-        else:
-            raise ValueError('Node not in graph')
-
-    def add_node(self, n):  # TODO: Simonne check this
-        if n not in self.list_nodes:
-            self.list_nodes.append(n)
-            for i in range(len(self.list_nodes)):
-                self.list_nodes[i].add_edge(n)
-        else:
-            raise ValueError('Node already in graph')
-
-    """
-    Since every node ends up being connected to every other node
-    anyway, this method is effectively the same as add_node
-    """
-    # def add_node_rand(self, n):
-    #
-    #     return 0
-
-
-"""
-These graphs will consist of many nodes all connected
-only to one central hub node.
-This graph should implement from the top down a guaranteed connected graph 
-rather than the Graph class' possible bottom-up of creation of a connected graph
-"""
-
-
-class HubAndSpokeGraph(Graph):
-    list_nodes = []
-
-    def __init__(self, hub, n_list=None):
-        Graph.__init__(self, n_list)
-        self.hub_node = hub
-
-    def add_edge(self, n1, n2):
-        if self.hub_node not in (n1, n2):
-            raise ValueError('Hub node not targeted')  # wouldn't it be easier to change the parameters?
-            # Or overriding, so can't? IDK.  Is it necessary to override/can we create a new function?
-        else:
-            if n2 not in n1.edges:  # TODO: fix other classes so they look like this
-                n1.add_edge(n2)  # n2 is appended to n1's list
-
-    def delete_edge(self, n1, n2):
-        if n1 in n2.edges:
-            n1.delete_edge(n2)
-        else:
-            raise ValueError('Edge does not exist')  # TODO: should exit quietly instead?
-
-    def delete_node(self, n):
-        if n in self.list_nodes:
-            # TODO: call delete_edge remove n from nodes that list it in otherNode.edge
-            # see general Graph class above
-            self.list_nodes.remove(n)
-            for i in range(len(self.list_nodes)):
-                self.list_nodes[i].delete_edge(n)
-        else:
-            raise ValueError('Node does not exist, cannot be deleted')
-
-    def add_node(self, n):
-        if n not in self.list_nodes:
-            self.list_nodes.append(n)
-            n.add_edge(self.hub_node)
-        else:
-            raise ValueError('Node already exists in graph')
-            # TODO: exit/fail quietly w/out error b/c called by other functions
-
-    """
-    Not necessary since an add is not allowed unless the hub is
-    targeted; adding a random node is effectively no different
-    than adding a particular node
-    """
-    # def add_node_rand(self, n):
-    #
