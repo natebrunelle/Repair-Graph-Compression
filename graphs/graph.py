@@ -63,7 +63,7 @@ class Graph(object):
                         self.list_nodes[x].edges.remove(n)
                         # TODO: call delete_edge here instead?
             # # every outside reference to the node is deleted -
-            # # TODO: IS THIS A FASTER WAY?
+            # # IS THIS A FASTER WAY?
             # for i in range(len(self.list_nodes)):
             #     self.list_nodes[i].delete_edge(n)  # TODO: test this, if works, change other graph classes
 
@@ -147,4 +147,3 @@ class Cluster(Graph):
         """
         rand_node = random.choice(self.list_nodes)
         self.add_edge(n, rand_node)
-
