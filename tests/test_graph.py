@@ -27,12 +27,12 @@ class GraphTestCase(unittest.TestCase):
         self.g.add_edge(self.n1, self.n2)  # n2 is added to n1's list
         self.g.add_edge(self.n1, self.n2)
         self.assertNotIn(self.n1, self.n2.edges)  # n1 is not added to n2's list
-        self.assertIn(self.n1.edges.count(self.n2), 1)
+        self.assertEqual(self.n1.edges.count(self.n2), 1)
 
     def test_graph_add_node(self):  # should add to list_nodes, this is diff between add_node and add_edge
         self.g.add_node(self.n4)
         self.assertIn(self.n4, self.g.list_nodes, "list_nodes not updated")
-        self.assertEquals(self.g.graph_id, self.n4.graph_id)  # test the uid or UUID
+        self.assertEqual(self.g.graph_id, self.n4.graph_id)  # test the uid or UUID
 
     def test_graph_duplicate_add_node(self):
         self.assertIn(self.n3, self.g.list_nodes)
@@ -76,8 +76,8 @@ class GraphTestCase(unittest.TestCase):
         self.g.add_edge(self.n1, self.n2)
         self.g.delete_node(self.n1)
         self.assertNotIn(self.n1, self.g.list_nodes, "Node not deleted")  # n1 no longer listed in graph
-        self.assertEquals(self.n1.edges, [], "Node's adj list not cleared")  # n1 has no adj nodes
         self.assertIn(self.n2, self.g.list_nodes, "Wrong node deleted")
+        self.assertEquals(self.n1.edges, [], "Node's adj list not cleared")  # n1 has no adj nodes
         self.assertNotIn(self.n1, self.n2.edges, "Found outside reference to deleted node")
         # n1 should have no outside references in other nodes (here, n2) adj_lists
 
@@ -99,12 +99,14 @@ class GraphTestCase(unittest.TestCase):
     def test_delete_nonexistent_edge(self):
         self.assertNotIn(self.n4, self.n1.edges)
         self.g.delete_edge(self.n1, self.n4)  # n4 attempted removed from n1's list
-        self.assertRaises("Value Error")
+        self.assertRaises(ValueError)
 
     def test_delete_nonexistent_node(self):
         self.assertNotIn(self.n4, self.g.list_nodes)
-        self.g.delete_node(self.n4)
-        self.assertRaises("Value Error")
+        try:
+            self.g.delete_node(self.n4)
+        except ValueError:
+            self.assertEqual(0, 0, "ValueError not found when it should have been")
 
     # TODO: also test deleting in various order
 

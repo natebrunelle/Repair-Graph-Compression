@@ -58,13 +58,12 @@ class Graph(object):
                 self.delete_edge(x, n)
 
             # every outside reference to the node is deleted - costly
-            for x in self.list_nodes:  # for all other nodes
+            for x in range(len(self.list_nodes)):  # for all other nodes
                     while self.list_nodes[x].edges.count(n) != 0:  # remove n as many times as it appears in edges
                         self.list_nodes[x].edges.remove(n)
                         # TODO: call delete_edge here instead?
             # # every outside reference to the node is deleted -
             # # IS THIS A FASTER WAY?
-            # for i in range(len(self.list_nodes)):
             #     self.list_nodes[i].delete_edge(n)  # TODO: test this, if works, change other graph classes
 
         else:
