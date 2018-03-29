@@ -45,7 +45,6 @@ class CompleteGraph(Graph):
         # original implementation here moved to graph class b/c general graphs should use it too
         super().delete_node(n)
 
-
     def add_node(self, n):
         """
         Adds a node and connects it to all other nodes in the complete graph
@@ -59,4 +58,3 @@ class CompleteGraph(Graph):
                 self.list_nodes[i].add_edge(n)  # should call Node.add_edge
         # else:
         #     raise ValueError('Node already in graph')
-
