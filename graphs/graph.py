@@ -52,10 +52,10 @@ class Graph(object):
         if n.graph_id == self.graph_id:
 
             # the node and it's list of edges is deleted
+            for x in n.edges:  # clear the adj list
+                self.delete_edge(n, x)
             self.list_nodes.remove(n)  # delete the node, error if nonexistent
             n.graph_id = None  # reset uid to reflect outside the graph
-            for x in n.edges:  # clear the adj list
-                self.delete_edge(x, n)
 
             # every outside reference to the node is deleted - costly
             for x in range(len(self.list_nodes)):  # for all other nodes

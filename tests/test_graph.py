@@ -80,6 +80,7 @@ class GraphTestCase(unittest.TestCase):
         self.assertEquals(self.n1.edges, [], "Node's adj list not cleared")  # n1 has no adj nodes
         self.assertNotIn(self.n1, self.n2.edges, "Found outside reference to deleted node")
         # n1 should have no outside references in other nodes (here, n2) adj_lists
+        # TODO: must test in all graph files that graph_id is reset
 
     # Depreciated test?
     # def test_delete_node_delete_edge(self):
