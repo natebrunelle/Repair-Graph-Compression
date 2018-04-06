@@ -123,4 +123,7 @@ class GraphFactoryAlphaNumeric(GraphFactory):
             node_value = self.get_random_alpha_numeric()
             graph.add_node(Node(node_value))
 
+        # shuffle the nodes
+        random.shuffle(graph.list_nodes)
+
         return graph
