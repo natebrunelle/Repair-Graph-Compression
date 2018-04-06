@@ -3,6 +3,7 @@ import uuid
 
 
 class Node:
+
     def __init__(self, value, edges=[]):
         self.value = value
         self.edges = edges
@@ -17,7 +18,7 @@ class Node:
         if node in self.edges:
             self.edges.remove(node)
 
-    def replace(self, node1, node2, repairNode):
+    def replace(self, node1, node2, repair_node):
         if node1 in self.edges and node2 in self.edges:
             index_node1 = self.edges.index(node1)
             index_node2 = self.edges.index(node2)
@@ -26,10 +27,10 @@ class Node:
 
                 self.delete_edge(node1)
                 self.delete_edge(node2)
-                self.edges.insert(index_node1, repairNode)
+                self.edges.insert(index_node1, repair_node)
 
     def __eq__(self, node2):
-        ''' overrides the equals method '''
+        """overrides the equals method"""
 
         if not isinstance(node2, Node):
             return False
@@ -41,7 +42,7 @@ class Node:
         return False
 
     def __gt__(self, node2):
-        ''' overrides the greater than method '''
+        """overrides the greater than method """
 
         if not isinstance(node2, Node):
             return False
@@ -59,7 +60,7 @@ class Node:
         return False
 
     def __lt__(self, node2):
-        ''' overrides the less than method '''
+        """overrides the less than method"""
 
         if not isinstance(node2, Node):
             return False
@@ -77,12 +78,12 @@ class Node:
         return False
 
     def __hash__(self):
-        ''' Makes node objects hashable so they can be used as keys in dict '''
+        """Makes node objects hashable so they can be used as keys in dict """
 
-        return hash((self.uid))
+        return hash(self.uid)
 
     def __str__(self):
-        ''' overriding the str method, helps when debugging '''
+        """overriding the str method, helps when debugging """
 
         return "ID: " + str(self.uid.int) + "\tValue: [" + str(
             self.value) + "]"
