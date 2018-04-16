@@ -29,6 +29,10 @@ class Graph(object):
         n2 can be in graph, doesn't have to be (add_node not called), must be not equal to n1
         add additional rules for new graph implementations
         """
+        # This is an unfair policy for n1 and n2.
+        # N1 has to be in the graph, and then n2 is added to n1's list
+        # if you wanted n2 to remain outside the graph and to have n1 added to n1's list,
+        # that's not possible here and so this function is unfair.
         if n1.graph_id != self.graph_id:  # check if n1 not in graph
             self.add_node(n1)
         if n1 != n2:  # prevent looping edges, nodes that refer to themselves

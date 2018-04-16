@@ -16,7 +16,8 @@ class CompleteGraph(Graph):
             # may need to redesign functions or add new functions here.
             # Maybe a hub and spoke function called recursively?
         else:
-            super().__init__([])  # this is a more complex option
+            super().__init__(None)  # this is a more complex option
+            super().__init__(None)  # this is a more complex option
             # building the complete graph not all at once, dynamically
             # we may not want to support this
 

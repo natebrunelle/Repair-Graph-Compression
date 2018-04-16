@@ -35,72 +35,69 @@ class GraphTestCase(unittest.TestCase):
         self.n6.edges = []
         # delete entire graph?
 
-    def test_graph_add_edge(self):
-        # since node count shouldn't change, this is now testing what the node does,
-        # rather than the graph
+    def test_add_edge(self):
         self.g.add_edge(self.n1, self.n2)
         self.assertIn(self.n2, self.n1.edges, "Adj list: edge not added")
-        self.assertEqual(self.n1.edges.count(self.n2), 1, "Adj list: n2 should appear 1x")
+        self.assertEqual(self.n1.edges.count(self.n2), 1, "Adj list: n2 should appear 1x, no duplicates")
         self.assertCountEqual(self.n1.edges, [self.n2], "Adj list not exactly as expected")
-        # TODO: figure out how the extra edge is appearing and what node is responsible
 
-    def test_graph_add_outside_edge(self):
+    def test_add_outside_edge(self):
         self.assertNotIn(self.n4, self.g.list_nodes)  # n4 is outside graph
         self.g.add_edge(self.n1, self.n4)
         self.assertIn(self.n4, self.n1.edges, "Adj lists not updated")
-        self.assertEqual(self.n1.edges.count(self.n4), 1, "Adj lists not updated or has duplicates")
-        # self.assertEqual(len(self.n1.edges), 1, "Adj lists not updated")
+        self.assertCountEqual(self.n1.edges, [self.n4], "Adj list not exactly as expected")
 
-    def test_graph_duplicate_add_edge(self):
+    def test_duplicate_add_edge(self):
         # node count shouldn't change
         self.g.add_edge(self.n1, self.n2)  # n2 is added to n1's list
         self.g.add_edge(self.n1, self.n2)
         self.assertNotIn(self.n1, self.n2.edges)  # n1 is not added to n2's list
         self.assertEqual(self.n1.edges.count(self.n2), 1)
+        self.assertCountEqual(self.n1.edges, [self.n2], "Adj list not exactly as expected")
 
-    def test_graph_add_node(self):  # should add to list_nodes, this is diff between add_node and add_edge
+    def test_edge_to_self(self):
+        self.g.add_edge(self.n1, self.n1)
+        self.assertNotIn(self.n1, self.n1.edges)
+        self.assertCountEqual(self.n1.edges, [], "Adj list not exactly as expected")
+
+    def test_add_node(self):  # should add to list_nodes, this is diff between add_node and add_edge
         self.assertNotIn(self.n4, self.g.list_nodes, "n4 is already in graph")
         self.g.add_node(self.n4)
         self.assertIn(self.n4, self.g.list_nodes, "list_nodes not updated")
-        self.assertEqual(self.g.graph_id, self.n4.graph_id)  # test the uid or UUID
+        self.assertEqual(self.g.graph_id, self.n4.graph_id, "UUID not set to graph_id")
+        self.assertCountEqual(self.g.list_nodes, self.testList4, "Adj list not exactly as expected")
 
     def test_graph_duplicate_add_node(self):
-        self.assertNotIn(self.n4, self.g.list_nodes, "n4 is already in graph, TESTS ARE STUPID")
         self.assertIn(self.n3, self.g.list_nodes)
         self.g.add_node(self.n3)
         self.assertEqual(self.g.list_nodes.count(self.n3), 1)
-        self.assertEqual(self.g.list_nodes, self.testList3)
+        self.assertCountEqual(self.g.list_nodes, self.testList3)
 
     def test_graph_add_node_edge(self):
-        self.assertNotIn(self.n4, self.g.list_nodes, "n4 is already in graph, TESTS ARE STUPID")
+        self.assertNotIn(self.n4, self.g.list_nodes, "n4 is already in graph")
         self.g.add_node(self.n4)
         self.g.add_edge(self.n1, self.n4)
         self.assertEqual(self.g.list_nodes, self.testList4)
         self.assertIn(self.n4, self.n1.edges)
 
     def test_graph_add_edge_node(self):
-        self.assertNotIn(self.n4, self.g.list_nodes, "n4 is already in graph, TESTS ARE STUPID")
-        self.g.add_edge(self.n1, self.n4)  # should add_node
+        # discovered problem - inherent unfairness to the add_edge function - see graph class
+        self.assertNotIn(self.n4, self.g.list_nodes, "n4 is already in graph")
+        self.g.add_edge(self.n4, self.n1)  # should add_node for n4
+        self.assertIn(self.n1, self.n4.edges)
+        self.assertIn(self.n4, self.g.list_nodes)
         self.g.add_node(self.n4)  # should be prevented from adding 2x
-        self.assertEqual(self.g.list_nodes, self.testList4)
-        self.assertIn(self.n4, self.n1.edges)
+        self.assertEqual(self.n1.edges.count(self.n4), 1)
+        self.assertCountEqual(self.g.list_nodes, self.testList4)
 
-        # TODO: need to write new tests to reflect new strict parameters in add_edge
-
-    def test_new_node_add_edge(self):
-        self.assertNotIn(self.n4, self.g.list_nodes, "n4 is already in graph, TESTS ARE STUPID")
-        self.g.add_edge(self.n1, self.n4)
-        # if new node added by edge, should be added to list_nodes? (No, Currently isn't)
-        self.assertEqual(len(self.g.list_nodes), 3)  # 3 not 4 because that's how clusters work - not our def of graph
-        self.assertEqual(self.g.list_nodes, self.testList3)
-        # also shouldn't be added to list_nodes b/c that's the job of add_node
+        # TODO: need to write new tests to reflect new strict parameters in add_edge (unfair - add new function?)
 
     # def test_cluster_graphs_linked(self):
     #     # self.g.add_edge(self.n1, self.n4)  # n4 is node in another graph
     #     self.assertEqual(0, 0)
     #     # ...
 
-    def test_delete_edge(self):  # this now tests node things,
+    def test_delete_edge(self):
         self.assertNotIn(self.n4, self.g.list_nodes, "n4 is already in graph, TESTS ARE STUPID")
         self.assertTrue(self.n1 in self.g.list_nodes or self.n2 in self.g.list_nodes, "both parameters not in graph")
         # TODO: this is where the second parameter may/may not be in graph
