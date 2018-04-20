@@ -18,16 +18,23 @@ class Graph(object):
 
     def add_edge(self, n1, n2):  # TODO: changed params here, notify group
         """
-        n1 must be/will be a node in the graph (1st param), if it isn't, it's added to the graph
-        n2 can be in graph, doesn't have to be (add_node not called)
         n2 is added to n1's adj list by calling Node.add_edge()
-        Needs to be redefined by other graphs to check for duplicates,
+        n1 must be/will be a node in the graph (1st param), if it isn't, it's added to the graph
+        n2 can be in graph, doesn't have to be (add_node not called), must be not equal to n1
         add additional rules for new graph implementations
         """
+        # This is an unfair policy for n1 and n2.
+        # N1 has to be in the graph, and then n2 is added to n1's list
+        # if you wanted n2 to remain outside the graph and to have n1 added to n1's list,
+        # that's not possible here and so this function is unfair.
         if n1.graph_id != self.graph_id:  # check if n1 not in graph
             self.add_node(n1)
-        n1.add_edge(
-            n2)  # n2 is appended to n1's list, not vice versa, directed graph
+
+        if n1 != n2:  # prevent looping edges, nodes that refer to themselves
+            if n1.edges.count(n2) < 1:  # prevent duplicates
+                n1.add_edge(
+                    n2
+                )  # n2 is appended to n1's list, not vice versa, directed graph
 
     def delete_edge(self, n1, n2):
         """
@@ -35,9 +42,21 @@ class Graph(object):
         One node must be in graph, the other doesn't have to be (so can remove edges between graphs)
         """
         if n1.graph_id == self.graph_id or n2.graph_id == self.graph_id:  # if either in graph, try deleting
-            n1.delete_edge(
-                n2)  # List.remove() throws ValueError if remove non existing
+            # TODO: need to add removing duplicates
+            while n1.edges.count(
+                    n2) != 0:  # remove n as many times as it appears in edges
+                try:
+                    n1.delete_edge(
+                        n2
+                    )  # List.remove() throws ValueError if remove non existing
             # n2.delete_edge(n1) our's is a directed graph, must call delete_edge 2x if want no connections at all
+            # n1.edges.remove(n4) param is n4, aka n1.delete_edge(n4)
+                except ValueError:
+                    raise ValueError(
+                        "Tried to remove a node that isn't present")
+        else:
+            raise ValueError(
+                'Both Nodes not in graph, cannot delete edge from this graph')
 
     def delete_node(self, n):
         """removes the node from the graph,
@@ -48,21 +67,17 @@ class Graph(object):
         if n.graph_id == self.graph_id:
 
             # the node and it's list of edges is deleted
-            for x in n.edges:  # clear the adj list
-                self.delete_edge(n, x)
+            n.edges = []  # clear the adj list
             self.list_nodes.remove(n)  # delete the node, error if nonexistent
+            # TODO: test for this error
             n.graph_id = None  # reset uid to reflect outside the graph
 
             # every outside reference to the node is deleted - costly
             for x in range(len(self.list_nodes)):  # for all other nodes
-                while self.list_nodes[x].edges.count(
-                        n
-                ) != 0:  # remove n as many times as it appears in edges
-                    self.list_nodes[x].edges.remove(n)
-                    # TODO: call delete_edge here instead?
-            # # every outside reference to the node is deleted -
-            # # IS THIS A FASTER WAY?
-            #     self.list_nodes[i].delete_edge(n)  # TODO: test this, if works, change other graph classes
+                self.list_nodes[x].delete_edge(
+                    n)  # delete_edge should remove duplicates
+                # so all instances of n should be removed from x's adj list
+            # TODO: test this, if works, change other graph classes
 
         else:
             raise ValueError('Node not in graph, cannot delete node')
