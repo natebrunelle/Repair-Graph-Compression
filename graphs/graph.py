@@ -12,15 +12,9 @@ class Graph(object):
     # this doesn't actually show if node is CURRENTLY in graph though,
     # as it could have been deleted and still have the same uid
 
-    def __init__(self, n_list=None):
-
-        self.list_nodes = []
+    def __init__(self):
+        self.list_nodes = list()
         self.graph_id = uuid.uuid4()
-
-        # add the nodes passed in
-        if n_list:
-            for node in n_list:
-                self.add_node(node)
 
     def add_edge(self, n1, n2):  # TODO: changed params here, notify group
         """
@@ -32,7 +26,8 @@ class Graph(object):
         """
         if n1.graph_id != self.graph_id:  # check if n1 not in graph
             self.add_node(n1)
-        n1.add_edge(n2)  # n2 is appended to n1's list, not vice versa, directed graph
+        n1.add_edge(
+            n2)  # n2 is appended to n1's list, not vice versa, directed graph
 
     def delete_edge(self, n1, n2):
         """
@@ -40,7 +35,8 @@ class Graph(object):
         One node must be in graph, the other doesn't have to be (so can remove edges between graphs)
         """
         if n1.graph_id == self.graph_id or n2.graph_id == self.graph_id:  # if either in graph, try deleting
-            n1.delete_edge(n2)  # List.remove() throws ValueError if remove non existing
+            n1.delete_edge(
+                n2)  # List.remove() throws ValueError if remove non existing
             # n2.delete_edge(n1) our's is a directed graph, must call delete_edge 2x if want no connections at all
 
     def delete_node(self, n):
@@ -59,9 +55,11 @@ class Graph(object):
 
             # every outside reference to the node is deleted - costly
             for x in range(len(self.list_nodes)):  # for all other nodes
-                    while self.list_nodes[x].edges.count(n) != 0:  # remove n as many times as it appears in edges
-                        self.list_nodes[x].edges.remove(n)
-                        # TODO: call delete_edge here instead?
+                while self.list_nodes[x].edges.count(
+                        n
+                ) != 0:  # remove n as many times as it appears in edges
+                    self.list_nodes[x].edges.remove(n)
+                    # TODO: call delete_edge here instead?
             # # every outside reference to the node is deleted -
             # # IS THIS A FASTER WAY?
             #     self.list_nodes[i].delete_edge(n)  # TODO: test this, if works, change other graph classes

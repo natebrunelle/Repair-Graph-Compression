@@ -1,5 +1,6 @@
 from graphs.graph import Graph
 
+
 """
 These graphs will consist exclusively of nodes which
 are connected to every other node in the graph
@@ -7,18 +8,15 @@ are connected to every other node in the graph
 
 
 class CompleteGraph(Graph):
-
-    def __init__(self, n_list=None):
+    def __init__(self):
         # n_list = None allows us to optionally pass all the nodes we want at start
-        if n_list:
-            super().__init__(n_list)  # this is a placeholder
-            # connect all nodes in n_list here
-            # may need to redesign functions or add new functions here.
-            # Maybe a hub and spoke function called recursively?
-        else:
-            super().__init__([])  # this is a more complex option
-            # building the complete graph not all at once, dynamically
-            # we may not want to support this
+
+        super().__init__()  # this is a placeholder
+        # connect all nodes in n_list here
+        # may need to redesign functions or add new functions here.
+        # Maybe a hub and spoke function called recursively?
+        # building the complete graph not all at once, dynamically
+        # we may not want to support this
 
     def add_edge(self, n1, n2):
         """

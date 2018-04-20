@@ -1,25 +1,24 @@
 from graphs.graph import Graph
 
+
 """
 These graphs will consist of many nodes all connected
 only to one central hub node.
-This graph should implement from the top down a guaranteed connected graph 
+This graph should implement from the top down a guaranteed connected graph
 rather than the Graph class' possible bottom-up of creation of a connected graph
 """
 
 
 class HubAndSpoke(Graph):
-
-    def __init__(self, hub, nodes=None):
+    def __init__(self, hub):
         self.hub_node = hub  # Could set the hub's id to the graph's id, but no reason to
-        if nodes:
-            super().__init__(nodes)
-        else:
-            super().__init__([])
+        super().__init__()
 
     def add_edge(self, n1, n2):
         if self.hub_node not in (n1, n2):
-            raise ValueError('Hub node not targeted')  # wouldn't it be easier to change the parameters?
+            raise ValueError(
+                'Hub node not targeted'
+            )  # wouldn't it be easier to change the parameters?
             # Or overriding, so can't? IDK.  Is it necessary to override/can we create a new function?
         else:
             if n2 not in n1.edges:
@@ -39,7 +38,8 @@ class HubAndSpoke(Graph):
         and removes all references other nodes hold to the deleted node
         """
         if n == self.hub_node:
-            raise ValueError('Deleting hub node leaves unconnected and misleading graph')
+            raise ValueError(
+                'Deleting hub node leaves unconnected and misleading graph')
         super().delete_node(n)
 
     def add_node(self, n):

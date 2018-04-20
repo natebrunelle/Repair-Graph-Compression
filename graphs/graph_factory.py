@@ -60,7 +60,7 @@ class GraphFactoryNoData(GraphFactory):
             graph = HubAndSpoke()
 
         else:
-            graph = Graph([])
+            graph = Graph()
 
         # create the nodes
         for _ in range(self.num_of_nodes):
@@ -115,7 +115,7 @@ class GraphFactoryAlphaNumeric(GraphFactory):
             graph = HubAndSpoke()
 
         else:
-            graph = Graph([])
+            graph = Graph()
 
         # create the nodes
         for _ in range(self.num_of_nodes):

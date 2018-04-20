@@ -3,10 +3,9 @@ import uuid
 
 
 class Node:
-
-    def __init__(self, value, edges=[]):
+    def __init__(self, value, edges=None):
         self.value = value
-        self.edges = edges
+        self.edges = []
         self.uid = uuid.uuid4()
         self.graph_id = None
 
