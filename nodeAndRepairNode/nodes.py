@@ -1,11 +1,21 @@
 # Rahul Tuladhar Nick Taylor 2/12/18
 import uuid
+import logging
 
+
+logging.basicConfig(filename="repair_main.log", level=logging.DEBUG,
+        format="[%(name)s] [%(asctime)s] [%(levelname)s] %(message)s")
+log = logging.getLogger(__name__)
 
 class Node:
     def __init__(self, value, edges=None):
         self.value = value
-        self.edges = []
+        if edges:
+            self.edges = edges
+            log.info("Created a node with edges.")
+        else:
+            self.edges = list()
+            log.info("Created a node with no edges.")
         self.uid = uuid.uuid4()
         self.graph_id = None
 
@@ -34,6 +44,9 @@ class Node:
         if not isinstance(node2, Node):
             return False
 
+        if self.graph_id is None or node2.graph_id is None:
+            return False
+
         if self.graph_id == node2.graph_id:
             if self.uid == node2.uid:
                 return True
@@ -44,6 +57,9 @@ class Node:
         """overrides the greater than method """
 
         if not isinstance(node2, Node):
+            return False
+
+        if self.graph_id is None or node2.graph_id is None:
             return False
 
         if self.graph_id.int > node2.graph_id.int:
@@ -62,6 +78,9 @@ class Node:
         """overrides the less than method"""
 
         if not isinstance(node2, Node):
+            return False
+
+        if self.graph_id is None or node2.graph_id is None:
             return False
 
         if self.graph_id < node2.graph_id:

@@ -41,19 +41,11 @@ def weakly_connected_graphs(connection_num, graph_num, edge_num,
 # create all the graphs
     for _ in range(graph_num):
         graphs.append(graph_factory.get_graph())
-    
-    
 
-    
-    print("right here!")
     node1 = random.choice(graphs[1].list_nodes)
     node2 = random.choice(graphs[0].list_nodes)
-    print("graph0 " + str(graphs[0]))
-    print("graph1 " + str(graphs[1]))
 
     graphs[0].add_edge(node2, node1)
-    print("graph0 " + str(graphs[0]))
-    print("graph1 " + str(graphs[1]))
 
 #    for i in range(0,len(graphs[0].list_nodes)):
 #        print(str(graphs[0].list_nodes[i]))
@@ -83,4 +75,4 @@ def weakly_connected_graphs(connection_num, graph_num, edge_num,
 #        else:
 #            graphs[random1].add_edge(randomNode1, randomNode2)
 #            counter = counter + 1
-    return graphs[0]
+    return graphs

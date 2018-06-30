@@ -119,7 +119,7 @@ class Repair:
     def compress(self):
         ''' Compresses the graph passed into the class
 
-        It updates the iternal dictionary, creates a dictionary node for the most,
+        It updates the iternal dictionary, creates a dictionary node for the most
         common pair, unless all are unique (freq == 1), recurse.
         '''
 
