@@ -10,7 +10,6 @@ from graphs.graph import Graph
 
 class TestGraphGenerator(TestCase):
     def setUp(self):
-        print("hello")
         self.n1 = Node(1)
         self.n2 = Node(2)
         self.n3 = Node(3)
@@ -19,15 +18,17 @@ class TestGraphGenerator(TestCase):
         # self.g = Graph([self.n1, self.n2, self.n3])
         self.gf = GraphFactoryAlphaNumeric(GraphTypes(3), 10)
         #weakly_connected_graphs(connection_num, graph_num, edge_num, graph_factory):
-        print("hello1")
+    # connection_num, graph_num, edge_num, graph_factory)
 
         self.g = weakly_connected_graphs(20, 10, 11, self.gf)
-        print("done")
     # def test_graph_generator(self):
     #     # weakly_connected_graphs(connection_num, graph_num, edge_num, graph_factory):
     #     g = weakly_connected_graph(10, 20, 10, self.gf)
     #     self.assertEqual(self.gf )
 
+
+        for graph in self.g:
+            print(graph)
     # connections
     def test_num_connections(self):
         self.assertEqual(len(self.g.list_nodes), 10, "Wrong number of connections between graphs")
@@ -53,5 +54,3 @@ class TestGraphGenerator(TestCase):
     # # if connections are valid1
     # def test_correct_connections(self):
     #     pass
-
-

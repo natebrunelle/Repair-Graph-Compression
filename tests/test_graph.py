@@ -33,7 +33,6 @@ class GraphTestCase(unittest.TestCase):
         self.n4.edges = []
         self.n5.edges = []
         self.n6.edges = []
-        # delete entire graph?
 
     def test_add_edge(self):
         self.g.add_edge(self.n1, self.n2)
@@ -86,23 +85,16 @@ class GraphTestCase(unittest.TestCase):
         self.g.add_edge(self.n4, self.n1)  # should add_node for n4
         self.assertIn(self.n1, self.n4.edges)
         self.assertIn(self.n4, self.g.list_nodes)
+
         self.g.add_node(self.n4)  # should be prevented from adding 2x
-        self.assertEqual(self.n1.edges.count(self.n4), 1)
+        self.assertEqual(self.n4.edges.count(self.n1), 1)
         self.assertCountEqual(self.g.list_nodes, self.testList4)
 
-        # TODO: need to write new tests to reflect new strict parameters in add_edge (unfair - add new function?)
-
-    # def test_cluster_graphs_linked(self):
-    #     # self.g.add_edge(self.n1, self.n4)  # n4 is node in another graph
-    #     self.assertEqual(0, 0)
-    #     # ...
-
     def test_delete_edge(self):
-        self.assertNotIn(self.n4, self.g.list_nodes, "n4 is already in graph, TESTS ARE STUPID")
         self.assertTrue(self.n1 in self.g.list_nodes or self.n2 in self.g.list_nodes, "both parameters not in graph")
-        # TODO: this is where the second parameter may/may not be in graph
         self.g.add_edge(self.n1, self.n2)
-        self.g.delete_edge(self.n1, self.n2)  # n2 removed from n1's list
+        self.g.delete_edge(self.n1, self.n2)
+
         self.assertEqual(len(self.g.list_nodes), 3, "Node_count for graph incorrect")
         self.assertEqual(self.g.list_nodes, self.testList3, "Graph modified by delete_edge")
         # an edge, but not a node deleted, n2 still in list_nodes and the graph
