@@ -89,7 +89,7 @@ class TestNodeAndRepairNode(unittest.TestCase):
         self.n5.graph_id = 2
 
         self.n4.graph_id=-1
-        self.n5.graph_id=-1
+        self.n5.graph_id=1
 
         self.assertTrue(self.n5 > self.n4)
         self.assertFalse(self.n4 > self.n5)
