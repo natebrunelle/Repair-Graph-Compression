@@ -51,6 +51,9 @@ class Graph(object):
 
     def delete_edge(self, n1, n2):
         """
+        :param n1: One of the two nodes that form the edge.
+        :param n2: The second node that forms the edge.
+
         n2 is removed from n1's adj list by calling Node.delete_edge()
         One node must be in graph, the other doesn't have to be
         so can remove edges between graphs.
@@ -112,7 +115,7 @@ class Graph(object):
         """
         Compares two graphs for equality
 
-        @Warning This can be very slow.
+        .. warning:: This can be very slow.
         Don't compare two graphs unless you are in a test env.
 
         Two graphs are considered equal iff they have the same exact nodes,

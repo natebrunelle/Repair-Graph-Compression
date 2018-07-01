@@ -57,7 +57,8 @@ class GraphFactoryNoData(GraphFactory):
             graph = CompleteGraph()
 
         elif self.graph_type.value == 2:
-            graph = HubAndSpoke()
+            graph = HubAndSpoke(Node(""))
+            self.num_of_nodes-=1
 
         else:
             graph = Graph()
@@ -74,8 +75,8 @@ class GraphFactoryAlphaNumeric(GraphFactory):
     graph with alpahnumeric values. Pass a random seed other than -1
     to set the seed.
 
-    @Note: it doesn't create any edges b/n the nodes. Call rand edge
-    from graph if you would like to randomly create the edges.
+    .. note:: it doesn't create any edges b/n the nodes. Call rand edge
+            from graph if you would like to randomly create the edges.
     '''
 
     def __init__(self, graph_type, num_of_nodes, random_seed=-1):
@@ -112,10 +113,12 @@ class GraphFactoryAlphaNumeric(GraphFactory):
             graph = CompleteGraph()
 
         elif self.graph_type.value == 2:
-            graph = HubAndSpoke()
+            graph = HubAndSpoke(Node(self.get_random_alpha_numeric()))
+            self.num_of_nodes-=1
 
         else:
             graph = Graph()
+
 
         # create the nodes
         for _ in range(self.num_of_nodes):

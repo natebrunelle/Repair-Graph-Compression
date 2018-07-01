@@ -16,10 +16,13 @@ def weakly_connected_graphs(connection_num, graph_num, edge_num,
     '''
     generates a group of connected graphs as specified by the parameters:
 
-    connection_num: the number of connections we expect to see on ave
-    graph_num: the number of graph in the cluster
-    edge_num: the number of edges we expect to see within each graph on ave
-    graph_factory: an instance of a graph factory to specify the kind of graphs
+    :param connection_num: the number of connections we expect to see on ave
+    :param graph_num: the number of graph in the cluster
+    :param edge_num: the number of edges we expect to see within each graph on ave
+    :param graph_factory: an instance of a graph factory to specify the kind of graphs
+
+    :return: A group of 1 or more graphs connected into one large graph
+    :return_type: Graph
     '''
 
     # if bad input, silently correct it
