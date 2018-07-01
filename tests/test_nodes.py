@@ -1,7 +1,6 @@
 import unittest
-
+from uuid import UUID, uuid4
 from nodeAndRepairNode.nodes import Node, RepairNode
-
 
 class TestNodeAndRepairNode(unittest.TestCase):
     def setUp(self):
@@ -72,7 +71,7 @@ class TestNodeAndRepairNode(unittest.TestCase):
         self.n4.uid = 4
         self.n3.uid = 4
 
-        self.assertTrue(self.n4 == self.n3, "Equality doesn't hold")
+        self.assertEqual(self.n4, self.n3, "Equality doesn't hold")
 
     def test_gt_op(self):
         """tests the greater than method override"""
@@ -88,6 +87,9 @@ class TestNodeAndRepairNode(unittest.TestCase):
 
         self.n4.graph_id = 1
         self.n5.graph_id = 2
+
+        self.n4.graph_id=-1
+        self.n5.graph_id=-1
 
         self.assertTrue(self.n5 > self.n4)
         self.assertFalse(self.n4 > self.n5)
@@ -127,7 +129,7 @@ class TestNodeAndRepairNode(unittest.TestCase):
     def test_node_str(self):
         """tests that the node has the right string output"""
         node1 = Node(5, [])
-        self.assertEqual(str(node1), 'ID: ' + str(node1.uid.int) + '\tValue: [5]', 'Wrong string outputed')
+        self.assertEqual(str(node1), 'ID: ' + str(node1.uid) + '\tValue: [5]', 'Wrong string outputed')
 
 # def test_add_repair_node_edge():
 # 	self.rnn.

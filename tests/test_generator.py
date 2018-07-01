@@ -28,7 +28,7 @@ class TestGraphGenerator(TestCase):
 
 
         for graph in self.g:
-            print(graph)
+            pass #print(graph)
     # connections
     def test_num_connections(self):
         self.assertEqual(len(self.g.list_nodes), 10, "Wrong number of connections between graphs")

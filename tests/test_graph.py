@@ -113,35 +113,12 @@ class GraphTestCase(unittest.TestCase):
     def test_delete_node(self):
         self.assertIn(self.n1, self.g.list_nodes, "n1 is not part of this graph to be removed")
         self.assertNotIn(self.n2, self.n1.edges, "n2 is already in n1.edges")  # since this is true...
-        # print("graph g = \n" + str(self.g) + " end of g ")  # consistently shows 3 nodes in n1.edges
-        # print("n1.edges = ")
-        # for x in range(len(self.n1.edges)):
-        #     print(self.n1.edges[x])
-        #     # despite that, it sometimes shows 2 or 3 nodes, some with duplicates??? shouldn't be possible
-        # print("end of n1.edges")
         self.g.add_edge(self.n1, self.n2)  # THIS NEEDS TO BE FULLY TESTED ELSEWHERE
         self.g.delete_node(self.n1) # ...this is already true
         self.assertNotIn(self.n1, self.g.list_nodes, "Node not deleted")  # n1 no longer listed in graph
         self.assertIn(self.n2, self.g.list_nodes, "Wrong node deleted")
         self.assertNotIn(self.n1, self.n2.edges, "Found outside reference to deleted node")
         self.assertEqual(self.n1.edges, [], "Node's adj list not cleared")  # n1 has no adj nodes
-        # n1 should have no outside references in other nodes (here, n2) adj_lists
-        # TODO: must test in all graph files that graph_id is reset
-
-    # Depreciated test?
-    # def test_delete_node_delete_edge(self):
-    #     self.g.add_edge(self.n2, self.n1)  # g initialized w/n1 and n2, but no connecting edges
-    #     # each should be added to other's adj list.
-    #     self.g.delete_edge(self.n1, self.n2)
-    #     self.assertEqual(self.n1.edges, [])
-    #     self.assertEqual(self.n2.edges, [])
-    #     # some assert here...
-
-    def test_delete_edge_delete_node(self):
-        # we can still access deleted nodes through the uid.
-        # so we can still give it edges, although deleted node's adj list should be blank
-        self.assertEqual(0, 0)
-        # ...
 
     def delete_nonexistent_edge(self):
         # test_delete_nonexistent_edge(self):

@@ -19,7 +19,7 @@ class Graph(object):
 
     def __init__(self, nodes=None):
 
-        self.graph_id = uuid.uuid4()
+        self.graph_id = uuid.uuid4().int
         if nodes:
             self.list_nodes = list()
             for node in nodes:
