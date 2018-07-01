@@ -1,7 +1,6 @@
 # Repair Compression for Graphs
 
-## Build Status 
-[![Build Status](https://travis-ci.com/yonathanF/Repair-Graph-Compression.svg?token=iEJ27eCnjKeFqxrBkzzA&branch=repair_refactor)](https://travis-ci.com/yonathanF/Repair-Graph-Compression)
+ [![Master](https://travis-ci.com/yonathanF/Repair-Graph-Compression.svg?token=iEJ27eCnjKeFqxrBkzzA&branch=master)](https://travis-ci.com/yonathanF/Repair-Graph-Compression)
 ### Setup
 
 1. Make sure you have pip (check version, current version is 9.0) 
@@ -20,7 +19,6 @@ pip install -r requirements.txt
 - Leave commit messages with helpful messages. Try to do a single subject line, followed by more descripiton
 - Push to the right branch. Master is already locked so you need to do a pull request before merging into master
 	- Try to stick to the Git Workflow [Details here](https://www.atlassian.com/git/tutorials/comparing-workflows)
-- A Doxygen like documentation lib will be part of our dependencies so use it if you want (it works with regular docstrings used by python so you don't have to add anything special if you don't want to)
 
 
 ### Testing 
@@ -40,20 +38,16 @@ pip install -r requirements.txt
 ### Helpful commands 
 - Running tests 
 ```python
-python -m unittest Tests.testXXX 
+python -m unittest tests.test_XXX 
 ```
 - Running coverage (see coverage of the repair folder for example)
 ```python 
 coverage run --source=repair/ -m unittest discover -s Tests/
 ```
 
-	- Then use this to generate the html and view the report in your browser 
-	```python
-	coverage html
-	```
-- To view our doxygen-ish docs 
+- Then use this to generate the html and view the report in your browser 
 ```python
-pdoc --html py_file_you_want
+coverage html
 ```
 - To get style suggestions etc (if your IDE doesn't have a plugin)
 ```python 

@@ -11,6 +11,8 @@ __pycache__/
 *.idea
 */.idea
 .idea/
+myTags
+*.swp
 
 # visualizer stuff 
 *.graphml 
@@ -22,6 +24,7 @@ __pycache__/
 .Python
 env/
 build/
+.build/
 develop-eggs/
 dist/
 downloads/
