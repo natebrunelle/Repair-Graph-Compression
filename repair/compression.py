@@ -1,4 +1,5 @@
-''' Implementation of the Repair algorithm
+'''
+Implementation of the Repair algorithm
 Uses the Graph and Node classes to compress a graph.
 '''
 import math
@@ -14,9 +15,9 @@ class RepairPriorityQueue(PriorityQueue):
     ''' A priority queue implementation that overrides a few methods to make python's
     queue implementation work the way we need it to
 
-    Note that both put and get default block to False instead of true.
-    This makes the implementation closer to put_nowait and get_nowait.
-    It makes a difference in a multithreaded setup'''
+    .. note:: Both put and get default block to False instead of true.
+              This makes the implementation closer to put_nowait and get_nowait.
+              It makes a difference in a multithreaded setup'''
 
     def __init__(self, pairs=None):
         super().__init__()
