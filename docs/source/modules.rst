@@ -1,7 +1,7 @@
-graphs
-======
+nodeAndRepairNode
+=================
 
 .. toctree::
    :maxdepth: 4
 
-   graphs
+   nodeAndRepairNode
