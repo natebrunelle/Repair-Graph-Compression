@@ -24,6 +24,7 @@ myTags
 .Python
 env/
 build/
+.build/
 develop-eggs/
 dist/
 downloads/
