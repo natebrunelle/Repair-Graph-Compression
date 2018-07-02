@@ -8,11 +8,6 @@ as the cluster creating functions depend on it.
 
 import random
 import uuid
-import logging
-
-logging.basicConfig(filename="repair_main.log", level=logging.DEBUG,
-        format="[%(name)s] [%(asctime)s] [%(levelname)s] %(message)s")
-log = logging.getLogger(__name__)
 
 class Graph(object):
     ''' The graph class implementation '''
@@ -24,11 +19,8 @@ class Graph(object):
             self.list_nodes = list()
             for node in nodes:
                 self.add_node(node)
-
-            log.info("Created a graph from list of nodes")
         else:
             self.list_nodes = list()
-            log.info("Created an empty graph")
 
 
     def add_edge(self, n1, n2):
@@ -42,12 +34,10 @@ class Graph(object):
         # check if n1 not in graph
         if n1.graph_id != self.graph_id:
             self.add_node(n1)
-            log.info("Node n1 %s not in graph. Added it to the graph.", str(n1))
 
         if n1 != n2:
             if n1.edges.count(n2) < 1:
                 n1.add_edge(n2)
-                log.info("Added edge from %s to %s", str(n1), str(n2))
 
     def delete_edge(self, n1, n2):
         """

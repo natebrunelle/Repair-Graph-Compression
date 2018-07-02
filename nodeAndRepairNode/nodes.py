@@ -1,21 +1,13 @@
 # Rahul Tuladhar Nick Taylor 2/12/18
 import uuid
-import logging
-
-
-logging.basicConfig(filename="repair_main.log", level=logging.DEBUG,
-        format="[%(name)s] [%(asctime)s] [%(levelname)s] %(message)s")
-log = logging.getLogger(__name__)
 
 class Node:
     def __init__(self, value, edges=None):
         self.value = value
         if edges:
             self.edges = edges
-            log.info("Created a node with edges.")
         else:
             self.edges = list()
-            log.info("Created a node with no edges.")
         self.uid = uuid.uuid4().int
         self.graph_id = None
 
