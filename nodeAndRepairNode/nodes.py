@@ -1,6 +1,7 @@
 # Rahul Tuladhar Nick Taylor 2/12/18
 import uuid
 
+
 class Node:
     def __init__(self, value, edges=None):
         self.value = value
