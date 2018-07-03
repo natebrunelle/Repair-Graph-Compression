@@ -1,23 +1,39 @@
-# Rahul Tuladhar Nick Taylor 2/12/18
+'''
+A representation of a node/vertex in a graph.
+
+A simple implementation based on adjacency list representation of graphs.
+Implements the observer pattern so that nodes that have edges
+connecting to them from outside of their graph can be properly deleted.
+'''
+
+import enum
 import uuid
-import logging
+import warnings
+from collections import namedtuple
 
 
-logging.basicConfig(filename="repair_main.log", level=logging.DEBUG,
-        format="[%(name)s] [%(asctime)s] [%(levelname)s] %(message)s")
-log = logging.getLogger(__name__)
+class EventTypes(enum.Enum):
+    '''
+    Defines event types that graphs will recieve when they
+    observe nodes
+    '''
+    NODE_DELETED = 1
+    NODE_REPLACED = 2
+
+
+Event = namedtuple("Event", ['observable', 'event_type', 'payload'])
+
 
 class Node:
     def __init__(self, value, edges=None):
         self.value = value
         if edges:
             self.edges = edges
-            log.info("Created a node with edges.")
         else:
             self.edges = list()
-            log.info("Created a node with no edges.")
         self.uid = uuid.uuid4().int
         self.graph_id = None
+        self.observers = list()
 
     def add_edge(self, node):
         if node not in self.edges:
@@ -28,6 +44,11 @@ class Node:
             self.edges.remove(node)
 
     def replace(self, node1, node2, repair_node):
+
+        warnings.warn(
+            "Use event system instead it is faster \
+                    and more consistant.", DeprecationWarning)
+
         if node1 in self.edges and node2 in self.edges:
             index_node1 = self.edges.index(node1)
             index_node2 = self.edges.index(node2)
@@ -38,13 +59,42 @@ class Node:
                 self.delete_edge(node2)
                 self.edges.insert(index_node1, repair_node)
 
+    def observe(self, graph):
+        '''
+        :param graph: a reference to the graph that wants to observe the node
+
+        A graph can observe a node so that it can be notified when certain
+        changes are applied to the node. For example, if the node is deleted
+        by the graph that owns it, all other graphs should remove their
+        bindings to the node as well. Another example, if the node is replace
+        by a repair node, all graphs that have edges going to this node should
+        update their references.
+        '''
+
+        self.observers.append(graph)
+
+    def notify_all(self, event_type, payload=None):
+        '''
+        :param event_type: the type of the event that will be broadcasted
+
+        This notifies all observers of the event that just happened.
+        The notification is passed by wrapping it in an event tuple where
+        we pass the event type as well as a reference to this node
+        '''
+
+        event = Event(self, event_type, payload)
+
+        for observer in self.observers:
+            observer.update(event)
+
     def __eq__(self, node2):
         """overrides the equals method"""
 
         if not isinstance(node2, Node):
             return False
 
-        if self.graph_id == node2.graph_id or (self.graph_id is None and node2.graph_id is None):
+        if self.graph_id == node2.graph_id or (self.graph_id is None
+                                               and node2.graph_id is None):
             if self.uid == node2.uid:
                 return True
 
@@ -57,13 +107,14 @@ class Node:
             return False
 
         if self.graph_id:
-            if self.graph_id> node2.graph_id:
+            if self.graph_id > node2.graph_id:
                 return True
 
             if self.graph_id < node2.graph_id:
                 return False
 
-        if self.graph_id == node2.graph_id or (self.graph_id is None and node2.graph_id is None):
+        if self.graph_id == node2.graph_id or (self.graph_id is None
+                                               and node2.graph_id is None):
             if self.uid > node2.uid:
                 return True
 
@@ -82,7 +133,8 @@ class Node:
             if self.graph_id > node2.graph_id:
                 return False
 
-        if self.graph_id == node2.graph_id or (self.graph_id is None and node2.graph_id is None):
+        if self.graph_id == node2.graph_id or (self.graph_id is None
+                                               and node2.graph_id is None):
             if node2 and self.uid < node2.uid:
                 return True
 
@@ -96,8 +148,7 @@ class Node:
     def __str__(self):
         """overriding the str method, helps when debugging """
 
-        return "ID: " + str(self.uid) + "\tValue: [" + str(
-            self.value) + "]"
+        return "ID: " + str(self.uid) + "\tValue: [" + str(self.value) + "]"
 
 
 class RepairNode(Node):
