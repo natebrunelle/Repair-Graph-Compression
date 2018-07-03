@@ -6,7 +6,6 @@ Both the compression and decompression algorithms as well
 as the cluster creating functions depend on it.
 '''
 
-import random
 import uuid
 
 
