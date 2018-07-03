@@ -58,7 +58,7 @@ class GraphFactoryNoData(GraphFactory):
 
         elif self.graph_type.value == 2:
             graph = HubAndSpoke(Node(""))
-            self.num_of_nodes-=1
+            self.num_of_nodes -= 1
 
         else:
             graph = Graph()
@@ -114,11 +114,10 @@ class GraphFactoryAlphaNumeric(GraphFactory):
 
         elif self.graph_type.value == 2:
             graph = HubAndSpoke(Node(self.get_random_alpha_numeric()))
-            self.num_of_nodes-=1
+            self.num_of_nodes -= 1
 
         else:
             graph = Graph()
-
 
         # create the nodes
         for _ in range(self.num_of_nodes):

@@ -8,11 +8,7 @@ as the cluster creating functions depend on it.
 
 import random
 import uuid
-import logging
 
-logging.basicConfig(filename="repair_main.log", level=logging.DEBUG,
-        format="[%(name)s] [%(asctime)s] [%(levelname)s] %(message)s")
-log = logging.getLogger(__name__)
 
 class Graph(object):
     ''' The graph class implementation '''
@@ -25,11 +21,8 @@ class Graph(object):
             for node in nodes:
                 self.add_node(node)
 
-            log.info("Created a graph from list of nodes")
         else:
             self.list_nodes = list()
-            log.info("Created an empty graph")
-
 
     def add_edge(self, n1, n2):
         """
@@ -42,12 +35,10 @@ class Graph(object):
         # check if n1 not in graph
         if n1.graph_id != self.graph_id:
             self.add_node(n1)
-            log.info("Node n1 %s not in graph. Added it to the graph.", str(n1))
 
         if n1 != n2:
             if n1.edges.count(n2) < 1:
                 n1.add_edge(n2)
-                log.info("Added edge from %s to %s", str(n1), str(n2))
 
     def delete_edge(self, n1, n2):
         """
@@ -66,9 +57,11 @@ class Graph(object):
                 try:
                     n1.delete_edge(n2)
                 except ValueError:
-                    raise ValueError("Tried to remove a node that isn't present")
+                    raise ValueError(
+                        "Tried to remove a node that isn't present")
         else:
-            raise ValueError('Both Nodes not in graph, cannot delete edge from this graph')
+            raise ValueError(
+                'Both Nodes not in graph, cannot delete edge from this graph')
 
     def delete_node(self, n):
         """
@@ -80,10 +73,12 @@ class Graph(object):
 
         if n.graph_id == self.graph_id:
             n.edges = []
-            self.list_nodes.remove(n)  # TODO: test this. delete the node, error if nonexistent
+            self.list_nodes.remove(
+                n)  # TODO: test this. delete the node, error if nonexistent
             n.graph_id = None
 
-            # every outside reference to the node is deleted - costly --> TODO this checks in the existing graph only
+            # every outside reference to the node is deleted -
+            # costly --> TODO this checks in the existing graph only
             for x in range(len(self.list_nodes)):
                 self.list_nodes[x].delete_edge(n)
 
@@ -92,13 +87,27 @@ class Graph(object):
 
     def add_node(self, n):
         """
-        Adds a node to the Graph data structures, but it won't be connected by any edge.
-        Duplicate nodes fail silently.
+        Adds a node to the Graph data structures, but it won't be connected by
+        any edge. Duplicate nodes fail silently.
         New implementations should redefine this function.
         """
         if n not in self.list_nodes:  # prevent from adding >1x
             n.graph_id = self.graph_id
             self.list_nodes.append(n)
+
+    def update(self, event):
+        '''
+        :param event: an event namedtuple
+
+        Recieves an update when nodes change and reacts to the event.
+        For node deletion, it will look through it's list and remove all
+        references to that node. For node replacement, it will search for the
+        replaced node and update it with the payload.
+
+        .. note:: If it is a replacement update, the payload should include
+                  the other node being replaced and the replacement node
+        '''
+        pass
 
     def __str__(self):
         """ Prints out graphs in a nice format """
