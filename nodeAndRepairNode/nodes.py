@@ -8,17 +8,16 @@ connecting to them from outside of their graph can be properly deleted.
 
 import enum
 import uuid
-import warnings
 from collections import namedtuple
 
 
-class EventTypes(enum.Enum):
+class EventType(enum.Enum):
     '''
     Defines event types that graphs will recieve when they
     observe nodes
     '''
-    NODE_DELETED = 1
-    NODE_REPLACED = 2
+    node_deleted = 1
+    node_replaced = 2
 
 
 Event = namedtuple("Event", ['observable', 'event_type', 'payload'])
@@ -44,10 +43,6 @@ class Node:
             self.edges.remove(node)
 
     def replace(self, node1, node2, repair_node):
-
-        warnings.warn(
-            "Use event system instead it is faster \
-                    and more consistant.", DeprecationWarning)
 
         if node1 in self.edges and node2 in self.edges:
             index_node1 = self.edges.index(node1)

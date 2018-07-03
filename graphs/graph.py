@@ -8,6 +8,8 @@ as the cluster creating functions depend on it.
 
 import uuid
 
+from nodeAndRepairNode.nodes import EventType
+
 
 class Graph(object):
     ''' The graph class implementation '''
@@ -38,6 +40,7 @@ class Graph(object):
         if n1 != n2:
             if n1.edges.count(n2) < 1:
                 n1.add_edge(n2)
+                n2.observe(self)
 
     def delete_edge(self, n1, n2):
         """
@@ -71,13 +74,13 @@ class Graph(object):
         """
 
         if n.graph_id == self.graph_id:
+            n.notify_all(EventType.node_deleted)
+
             n.edges = []
-            self.list_nodes.remove(
-                n)  # TODO: test this. delete the node, error if nonexistent
+            self.list_nodes.remove(n)
             n.graph_id = None
 
             # every outside reference to the node is deleted -
-            # costly --> TODO this checks in the existing graph only
             for x in range(len(self.list_nodes)):
                 self.list_nodes[x].delete_edge(n)
 
@@ -92,6 +95,7 @@ class Graph(object):
         """
         if n not in self.list_nodes:  # prevent from adding >1x
             n.graph_id = self.graph_id
+            n.observe(self)
             self.list_nodes.append(n)
 
     def update(self, event):
@@ -106,7 +110,21 @@ class Graph(object):
         .. note:: If it is a replacement update, the payload should include
                   the other node being replaced and the replacement node
         '''
-        pass
+
+        if event.event_type == EventType.node_deleted:
+            for node in self.list_nodes:
+                self.delete_edge(node, event.observable)
+
+        elif event.event_type == EventType.node_replaced:
+            node1 = event.observable
+            node2 = event.payload[0]
+            replacement_node = event.payload[1]
+
+            # TODO replacement_node should probably be added to
+            # the list node but that causes problems when creating the
+            # cluster
+            for node in self.list_nodes:
+                node.replace(node1, node2, replacement_node)
 
     def __str__(self):
         """ Prints out graphs in a nice format """
