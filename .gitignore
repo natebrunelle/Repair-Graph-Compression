@@ -6,10 +6,25 @@ __pycache__/
 # C extensions
 *.so
 
+# IDE files 
+.idea
+*.idea
+*/.idea
+.idea/
+myTags
+*.swp
+
+# visualizer stuff 
+*.graphml 
+
+# vim swp 
+# *.swp 
+
 # Distribution / packaging
 .Python
 env/
 build/
+.build/
 develop-eggs/
 dist/
 downloads/
@@ -45,7 +60,7 @@ nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
-*.html 
+*.html
 
 # Translations
 *.mo
