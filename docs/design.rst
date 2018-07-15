@@ -21,6 +21,7 @@ Each node has a unique id, `uid`, because every node must be uniquely identifiab
 Nodes also have a `graph_id` attribute. This is necessary because when we create clusters, we would like to have nodes from the same graph appear closer to each other.
 
 
+
 **2. Graphs and Clusters**
 
 
