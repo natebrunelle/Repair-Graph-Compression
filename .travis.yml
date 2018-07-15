@@ -7,6 +7,8 @@ before_script:
     - pylint graphs repair nodes 
 script:
     - python -m unittest discover -s tests/
+after_script:
+    - codecov
 notifications:
   email:
       on_success: change
