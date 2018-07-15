@@ -7,7 +7,7 @@ Getting started, in terms of development environment setup, should be very easy 
 Getting the source code
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-All of the source code for this project is version controlled using git and privately shared on GitHub. As a result, you need an invitation to access the repo (email yf2ey to request access). You will also need to have git installed on your computer, then follow these steps: 
+All of the source code for this project is version controlled using git and shared on GitHub. You will need to have git installed on your computer, then follow these steps: 
 
 1. Create a folder on your computer and inside that folder run::
 
@@ -32,7 +32,7 @@ You now have all of the source code. But there is one more thing to setup. We ar
    
      python3 -m venv env/
         
-4. Activate the virtual env. You want to do this setup every time you work on this project. On Posix systems::
+4. Activate the virtual env. You want to do this step very time you work on this project. On Posix systems::
 
      source env/bin/activate
 
@@ -49,7 +49,40 @@ That's it! You are good to go. You might want to run the last command to stay up
 
 Tools
 ^^^^^
+There are some tools in place to make life easier. These are either the easiest to use or the standards in the community. 
 
+Unit Tests 
+----------
+Although this isn't a software development project, we still need some level of confidence in the quality of the code. At minimum we would like to know the code does its most basic task correctly, and so you must provide unit tests that test the happy path. Usually two or three tests are enough but you should try to cover as many edge cases as possible. We use Python's own `Unittest` please don't use any other frameworks since it will just be more work to keep track of them. Here are some commands to get you started:: 
+
+   python -m unittest discover -s tests # run all tests 
+   python -m unittest tests.test_file_name # run a module of tests
+   python -m unittest tests.test_file_name.TestCaseName # to run a single test case
+   python -m unittest tests.test_file_name.TestCaseName.test_method_name # to run a single test in a given test case 
+
+You should run these commands in the highest level of the directory (same level as `tests/`).
+
+Coverage
+--------
+
+We use line coverage to measure out unit tests' coverage. While this isn't the best metric for it, we just need the bare minimum and this does it for us. The package `Coverage.py` should already be on your system if you went through the setup steps above. You can generate a report using this::
+
+   coverage run --source='.' -m unittest discover -s tests/
+   coverage html # recommended
+   coverage report # to just see the numbers
+
+Try to have 80% coverage or more at all times. 
+
+Linting
+-------
+
+Python is very opinionated, perhaps a little too much, but this makes it easy to work in teams. Linting is a way to check your code for known bad practice, possible bugs, and style problems. The CI server will reject your code if the linter returns none 0 values, so please check it locally before pushing. Pylint should be part of your env already. Here is how to use it::
+
+   pylint folder/python_file_name.py # to lint a single file
+   pylint folder/ # to lint all the python files within 
+   pylint folder1 folder2 folder3   # to lint multiple python folders
+
+There are some rules that are useless and we ignore them (e.g. whitespace). If you come across a rule that you think is useless, please discuss with the team to add it to the ignore list. 
 
 Contribution Guidelines
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -61,9 +94,13 @@ Working with Git
 
 Git is both powerful and annoying. Fortunately, we only need some features to operate: pull, push, commit, merge, branch. Google everything else. 
 
-**Commit often.** Think of it like hitting save. Your last commit for the feature/fix/etc should be VERY detailed. Don't use `-m` for it. Write a *subject line* (a single sentence summary of what you did), followed by an empty line, followed by a paragraph describing *what* you solved/fixed, followed by an empty line, followed by a paragraph describing *how* you solved it. Follow this format strictly for the last commit. This makes the code changes amazingly traceable using git (e.g. someone can see who changed a given line, when, why, and how). 
+**Commit often** 
 
-**Branch often.** Think of it like copy-pasting the source code into a new folder. Branches are very lightweight and an amazing way to isolate different works. Don't be afraid to have many branches; you can quickly delete them if you need to. By using branches to isolate your work, you can avoid merge conflicts for the most part. Here are a few rules related to branches: 
+Think of it like hitting save. Your last commit for the feature/fix/etc should be VERY detailed. Don't use `-m` for it. Write a *subject line* (a single sentence summary of what you did), followed by an empty line, followed by a paragraph describing *what* you solved/fixed, followed by an empty line, followed by a paragraph describing *how* you solved it. Follow this format strictly for the last commit. This makes the code changes amazingly traceable using git (e.g. someone can see who changed a given line, when, why, and how). 
+
+**Branch often** 
+
+Think of it like copy-pasting the source code into a new folder. Branches are very lightweight and an amazing way to isolate different works. Don't be afraid to have many branches; you can quickly delete them if you need to. By using branches to isolate your work, you can avoid merge conflicts for the most part. Here are a few rules related to branches: 
 
 1. Name your branches using the following format: `theme_area_firstName`. The theme should be something like `bugfix` or `refactoring`. The area should be more specific to what you are fixing, refactoring, etc: `graphs` or `generator`. And, ofcourse, the firstname should be your first name. 
 
@@ -71,18 +108,27 @@ Git is both powerful and annoying. Fortunately, we only need some features to op
 
 3. Related to (2) above, use the Git Workflow. [4]_ Branch off of development, do your work there, write unit tests, etc, push it to Travis, get the green light, and make a pull request. If you are working with someone else on the same problem/feature, you should create a different branch to combine your works. Handle your merge conflicts there and make a    pull request from the combined branch. Pull request into development only. 
 
+**Use issues** 
 
-Testing and Style
------------------
-
-
+Issues are the team's todo list. They make it really easy to discuss code, progress, and larger goals. For example, if you have a line like `Issue #12` in your commit, GitHub will link that commit in the issue comments. GitHub also  provides a board for Agile development. All new issues go into the Backlog. When we decide to work on a given issue, we move it into Todo. It's then moved into In Progress once someone starts working on it. When the issue is closed, Automation will put the issue into the Done column. This makes it easy to see who's doing what and how much time we need to finish whatever feature/fix. 
 
 
 File Organization
 -----------------
 
+The file organization is self explanatory, but for completness sake: 
 
-.. [1] The main program doesn't need any of these packages. They are used for generating this documentation, and providing visualization for graphs. 
+* Graph directory --> Contains graphs, and cluster
+* Nodes directory --> Contains nodes
+* Repair directory --> Contains the Repair algorithm (both compression and decompression) 
+* Algorithms directory --> Contains algorithms that run on graphs 
+* Utils directory --> General tools like the graph visualizer and GraphML generator 
+* Tests directory --> All the tests 
+* Docs directory --> Contains this documentation 
+* Requirements directory --> Contains the production and development requirements 
+
+
+.. [1] The main program doesn't need any of these packages. They are used for generating this documentation, and linting tools. 
 
 .. [2] https://pip.pypa.io/en/stable/installing/
 .. [3] https://www.python.org/downloads/
