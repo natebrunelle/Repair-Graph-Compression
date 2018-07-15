@@ -6,7 +6,7 @@ from graphs.graph import Graph
 from graphs.graph_factory import (GraphFactory, GraphFactoryAlphaNumeric,
                                   GraphFactoryNoData)
 from graphs.graph_generator import weakly_connected_graphs
-from nodeAndRepairNode.nodes import Node
+from nodes.nodes import Node
 
 
 class TestGraphGenerator(TestCase):

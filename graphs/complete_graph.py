@@ -1,11 +1,23 @@
 """
 These graphs will consist exclusively of nodes which
 are connected to every other node in the graph
+
 """
 
 from graphs.graph import Graph
 
+
 class CompleteGraph(Graph):
+    '''
+    A representation of a complete graph based on the more
+    general `Graph` class. It ensures all nodes are connected
+    all the time.
+
+    .. note:: It will reject changes to the graph that might
+              cause it to lose this property.
+
+    '''
+
     def __init__(self, n_list=None):
 
         super().__init__()
@@ -27,54 +39,44 @@ class CompleteGraph(Graph):
             self.list_nodes.append(node)
 
         for node in n_list:
-            for n in self.list_nodes:
-                if n != node:
-                    node.add_edge(n)
+            for ref_node in self.list_nodes:
+                if ref_node != node:
+                    node.add_edge(ref_node)
 
-    def add_edge(self, n1, n2):
+    def add_edge(self, node1, node2):
         """
-        :param n1: MUST be a node in the CompleteGraph
-        :paam n2: MUST be a node outside the graph (in another graph)
+        :param node1: MUST be a node in the CompleteGraph
+        :paam node2: MUST be a node outside the graph (in another graph)
 
         for connecting a CompleteGraph to other graphs,
         NOT for connecting a Complete graph internally.
         """
-        if n1.graph_id == self.graph_id and n2.graph_id != self.graph_id:
-            n1.add_edge(n2)
+        if node1.graph_id == self.graph_id and node2.graph_id != self.graph_id:
+            node1.add_edge(node2)
         else:
-            raise ValueError('Don\'t use this method to connect a complete graph internally')
+            raise ValueError(
+                'Don\'t use this method to connect a complete graph internally'
+            )
 
-    def delete_edge(self, n1, n2):
+    def delete_edge(self, node1, node2):
         # internal edge and not out into cluster
-        if n1.graph_id == self.graph_id and n2.graph_id == self.graph_id:
+        if node1.graph_id == self.graph_id and node2.graph_id == self.graph_id:
             raise ValueError('Edge removal violates complete graph structure')
         else:
-            n1.delete_edge(n2)
+            node1.delete_edge(node2)
 
-    def delete_node(self, n):
-        """removes the node from the graph,
-        clears the adj list therein,
-        resets the node.graph_id to None,
-        and removes all references other nodes hold to the deleted node"""
-
-        super().delete_node(n)
-
-    def add_node(self, n):
+    def add_node(self, node):
         """
         Adds a node and connects it to all other nodes in the complete graph
         Duplicate nodes fail silently.
         """
 
-        if n not in self.list_nodes:
-            n.graph_id = self.graph_id
-            self.list_nodes.append(n)
-            for node in self.list_nodes:
-                if node != n:
-                    n.add_edge(node)
-                    node.add_edge(n)
-                '''
-            for i in range(len(self.list_nodes)):
-                self.list_nodes[i].add_edge(n)
-                '''
+        if node not in self.list_nodes:
+            node.graph_id = self.graph_id
+            self.list_nodes.append(node)
+            for ref_node in self.list_nodes:
+                if ref_node != node:
+                    node.add_edge(ref_node)
+                    ref_node.add_edge(node)
         else:
-             raise ValueError('Node already in graph')
+            raise ValueError('Node already in graph')

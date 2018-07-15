@@ -1,8 +1,8 @@
 from unittest import TestCase
 
 from graphs.graph import Graph
-from nodeAndRepairNode.nodes import Node, RepairNode
-from repair.compression import Repair
+from nodes.nodes import Node, RepairNode
+from repair.repair import Repair
 from tests.test_compression import compare_by_value
 
 

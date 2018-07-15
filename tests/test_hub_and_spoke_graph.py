@@ -1,7 +1,7 @@
 import unittest
 
 from graphs.hub_and_spoke_graph import HubAndSpoke
-from nodeAndRepairNode.nodes import Node
+from nodes.nodes import Node
 
 
 class CompleteGraphTestCase(unittest.TestCase):

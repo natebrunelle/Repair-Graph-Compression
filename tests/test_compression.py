@@ -2,8 +2,8 @@ import math
 from unittest import TestCase
 
 from graphs.graph import Graph
-from nodeAndRepairNode.nodes import Node, RepairNode
-from repair.compression import Repair, RepairPriorityQueue
+from nodes.nodes import Node, RepairNode
+from repair.repair import Repair, RepairPriorityQueue
 
 
 def compare_by_value(graph1, graph2):

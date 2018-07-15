@@ -4,15 +4,14 @@ easier for future development. It is not really need for the
 three graph implementations we have right now. '''
 
 import enum
-import random
 import string
 import time
-from random import randint
+from random import choice, randint, seed
 
 from graphs.complete_graph import CompleteGraph
 from graphs.graph import Graph
 from graphs.hub_and_spoke_graph import HubAndSpoke
-from nodeAndRepairNode.nodes import Node
+from nodes.nodes import Node
 
 
 class GraphTypes(enum.Enum):
@@ -43,12 +42,12 @@ class GraphFactory(object):
 
 
 class GraphFactoryNoData(GraphFactory):
-    ''' A graph  factory that doesn't add any data. It wil generate graphs
-    with empty nodes or empty node lists. You probably want to use the other implementations
-    since they can also add randomized data and take # of nodes as an argument '''
+    ''' A graph  factory that doesn't add any data.
 
-    def __init__(self, graph_type, num_of_nodes=0):
-        super().__init__(graph_type, num_of_nodes)
+    It wil generate graphs with empty nodes or empty node lists.
+    .. note:: You probably want to use the other implementations since
+    they can also add randomized data and take # of nodes as an argument
+    '''
 
     def get_graph(self):
         ''' Creates graphs of different type based on the parameter '''
@@ -71,9 +70,9 @@ class GraphFactoryNoData(GraphFactory):
 
 
 class GraphFactoryAlphaNumeric(GraphFactory):
-    ''' Implementation of the the factory class that populates the
-    graph with alpahnumeric values. Pass a random seed other than -1
-    to set the seed.
+    ''' Factory class that populates the graph with alpahnumeric values.
+
+    Pass a random seed other than -1 to set the seed.
 
     .. note:: it doesn't create any edges b/n the nodes. Call rand edge
             from graph if you would like to randomly create the edges.
@@ -83,7 +82,7 @@ class GraphFactoryAlphaNumeric(GraphFactory):
 
         # set random seed if not -1
         if random_seed != -1:
-            random.seed(random_seed)
+            seed(random_seed)
 
         self.seed = random_seed
 
@@ -95,12 +94,12 @@ class GraphFactoryAlphaNumeric(GraphFactory):
 
         # randomize on each generation
         if self.seed != -1:
-            random.seed(time.time())
+            seed(time.time())
 
         number = randint(lower_num, upper_num)
 
         # get five letters
-        letter = "".join(random.choice(string.ascii_letters) for n in range(5))
+        letter = "".join(choice(string.ascii_letters) for n in range(5))
 
         return str(number) + letter
 
@@ -124,8 +123,5 @@ class GraphFactoryAlphaNumeric(GraphFactory):
             # get value for node
             node_value = self.get_random_alpha_numeric()
             graph.add_node(Node(node_value))
-
-        # shuffle the nodes
-        random.shuffle(graph.list_nodes)
 
         return graph

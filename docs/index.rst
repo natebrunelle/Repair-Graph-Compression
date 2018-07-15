@@ -7,30 +7,13 @@ Repair Compression's Documentation!
 ==============================================
 
 .. toctree::
-   :maxdepth: 2
+   :glob:
+   :maxdepth: 3
    :caption: Contents:
 
-Introduction
----------------
-
-Design
----------------
-
-Notes
----------------
-
-Meeting Notes
-^^^^^^^^^^^^^^
-
-Experiments
----------------
-
-Getting Started
------------------
-
-
-Indices and tables
-------------------
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   intro
+   gettingstarted
+   design
+   experiments
+   notes
+   refs 

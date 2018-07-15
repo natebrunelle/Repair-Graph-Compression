@@ -1,7 +1,7 @@
 import unittest
 
 from graphs.complete_graph import CompleteGraph
-from nodeAndRepairNode.nodes import Node
+from nodes.nodes import Node
 
 def is_complete(graph):
     for node in graph.list_nodes:

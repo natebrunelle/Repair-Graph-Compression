@@ -2,7 +2,7 @@ import unittest
 import warnings
 
 from graphs.graph import Graph
-from nodeAndRepairNode.nodes import EventType, Node, RepairNode
+from nodes.nodes import EventType, Node, RepairNode
 
 
 class TestObserver:

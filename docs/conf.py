@@ -14,8 +14,8 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../'))
 
+sys.path.insert(0, os.path.abspath('../'))
 
 # -- Project information -----------------------------------------------------
 
@@ -27,7 +27,6 @@ author = 'Research Team'
 version = '1.0'
 # The full version, including alpha/beta/rc tags
 release = '1.0-alpha'
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -67,18 +66,17 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path .
-exclude_patterns = ['.build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['.build', 'Thumbs.db', '.DS_Store', 'tests']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
-
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -99,14 +97,15 @@ html_static_path = ['.static']
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
 #
-# html_sidebars = {}
-
+html_sidebars = {
+    '**':
+    ['globaltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html']
+}
 
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'RepairCompressiondoc'
-
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -136,16 +135,12 @@ latex_documents = [
      'Research Team', 'manual'),
 ]
 
-
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'repaircompression', 'Repair Compression Documentation',
-     [author], 1)
-]
-
+man_pages = [(master_doc, 'repaircompression',
+              'Repair Compression Documentation', [author], 1)]
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -158,10 +153,10 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-
 # -- Extension configuration -------------------------------------------------
 
 # -- Options for todo extension ----------------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+autoclass_content = "both"

@@ -1,13 +1,23 @@
 """
 These graphs will consist of many nodes all connected
-only to one central hub node.
-This graph should implement from the top down a guaranteed connected graph
-rather than the Graph class' possible bottom-up of creation of a connected graph
+only to one central hub node. This graph should implement
+from the top down a guaranteed connected graph rather than the
+Graph class' possible bottom-up of creation of a connected graph
 """
 
 from graphs.graph import Graph
 
+
 class HubAndSpoke(Graph):
+    '''
+    A hub and spoke representation.
+    :param hub: The hub node.
+    :param nodes: All other nodes.
+
+    .. note:: The hub points to the nodes. Not the other way around.
+    .. warning:: The hub is not included in the list for now.
+    '''
+
     def __init__(self, hub, nodes=None):
         self.hub_node = hub
         super().__init__(nodes)
@@ -27,7 +37,7 @@ class HubAndSpoke(Graph):
         if n1 in n2.edges:
             n1.delete_edge(n2)
         else:
-             raise ValueError('Edge does not exist')
+            raise ValueError('Edge does not exist')
 
     def delete_node(self, n):
         """
@@ -52,11 +62,4 @@ class HubAndSpoke(Graph):
             self.list_nodes.append(n)
             n.add_edge(self.hub_node)
         else:
-             raise ValueError('Node already exists in graph')
-
-    """
-    Not necessary since an add is not allowed unless the hub is
-    targeted; adding a random node is effectively no different
-    than adding a particular node
-    """
-    # def add_node_rand(self, n):
+            raise ValueError('Node already exists in graph')

@@ -4,6 +4,14 @@ graphs package
 Submodules
 ----------
 
+graphs.clusters module
+----------------------
+
+.. automodule:: graphs.clusters
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 graphs.complete\_graph module
 -----------------------------
 
@@ -40,14 +48,6 @@ graphs.hub\_and\_spoke\_graph module
 ------------------------------------
 
 .. automodule:: graphs.hub_and_spoke_graph
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-graphs.test\_generator module
------------------------------
-
-.. automodule:: graphs.test_generator
     :members:
     :undoc-members:
     :show-inheritance:

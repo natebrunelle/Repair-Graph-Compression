@@ -1,3 +1,4 @@
+# pylint: disable=all
 '''
 Creates a cluster of graphs.
 
@@ -8,7 +9,7 @@ import random
 import string
 
 from graphs.graph import Graph
-from nodeAndRepairNode.nodes import Node
+from nodes.nodes import Node
 
 
 def weakly_connected_graphs(connection_num, graph_num, edge_num,
@@ -41,7 +42,7 @@ def weakly_connected_graphs(connection_num, graph_num, edge_num,
     # will help ensure every graph is connected at least once
     graphs = []
 
-# create all the graphs
+    # create all the graphs
     for _ in range(graph_num):
         graphs.append(graph_factory.get_graph())
 
@@ -50,32 +51,32 @@ def weakly_connected_graphs(connection_num, graph_num, edge_num,
 
     graphs[0].add_edge(node2, node1)
 
-#    for i in range(0,len(graphs[0].list_nodes)):
-#        print(str(graphs[0].list_nodes[i]))
+    #    for i in range(0,len(graphs[0].list_nodes)):
+    #        print(str(graphs[0].list_nodes[i]))
 
-        #while counter < graph_num:
+    #while counter < graph_num:
     counter = 0
-        #random2 = random.randint(0, graph_num - 1)
-#    for i in range(0,len(graphs)):
-#        #if (random1 != random2 and ((connected[random1] is False or connected[random2] is False))):
-#        random1 = random.randint(0, graph_num - 1)
-#        print(random1)
-#        print("connecting")
-#        graphs[i].add_edge(random.choice(graphs[i].list_nodes),random.choice(graphs[random1].list_nodes))
-#        counter += 1
-#
-#
-#    while counter < connection_num:
-#        print("second loop")
-#        random1 = random.randint(0, graph_num - 1)
-#        random2 = random.randint(0, graph_num - 1)
-#
-#        randomNode1 = random.choice(graphs[random1].list_nodes)
-#        randomNode2 = random.choice(graphs[random2].list_nodes)
-#
-#        if (randomNode2 in graphs[random1].list_nodes or randomNode1 in graphs[random2].list_nodes):
-#            continue
-#        else:
-#            graphs[random1].add_edge(randomNode1, randomNode2)
-#            counter = counter + 1
+    #random2 = random.randint(0, graph_num - 1)
+    #    for i in range(0,len(graphs)):
+    #        #if (random1 != random2 and ((connected[random1] is False or connected[random2] is False))):
+    #        random1 = random.randint(0, graph_num - 1)
+    #        print(random1)
+    #        print("connecting")
+    #        graphs[i].add_edge(random.choice(graphs[i].list_nodes),random.choice(graphs[random1].list_nodes))
+    #        counter += 1
+    #
+    #
+    #    while counter < connection_num:
+    #        print("second loop")
+    #        random1 = random.randint(0, graph_num - 1)
+    #        random2 = random.randint(0, graph_num - 1)
+    #
+    #        randomNode1 = random.choice(graphs[random1].list_nodes)
+    #        randomNode2 = random.choice(graphs[random2].list_nodes)
+    #
+    #        if (randomNode2 in graphs[random1].list_nodes or randomNode1 in graphs[random2].list_nodes):
+    #            continue
+    #        else:
+    #            graphs[random1].add_edge(randomNode1, randomNode2)
+    #            counter = counter + 1
     return graphs

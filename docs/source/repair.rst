@@ -4,10 +4,10 @@ repair package
 Submodules
 ----------
 
-repair.compression module
--------------------------
+repair.repair module
+--------------------
 
-.. automodule:: repair.compression
+.. automodule:: repair.repair
     :members:
     :undoc-members:
     :show-inheritance:

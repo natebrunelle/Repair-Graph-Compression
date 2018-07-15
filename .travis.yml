@@ -2,7 +2,9 @@ language: python
 python:
     - 3.6
 install:
-    - pip install -r requirements.txt
+    - pip install -r requirements/requirements_prod.txt
+before_script:
+    - pylint graphs repair nodes 
 script:
     - python -m unittest discover -s tests/
 notifications:

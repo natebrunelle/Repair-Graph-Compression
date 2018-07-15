@@ -1,7 +1,9 @@
-nodeAndRepairNode
-=================
+repair-compression
+==================
 
 .. toctree::
    :maxdepth: 4
 
-   nodeAndRepairNode
+   graphs
+   nodes
+   repair

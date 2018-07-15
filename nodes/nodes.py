@@ -24,6 +24,13 @@ Event = namedtuple("Event", ['observable', 'event_type', 'payload'])
 
 
 class Node:
+    '''
+    An implementation of a regular node.
+
+    Has it's own uid and also a graph id to show which graph
+    owns it.
+    '''
+
     def __init__(self, value, edges=None):
         self.value = value
         if edges:
@@ -35,15 +42,27 @@ class Node:
         self.observers = list()
 
     def add_edge(self, node):
+        '''
+        Adds an edge from itself to the param node.
+
+        .. note:: the direction is this -> param node.
+        '''
         if node not in self.edges:
             self.edges.append(node)
 
     def delete_edge(self, node):
+        '''
+        Deletes the edge between itself and param node
+        if it exists.
+        '''
         if node in self.edges:
             self.edges.remove(node)
 
     def replace(self, node1, node2, repair_node):
-
+        '''
+        Replaces every occurrence of node1 and node2 with repair_node
+        if they appear in that exact order.
+        '''
         if node1 in self.edges and node2 in self.edges:
             index_node1 = self.edges.index(node1)
             index_node2 = self.edges.index(node2)
@@ -146,10 +165,21 @@ class Node:
         return "ID: " + str(self.uid) + "\tValue: [" + str(self.value) + "]"
 
 
+# pylint: disable=invalid-name
 class RepairNode(Node):
+    '''
+    A mostly useless implementation of a repair node. It simplifies some
+    code in other place and also helps avoid use of list of lists etc.
+
+    Consider refactoring at some point.
+    '''
+
     def __init__(self, value, node1, node2, isDictNode=True):
         self.isDictNode = isDictNode
         edges = [node1, node2]
 
         # init the parent class too
         super(RepairNode, self).__init__(value, edges)
+
+
+# pylint: enable=invalid-name

@@ -2,8 +2,8 @@ from unittest import TestCase
 
 from graphs.clusters import Cluster
 from graphs.graph import EventType, Graph
-from nodeAndRepairNode.nodes import Node
-from repair.compression import Repair
+from nodes.nodes import Node
+from repair.repair import Repair
 
 
 class TestClusterRepairIntegration(TestCase):

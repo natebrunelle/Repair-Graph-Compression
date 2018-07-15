@@ -11,10 +11,10 @@ the graphs instead of the whole cluster.
 This class provides this wrapper.
 '''
 
-from graphs.graph import EventType, Graph
+from graphs.graph import EventType
 
 
-class Cluster(Graph):
+class Cluster:
     '''
     A simple wrapper for a list of graphs.
 
