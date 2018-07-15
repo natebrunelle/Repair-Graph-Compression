@@ -1,6 +1,5 @@
 '''
 .. module:: Clusters
-.. moduleauthor:: Yonathan Fisseha
 
 A group of graphs need a light wrapper around them  because
 if we simply  put them into a list, algorithms operating on
