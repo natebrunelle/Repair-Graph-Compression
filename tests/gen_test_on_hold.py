@@ -1,12 +1,13 @@
 import unittest
+from unittest import TestCase
+
 from graph_factory import GraphTypes
-from graphs.graph_factory import GraphFactory
-from graphs.graph_factory import GraphFactoryNoData
-from graphs.graph_factory import GraphFactoryAlphaNumeric
+from graphs.graph import Graph
+from graphs.graph_factory import (GraphFactory, GraphFactoryAlphaNumeric,
+                                  GraphFactoryNoData)
 from graphs.graph_generator import weakly_connected_graphs
 from nodeAndRepairNode.nodes import Node
-from unittest import TestCase
-from graphs.graph import Graph
+
 
 class TestGraphGenerator(TestCase):
     def setUp(self):
@@ -20,6 +21,11 @@ class TestGraphGenerator(TestCase):
         #weakly_connected_graphs(connection_num, graph_num, edge_num, graph_factory):
         self.g = weakly_connected_graphs(10, 20, 11, self.gf)
 
+    def test_graphs(self):
+        print("hello world")
+
+
+'''
     # def test_graph_generator(self):
     #     # weakly_connected_graphs(connection_num, graph_num, edge_num, graph_factory):
     #     g = weakly_connected_graph(10, 20, 10, self.gf)
@@ -50,5 +56,4 @@ class TestGraphGenerator(TestCase):
     # # if connections are valid1
     # def test_correct_connections(self):
     #     pass
-
-
+'''
