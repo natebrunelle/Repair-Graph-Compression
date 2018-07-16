@@ -118,7 +118,7 @@ Issues are the team's todo list. They make it really easy to discuss code, progr
 File Organization
 -----------------
 
-The file organization is self explanatory, but for completness sake: 
+The file organization is self explanatory, but for completeness sake: 
 
 * Graph directory --> Contains graphs, and cluster
 * Nodes directory --> Contains nodes
