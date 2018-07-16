@@ -1,3 +1,5 @@
+.. _gettingstarted:
+
 ===============
 Getting Started
 ===============
@@ -102,7 +104,7 @@ Think of it like hitting save. Your last commit for the feature/fix/etc should b
 
 Think of it like copy-pasting the source code into a new folder. Branches are very lightweight and an amazing way to isolate different works. Don't be afraid to have many branches; you can quickly delete them if you need to. By using branches to isolate your work, you can avoid merge conflicts for the most part. Here are a few rules related to branches: 
 
-1. Name your branches using the following format: `theme_area_firstName`. The theme should be something like `bugfix` or `refactoring`. The area should be more specific to what you are fixing, refactoring, etc: `graphs` or `generator`. And, ofcourse, the firstname should be your first name. 
+1. Name your branches using the following format: `theme_area_firstName`. The theme should be something like `bugfix` or `refactoring`. The area should be more specific to what you are fixing, refactoring, etc; e.g. `graphs` or `generator`. And, ofcourse, the firstname should be your first name. 
 
 2. You can't push to the branches `master` and `development`. You need to make a pull request and at least 1 person needs to review it and TravisCI must green light it, before it gets merged into either of those branches. This is because `master` should always be stable and `development` should be stable enough for us to branch off of when we do work.
 

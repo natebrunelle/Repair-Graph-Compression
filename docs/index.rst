@@ -5,6 +5,8 @@
 
 Repair Compression's Documentation!
 ==============================================
+Repair is a compression algorithm for graphs. This repository holds the source code for a complete implementation of the compression algorithm as well as the Graphs needed. It also contains reproducable source code for experiments that validate the effectivenes of the algorithm. 
+
 
 .. toctree::
    :glob:
@@ -17,3 +19,6 @@ Repair Compression's Documentation!
    experiments
    notes
    refs 
+
+
+
