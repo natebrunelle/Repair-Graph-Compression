@@ -1,2 +1,3 @@
 [run]
-omit = *tests*, *__init__.py*
+omit = *tests*, *__init__.py* 
+include = graphs/*, repair/*, nodes/*
