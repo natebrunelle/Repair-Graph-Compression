@@ -6,7 +6,7 @@ install:
 before_script:
     - pylint graphs repair nodes 
 script:
-    - coverage run --source='.' -m unittest discover -s tests/
+    - coverage run -m unittest discover -s tests/
 after_script:
     - codecov
 notifications:
