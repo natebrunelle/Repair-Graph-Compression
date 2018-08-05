@@ -6,6 +6,7 @@ from graphs.graph_factory import (GraphFactory, GraphFactoryAlphaNumeric,
                                   GraphFactoryNoData, GraphTypes)
 from graphs.graph_generator import (pick_two_different_items,
                                     randomly_create_edges,
+                                    weakly_connected_cluster,
                                     weakly_connected_graphs)
 from nodes.nodes import Node
 
@@ -20,12 +21,12 @@ from nodes.nodes import Node
 
 class TestGraphGenerator(TestCase):
     def setUp(self):
-        self.graph_factory = GraphFactoryAlphaNumeric(GraphTypes.complete, 5)
+        self.graph_factory = GraphFactoryAlphaNumeric(GraphTypes.complete, 15)
 
     def test_all_graphs_connected_atleast_once(self):
-        num_conns = 15
-        num_graphs = 5
-        num_internal_edges = 5
+        num_conns = 150
+        num_graphs = 20
+        num_internal_edges = 15
 
         graphs = weakly_connected_graphs(
             num_conns, num_graphs, num_internal_edges, self.graph_factory)
