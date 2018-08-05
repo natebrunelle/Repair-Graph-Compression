@@ -69,3 +69,18 @@ class Cluster:
             self.list_nodes.remove(node1)
             self.list_nodes.remove(node2)
             self.list_nodes.append(replacement_node)
+
+    def generate_graphml_format(self):
+        '''
+        Generates the graphml representation of the graph.
+        '''
+
+        graph_ml = "<graph id=\"{}\" edgedefault=\"directed\">\n".format(
+            "cluster1")
+
+        for node in self.list_nodes:
+            graph_ml += node.generate_graphml_format()
+
+        graph_ml += "</graph>"
+
+        return graph_ml
