@@ -2,6 +2,7 @@ import unittest
 
 from graphs.graph import Graph
 from nodes.nodes import EventType, Node, RepairNode
+from utils.utils import write_graphml_file
 
 
 class GraphTestCase(unittest.TestCase):
