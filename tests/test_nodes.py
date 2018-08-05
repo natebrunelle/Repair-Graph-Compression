@@ -175,21 +175,26 @@ class TestNodeAndRepairNode(unittest.TestCase):
             str(node1), 'ID: ' + str(node1.uid) + '\tValue: [5]',
             'Wrong string outputed')
 
+    def test_node_generate_graphml_no_edges(self):
+        expected = "<node id=\"{}\"/>\n".format(self.n1.uid)
+        actual = self.n1.generate_graphml_format()
 
-# def test_add_repair_node_edge():
-# 	self.rnn.
+        self.assertEqual(expected, actual)
 
-# def test_delete_repair_node_edge():
-# 	n1 = Node(1)
-# 	n2 = Node(2)
-# 	n3 = Node(3)
-# 	n4 = Node(4)
-# 	r1 = RepairNode(1, n1, n2)
-# 	r2 = RepairNode(2, n3, r2)
-# 	n4.add_edge(r2)
-# 	n4.delete_edge(r2)
-# 	print(len(n3.edges))
-# 	assert len(n3.edges) == 0, 'Repair edge not deleted'
+    def test_node_generate_graphml_edges(self):
+        self.n1.add_edge(self.n2)
+        self.n1.add_edge(self.n3)
+
+        expected = "<node id=\"{}\"/>\n".format(self.n1.uid)
+        expected += "<edge source=\"{}\" target=\"{}\"/>\n".format(
+            self.n1.uid, self.n2.uid)
+        expected += "<edge source=\"{}\" target=\"{}\"/>\n".format(
+            self.n1.uid, self.n3.uid)
+
+        actual = self.n1.generate_graphml_format()
+
+        self.assertEqual(expected, actual)
+
 
 if __name__ == '__main__':
     unittest.main()

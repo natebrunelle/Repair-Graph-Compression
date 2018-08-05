@@ -101,6 +101,20 @@ class Node:
         for observer in self.observers:
             observer.update(event)
 
+    def generate_graphml_format(self):
+        '''
+        Generates a string representing the node in a GraphML format
+        '''
+        graph_ml = "<node id=\"{}\"/>\n".format(self.uid)
+
+        # add all edges from this node
+        for edge in self.edges:
+            edge_str = "<edge source=\"{}\" target=\"{}\"/>\n".format(
+                self.uid, edge.uid)
+            graph_ml += edge_str
+
+        return graph_ml
+
     def __eq__(self, node2):
         """overrides the equals method"""
 
