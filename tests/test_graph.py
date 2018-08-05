@@ -249,6 +249,42 @@ class GraphTestCase(unittest.TestCase):
 
         self.assertEqual(self.g, self.g, "same graphs should be equal")
 
+    def test_graphml_no_nodes(self):
+        empty_graph = Graph()
+        expected = "<graph id=\"{}\" edgedefault=\"directed\">\n".format(
+            empty_graph.graph_id)
+        expected += "</graph>"
+        actual = empty_graph.generate_graphml_format()
+
+        self.assertEqual(expected, actual, "Incorrect graphml format")
+
+    def test_graphml_nodes(self):
+        expected = "<graph id=\"{}\" edgedefault=\"directed\">\n".format(
+            self.g.graph_id)
+        expected += self.n1.generate_graphml_format()
+        expected += self.n2.generate_graphml_format()
+        expected += self.n3.generate_graphml_format()
+
+        expected += "</graph>"
+        actual = self.g.generate_graphml_format()
+
+        self.assertEqual(expected, actual, "Incorrect graphml format")
+
+    def test_graphml_nodes_edges(self):
+        self.n1.add_edge(self.n2)
+        self.n1.add_edge(self.n3)
+
+        expected = "<graph id=\"{}\" edgedefault=\"directed\">\n".format(
+            self.g.graph_id)
+        expected += self.n1.generate_graphml_format()
+        expected += self.n2.generate_graphml_format()
+        expected += self.n3.generate_graphml_format()
+
+        expected += "</graph>"
+        actual = self.g.generate_graphml_format()
+
+        self.assertEqual(expected, actual, "Incorrect graphml format")
+
 
 if __name__ == '__main__':
     unittest.main()
