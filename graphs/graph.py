@@ -123,17 +123,6 @@ class Graph(object):
             for node in self.list_nodes:
                 node.replace(node1, node2, replacement_node)
 
-    def __str__(self):
-        """ Prints out graphs in a nice format """
-        formatted = " "
-
-        for node in self.list_nodes:
-            formatted += str(node) + "\n"
-            for adj_node in node.edges:
-                formatted += "\t" + str(adj_node) + "\n"
-
-        return formatted
-
     def __eq__(self, other):
         """
         Compares two graphs for equality
@@ -169,3 +158,29 @@ class Graph(object):
                     return False
 
         return True
+
+    def generate_graphml_format(self):
+        '''
+        Generates the graphml representation of the graph.
+        '''
+
+        graph_ml = "<graph id=\"{}\" edgedefault=\"directed\">\n".format(
+            self.graph_id)
+
+        for node in self.list_nodes:
+            graph_ml += node.generate_graphml_format()
+
+        graph_ml += "</graph>"
+
+        return graph_ml
+
+    def __str__(self):
+        """ Prints out graphs in a nice format """
+        formatted = " "
+
+        for node in self.list_nodes:
+            formatted += str(node) + "\n"
+            for adj_node in node.edges:
+                formatted += "\t" + str(adj_node) + "\n"
+
+        return formatted

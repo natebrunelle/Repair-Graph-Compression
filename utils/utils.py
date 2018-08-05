@@ -1,30 +1,19 @@
 '''
-Some common functions we will most likely be sharing
+Helper functions that don't belong to any particular module or package.
 '''
 
-from pygraphml import Graph
-from pygraphml import GraphMLParser
 
-def cleanNode(node):
-    return str(node[0])+str(node[1])
+def write_graphml_file(graphml, target_path):
+    '''
+    Takes in a graphml representation (from a graph or a cluster)
+    and writes it to the specified location as a valid XML file.
+    '''
+    header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"\nxmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\nxsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns\nhttp://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\">"
 
-def generateViz(adjList, name):
-    g=Graph()
+    header += graphml
+    header += "\n"
+    header += '</graphml>'
 
-    lookup={}
-    for node in adjList.keys():
-        clean=cleanNode(node)
-        n=g.add_node(clean)
-        lookup[clean]=n
-
-    
-    for n1 in adjList.keys():
-        for n2 in adjList[n1]:
-            g.add_edge(lookup[cleanNode(n1)],lookup[cleanNode(n2)])
-
-
-    
-    parser = GraphMLParser()
-    parser.write(g, "name.graphml")
-
-    g.show()
+    target_file = open(target_path, 'w')
+    target_file.write(header)
+    target_file.close()
