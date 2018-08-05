@@ -7,6 +7,8 @@ function.
 '''
 import random
 
+from graphs.clusters import Cluster
+
 
 def pick_two_different_items(all_items):
     '''
@@ -117,3 +119,17 @@ def weakly_connected_graphs(connection_num, graph_num, edge_num,
             graph1, graph2, connections_so_far)
 
     return graphs
+
+
+def weakly_connected_cluster(connection_num, graph_num, edge_num,
+                             graph_factory):
+    '''
+    A wrapper around the weakly_connected_graphs function that
+    returns a cluster instead of a list of graphs. Might be better
+    to just return a cluster the other function instead.
+    '''
+
+    graphs = weakly_connected_graphs(connection_num, graph_num, edge_num,
+                                     graph_factory)
+
+    return Cluster(graphs)
