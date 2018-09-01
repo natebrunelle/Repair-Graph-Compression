@@ -21,6 +21,8 @@ class HubAndSpoke(Graph):
     def __init__(self, hub, nodes=None):
         self.hub_node = hub
         super().__init__(nodes)
+        self.hub_node.graph_id = self.graph_id
+        self.list_nodes.append(self.hub_node)
 
     def add_edge(self, n1, n2):
 

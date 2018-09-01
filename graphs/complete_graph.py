@@ -38,10 +38,14 @@ class CompleteGraph(Graph):
             node.graph_id = self.graph_id
             self.list_nodes.append(node)
 
+        num_of_connections = 0
         for node in n_list:
             for ref_node in self.list_nodes:
                 if ref_node != node:
                     node.add_edge(ref_node)
+                    num_of_connections += 1
+
+        print("Complete made: " + str(num_of_connections) + " connections")
 
     def add_edge(self, node1, node2):
         """

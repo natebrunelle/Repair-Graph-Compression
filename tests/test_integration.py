@@ -28,8 +28,38 @@ class ClusterRepairCompression(TestCase):
 
     def test_compress_cluster_complete(self):
         cluster = weakly_connected_cluster(25, 20, 15, self.complete_gf)
+        print("Create cluster.")
+        write_graphml_file(cluster.generate_graphml_format(), "before.graphml")
+        print("Writing cluster to file.")
+
+        edge_count_before = 0
+        node_count_before = 0
+        for node in cluster.list_nodes:
+            node_count_before += 1
+            for edge in node.edges:
+                edge_count_before += 1
+
         repair = Repair(cluster)
+        print("Compressing cluster.")
         compressed_cluster = repair.compress()
+
+        print("Writing cluster to file")
+        write_graphml_file(cluster.generate_graphml_format(), "after.graphml")
+
+        edge_count_after = 0
+        node_count_after = 0
+        for node in compressed_cluster.list_nodes:
+            node_count_after += 1
+            for edge in node.edges:
+                edge_count_after += 1
+
+        compression_ratio = edge_count_after / edge_count_before
+        print("Edges before: " + str(edge_count_before) + "\nEdges after: " +
+              str(edge_count_after) + "\n Nodes before: " +
+              str(node_count_before) + "\nNodes after: " +
+              str(node_count_after) + "\nCompression Ratio: " +
+              str(compression_ratio))
+
         self.assertTrue(compare_by_value(compressed_cluster, cluster))
 
     def test_compress_cluster_Generic(self):
@@ -39,7 +69,28 @@ class ClusterRepairCompression(TestCase):
         self.assertTrue(compare_by_value(compressed_cluster, cluster))
 
     def test_compress_cluster_HubSpoke(self):
-        cluster = weakly_connected_cluster(25, 20, 15, self.hubspoke_gf)
+        cluster = weakly_connected_cluster(9, 10, 10, self.hubspoke_gf)
+        edge_count_before = 0
+        node_count_before = 0
+        for node in cluster.list_nodes:
+            node_count_before += 1
+            for edge in node.edges:
+                edge_count_before += 1
+
+        print("Compressing...")
         repair = Repair(cluster)
         compressed_cluster = repair.compress()
+        edge_count_after = 0
+        node_count_after = 0
+        for node in compressed_cluster.list_nodes:
+            node_count_after += 1
+            for edge in node.edges:
+                edge_count_after += 1
+        compression_ratio = edge_count_after / edge_count_before
+        print("Edges before: " + str(edge_count_before) + "\nEdges after: " +
+              str(edge_count_after) + "\n Nodes before: " +
+              str(node_count_before) + "\nNodes after: " +
+              str(node_count_after) + "\nCompression Ratio: " +
+              str(compression_ratio))
+
         self.assertTrue(compare_by_value(compressed_cluster, cluster))

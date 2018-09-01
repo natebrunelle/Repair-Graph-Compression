@@ -53,7 +53,7 @@ def pick_nodes_connect_incr(graph1, graph2, counter):
     '''
     Extracts the edge making logic between two graphs.
     Picks a node from graph1 and another from graph2.
-    .. note:: The edge goes from graph1 to graph1
+    .. note:: The edge goes from graph1 to graph2
     '''
     node1 = random.choice(graph1[1].list_nodes)
     node2 = random.choice(graph2[1].list_nodes)
@@ -95,6 +95,8 @@ def weakly_connected_graphs(connection_num, graph_num, edge_num,
     graphs = []
     for _ in range(graph_num):
         graphs.append(graph_factory.get_graph())
+
+    randomly_create_edges(graphs, edge_num)
 
     # we start out with 0 connections/every graph not connected
     connections_so_far = 0
