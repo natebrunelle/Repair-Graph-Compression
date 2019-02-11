@@ -14,6 +14,7 @@ from nodes.nodes import EventType
 class Graph(object):
     ''' The graph class implementation '''
 
+
     def __init__(self, nodes=None):
 
         self.graph_id = uuid.uuid4().int

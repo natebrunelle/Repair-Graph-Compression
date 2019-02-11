@@ -30,6 +30,9 @@ class Node:
     Has it's own uid and also a graph id to show which graph
     owns it.
     '''
+    def __repr__(self):
+        return "ID: " + str(self.uid) + "\tValue: [" + str(self.value) + "]"
+
 
     def __init__(self, value, edges=None):
         self.value = value
@@ -177,6 +180,7 @@ class Node:
         """overriding the str method, helps when debugging """
 
         return "ID: " + str(self.uid) + "\tValue: [" + str(self.value) + "]"
+
 
 
 # pylint: disable=invalid-name

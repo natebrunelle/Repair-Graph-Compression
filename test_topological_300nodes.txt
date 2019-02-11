@@ -1,0 +1,4 @@
+Time for Dense Normal topsort: 16.242069005966187
+Time for Dense Compression aware topsort: 0.6194019317626953
+Time for Sparse Normal topsort: 0.0027010440826416016
+Time for Sparse Compression aware topsort: 0.037348031997680664

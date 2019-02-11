@@ -1,0 +1,2 @@
+Time for Dense Normal Bipartite: 0.10195302963256836
+Results from Dense normal bipartite:  False

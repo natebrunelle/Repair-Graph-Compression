@@ -24,6 +24,7 @@ class GraphTestCase(unittest.TestCase):
         self.g = Graph(self.testList3)
         self.h = Graph([self.n5, self.n6])
         self.j = Graph()
+        print(self.g)
 
     def tearDown(self):
         self.g.list_nodes = self.testList3

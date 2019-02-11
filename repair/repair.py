@@ -68,6 +68,16 @@ class RepairPriorityQueue(PriorityQueue):
 
         return freq_pair
 
+    def __repr__(self):
+        formatted_string = " "
+
+        for key in self.old_counts:
+            formatted_string += "[" + str(key[0]) + ", " + str(
+                key[1]) + "]\t\t" + str(self.old_counts[key]) + "\n"
+
+        return formatted_string
+
+
     def __str__(self):
         ''' prints the dictionary in a nice format
 

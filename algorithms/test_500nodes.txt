@@ -1,0 +1,14 @@
+Time for Dense Normal Bipartite: 0.5228931903839111
+Results from Dense normal bipartite:  False
+Time for dense compression aware Bipartite: 932.3862991333008
+Results from dense compression aware bipartite: False
+
+Time for Sparse Normal bipartite: 0.002267122268676758
+Results from Sparse normal bipartite: True
+Time for Sparse Compression aware bipartite: 0.04039287567138672
+Sparse compression aware bipartite result: True
+
+Time for Dense Normal topsort: 33.504127979278564
+Time for Dense Compression aware topsort: 877.8733458518982
+Time for Sparse Normal topsort: 0.0029172897338867188
+Time for Sparse Compression aware topsort: 0.12012910842895508
