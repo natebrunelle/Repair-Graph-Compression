@@ -69,13 +69,12 @@ class Node:
         if node1 in self.edges and node2 in self.edges:
             index_node1 = self.edges.index(node1)
             index_node2 = self.edges.index(node2)
-
             if index_node1 + 1 == index_node2:
-
                 self.delete_edge(node1)
                 self.delete_edge(node2)
                 self.edges.insert(index_node1, repair_node)
-
+                # print("repair node:", repair_node)
+                # print("deleted: ", node1, "and", node2)
     def observe(self, graph):
         '''
         :param graph: a reference to the graph that wants to observe the node

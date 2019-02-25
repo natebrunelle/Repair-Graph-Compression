@@ -154,7 +154,8 @@ class Repair:
             node.replace(node1, node2, dictionary_node)
 
         self.graph.add_node(dictionary_node)
-
+        # print("PRINTING Graph inside repair")
+        # print(Graph(self.graph.list_nodes))
         return self.compress()
 
     def remove_compression_nodes(self):

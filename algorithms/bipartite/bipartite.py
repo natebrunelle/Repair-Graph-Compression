@@ -76,6 +76,8 @@ def normal_bipartite(uncompressed_graph):
 
 def compression_aware_bipartite(compressed_graph):
     # print("Inside compression aware bipartite fun")
+    # print("Printing graph that was passed in:\n", compressed_graph)
+
     Q = []
     D = []
     V = []
@@ -107,7 +109,10 @@ def compression_aware_bipartite(compressed_graph):
     #     print(each.vertex)
     V[0].color = "GRAY"
     V[0].predecessor = None
+    print("size of graph: ", len(V))
     Q.append(V[0])
+    compressed_graph.todot()
+
     while(len(Q) != 0):
         u = Q.pop(0)
         # print("U: ", u.vertex)
@@ -118,9 +123,17 @@ def compression_aware_bipartite(compressed_graph):
                 v.predecessor = u
                 Q.append(v)
             elif((v.color == u.color and u.vertex not in D) or (v.color != u.color and u.vertex in D)):
+                if(v.color == u.color and u.vertex not in D):
+                    print("v.color == u.color and u.vertex not in D")
+                else:
+                    print("v.color != u.color and u.vertex in D")
+                # print(v.vertex, v.color)
+                # print(u.vertex, u.color)
                 # print("V.color: ", v.color)
                 # print("U.color: ", u.color)
                 # print("Sad, graph is not a bipartite :(")
+                for each in V:
+                    print(str(each.vertex.uid)[-4:], "[color = ", each.color.lower(), "];")
                 return False
         if(u.predecessor != None):
             if(((u.predecessor).color == "RED" and u.vertex not in D) or (u.predecessor).color == "BLUE" and u.vertex in D):
@@ -130,6 +143,8 @@ def compression_aware_bipartite(compressed_graph):
         else:
             u.color = "RED"
         colored_nodes.append(u)
+
+
     # print("TRUE WOOHOO GRAPH IS BIPARTITE")
     # for each in colored_nodes:
     #     print(each.color)

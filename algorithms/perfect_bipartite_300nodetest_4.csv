@@ -1,0 +1,9 @@
+Time for perfect normal bippartite: 
+1.3510668277740479
+Results from complete bipartite: True
+Time for perfect bipartite compressed: 
+683.127329826355
+Results from complete bipartite compressed False
+Time for DECOMPRESSED perfect bippartite: 
+1.4776058197021484
+Results from decompressed complete bipartite: True

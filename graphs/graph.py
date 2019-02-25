@@ -26,6 +26,35 @@ class Graph(object):
         else:
             self.list_nodes = list()
 
+
+    def todot(self):
+        print("digraph G{ ")
+        literals = []
+        dict_nodes = []
+        for node in self.list_nodes:
+            if node.value == float('inf'):
+                dict_nodes.append(node)
+            else:
+                literals.append(node)
+        print("node [shape = octagon]; ", end="")
+        for node in dict_nodes:
+            print(str(node.uid)[-4:], end=" ")
+        print(";")
+        print("node [shape = circle]; ", end="")
+        for node in literals:
+            print(str(node.uid)[-4:], end=" ")
+        print(";")
+
+        for node in self.list_nodes:
+            for dest in node.edges:
+                print(str(node.uid)[-4:], "->", str(dest.uid)[-4:] + ";")
+        print("}")
+
+
+
+
+
+
     def add_edge(self, node1, node2):
         """
         node2 is added to node1's adj list by calling Node.add_edge()
