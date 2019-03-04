@@ -15,8 +15,6 @@ def visit(node, visited, graph, stack): #list, dic, list
 def topSort(graph):
     visited={}
     for node in graph.list_nodes: #mark all nodes not visited
-        # if node.value == float('inf'):
-        #     print("FOUND INFINITY!!!")
         visited[node]=False
     
     stack=[]

@@ -28,7 +28,9 @@ class Graph(object):
 
 
     def todot(self):
-        print("digraph G{ ")
+        ret_str = ""
+        ret_str+=("http://www.webgraphviz.com/\n")
+        ret_str+=("digraph G{ \n")
         literals = []
         dict_nodes = []
         for node in self.list_nodes:
@@ -36,21 +38,20 @@ class Graph(object):
                 dict_nodes.append(node)
             else:
                 literals.append(node)
-        print("node [shape = octagon]; ", end="")
+        ret_str+=("node [shape = octagon]; " + "")
         for node in dict_nodes:
-            print(str(node.uid)[-4:], end=" ")
-        print(";")
-        print("node [shape = circle]; ", end="")
+            ret_str+=(str(node.uid)[-4:]+ " ")
+        ret_str+=(";\n")
+        ret_str+=("node [shape = circle]; "+ "")
         for node in literals:
-            print(str(node.uid)[-4:], end=" ")
-        print(";")
+            ret_str+=(str(node.uid)[-4:]+" ")
+        ret_str+=(";\n")
 
         for node in self.list_nodes:
             for dest in node.edges:
-                print(str(node.uid)[-4:], "->", str(dest.uid)[-4:] + ";")
-        print("}")
+                ret_str+=(str(node.uid)[-4:]+ "->" + str(dest.uid)[-4:] + ";\n")
 
-
+        return ret_str
 
 
 

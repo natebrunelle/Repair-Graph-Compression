@@ -1,7 +1,7 @@
 import unittest
 import sys
 import random
-from algorithms.bipartite.bipartite import normal_bipartite, compression_aware_bipartite
+from algorithms.bipartite.bipartite import normal_bipartite, compression_aware_bipartite, armans_algo
 from algorithms.top_sort.topologicalSort import topSort, repair_topological
 from graphs.graph import Graph
 from nodes.nodes import EventType, Node, RepairNode
@@ -297,7 +297,7 @@ class TestTopologicalSort(unittest.TestCase):
 
     def testCompleteBipartite(self):
 
-        self.setUpCompleteBipartite(2)
+        self.setUpCompleteBipartite(40)
         complete_bipartite = self.complete_bipartite
 
 
@@ -318,16 +318,18 @@ class TestTopologicalSort(unittest.TestCase):
 
         start = time.time()
         compressed_graph = complete_bipartite_repair.compress()
-        compressed_complete_bipartite_result = compression_aware_bipartite(compressed_graph)
+        # compressed_complete_bipartite_result = compression_aware_bipartite(compressed_graph)
+        armans_compressed_complete_bipartite_result = armans_algo(compressed_graph)
         end = time.time()
 
-        print("printing compressed graph: ")
-        print(compressed_graph)
-        # compressed_graph.todot()
+        # print("printing compressed graph: ")
+        # print(compressed_graph)
 
 
         print("Time for perfect bipartite compressed: \n" + str(end - start))
-        print("Results from complete bipartite compressed", compressed_complete_bipartite_result)
+        # print("Results from complete bipartite compressed", compressed_complete_bipartite_result)
+        print("ARMANS RESULTS", armans_compressed_complete_bipartite_result)
+
 
         # # start = time.time()
         # # decompressed_compressed_perfect_bipartite = complete_bipartite_repair.decompress()
