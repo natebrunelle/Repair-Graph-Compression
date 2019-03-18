@@ -203,7 +203,7 @@ def armans_algo(compressed_graph):
     #     print(each.vertex)
     V[0].color = "GRAY"
     V[0].predecessor = None
-    print("size of graph: ", len(V))
+    # print("size of graph: ", len(V))
     Q.append(V[0])
     # compressed_graph.todot()
 
@@ -234,17 +234,16 @@ def armans_algo(compressed_graph):
 
 
 
-    print(compressed_graph.todot())
-
-    for each in V:
-        print(str(each.vertex.uid)[-4:], "[color = ", each.color.lower(), "];")
-    print("}")
+    # print(compressed_graph.todot())
+    #
+    # for each in V:
+    #     print(str(each.vertex.uid)[-4:], "[color = ", each.color.lower(), "];")
+    # print("}")
 
     bipartite = True
 
     for node in colored_nodes:
         for dest in node.adj:
-
             if(node.color == dest.color):
                 if(node.vertex.value == float('inf') or dest.vertex.value == float('inf')):
                     continue

@@ -1,0 +1,50 @@
+Time for perfect normal bippartite algorithm: 
+0.9175519943237305
+Result for perfect normal bippartite algorithm:  True
+
+Time for normal bippartite run using compression aware algorithm: 
+0.26647305488586426
+Result for normal bippartite run using compression aware algorithm:  True
+
+Time for compressed graph ran in compression aware algorithm: 
+413.0613567829132
+Result for compressed graph ran using compression aware algorithm:  True
+
+Time for DECOMPRESSED graph ran in normal algorithm: 
+0.9777929782867432
+Results from decompressed graph ran in normal algorithm: True
+
+Time for DECOMPRESSED graph ran using compression aware algorithm: 
+0.3825240135192871
+Results from decompressed graph ran using compression aware algorithm True
+Time for Dense Normal topsort: 
+35.60184192657471
+
+Time for normal graph using compression aware topsort: 
+36.63767385482788
+
+Time for compressed graph ran in compression aware topsort:
+ 878.5861098766327
+
+Time for Decompressed dense graph ran in normal topsort:
+ 34.05035710334778
+
+Time for Decompressed dense graph ran in compression aware topsort:
+ 33.41174387931824
+
+------------------------------------------
+Time for Sparse Normal topsort: 
+0.002836942672729492
+
+Time for Sparse compression aware topsort: 
+0.003003835678100586
+
+Time for Sparse Compression aware topsort: 
+0.10965585708618164
+
+Time for DECOMPRESSED Sparse 'normal' topsort: 
+0.06494307518005371
+
+Time for DECOMPRESSED Sparse compression aware topsort: 
+0.06455016136169434
+
