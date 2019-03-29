@@ -1,3 +1,0 @@
-Size of spokes on graph one: 50
-Size of spokes on graph two: 100
-Number of nodes of hub2 compressed: 100

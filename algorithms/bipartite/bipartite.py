@@ -14,6 +14,10 @@ class bipartite_node:
         self.vertex = v
         self.color = -1
 
+
+    def __hash__(self):
+        return hash(self.vertex)
+
     # def vertex(self,v):
     #     self.attributes.append(v)
 
@@ -34,7 +38,7 @@ def normal_bipartite(uncompressed_graph):
     nodes_created = {}
     Q = []
     D = []
-    visited = []
+    #visited = set()
     for node in uncompressed_graph.list_nodes:
         temp = bipartite_node(node)
         if node.uid in nodes_created.keys():  # if the key is in the dictionary
@@ -52,7 +56,7 @@ def normal_bipartite(uncompressed_graph):
     D[0].color = 1
     new_D = []
     Q.append((D[0]))
-    visited.append(D[0])
+    #visited.add(D[0])
     bipartite = True
     while(len(Q) != 0):
         # print(Q)
@@ -60,10 +64,10 @@ def normal_bipartite(uncompressed_graph):
         # print(u.adj)
         next_color = 1 - int(u.color)
         for v in u.adj:
-            if v not in visited:
+            if v.color != -1:
                 v.color = next_color
                 Q.append(v)
-                visited.append(v)
+                #visited.add(v)
             else:
                 if v.color == u.color:
                     # print("Sad...graph is NOT bipartite :(")

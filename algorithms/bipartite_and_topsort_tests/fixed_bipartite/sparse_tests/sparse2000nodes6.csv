@@ -1,0 +1,16 @@
+Time for Sparse Normal topsort: 
+0.016443967819213867
+Time for Sparse compression aware topsort: 
+0.015858173370361328
+Time for compression of sparse graph:  
+0.15612006187438965
+Time for Sparse Compression aware topsort: 
+1.3976759910583496
+Time for actual decompression of sparse graph:  
+0.9478280544281006
+Time for DECOMPRESSED Sparse 'normal' topsort: 
+0.011991024017333984
+Time for actual decompression of sparse graph:  
+0.9835748672485352
+Time for DECOMPRESSED Sparse compression aware topsort: 
+0.012831926345825195

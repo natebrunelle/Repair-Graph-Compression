@@ -33,6 +33,8 @@ class Node:
     def __repr__(self):
         return "ID: " + str(self.uid) + "\tValue: [" + str(self.value) + "]"
 
+    def __hash__(self):
+        return hash(self.uid)
 
     def __init__(self, value, edges=None):
         self.value = value

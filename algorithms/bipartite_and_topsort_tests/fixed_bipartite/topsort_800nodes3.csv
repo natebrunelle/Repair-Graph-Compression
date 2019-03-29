@@ -1,0 +1,17 @@
+Time for Dense Normal topsort: 
+130.61455607414246
+Time for normal graph using compression aware topsort: 
+130.3093662261963
+Time for compression of dense graph: 
+3813.063616991043
+Time for compressed graph ran in compression aware topsort:
+ 3.7534608840942383
+Time for actual decompression of dense graph:  
+1.1891570091247559
+Time for Decompressed dense graph ran in normal topsort:
+ 130.34891605377197
+Time for actual decompression of dense graph:  
+0.49842000007629395
+Time for Decompressed dense graph ran in compression aware topsort:
+ 143.34931111335754
+------------------------------------------

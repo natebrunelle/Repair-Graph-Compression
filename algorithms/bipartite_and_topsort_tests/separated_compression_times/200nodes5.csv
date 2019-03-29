@@ -1,0 +1,68 @@
+Time for perfect normal bippartite algorithm: 
+0.05844712257385254
+Result for perfect normal bippartite algorithm:  True
+
+Time for normal bippartite run using compression aware algorithm: 
+0.03628683090209961
+Result for normal bippartite run using compression aware algorithm:  True
+
+Time for actual compression of complete bipartite: 
+25.78794503211975
+Time for compressed graph ran in compression aware algorithm: 
+0.002727985382080078
+Result for compressed graph ran using compression aware algorithm:  True
+
+Time for actual decompression of complete bipartite graph: 
+0.0387568473815918
+Time for DECOMPRESSED graph ran in normal algorithm: 
+0.05886101722717285
+Results from decompressed graph ran in normal algorithm: True
+
+Time for actual decompression of complete bipartite graph: 
+0.02201390266418457
+Time for DECOMPRESSED graph ran using compression aware algorithm: 
+0.037393808364868164
+Results from decompressed graph ran using compression aware algorithm True
+Time for Dense Normal topsort: 
+2.100738048553467
+
+Time for normal graph using compression aware topsort: 
+2.0916740894317627
+
+Time for compression of dense graph: 
+65.81035494804382
+Time for compressed graph ran in compression aware topsort:
+ 0.22840380668640137
+
+Time for actual decompression of dense graph:  
+0.0759439468383789
+Time for Decompressed dense graph ran in normal topsort:
+ 2.0895659923553467
+
+Time for actual decompression of dense graph:  
+0.03263068199157715
+Time for Decompressed dense graph ran in compression aware topsort:
+ 2.088750123977661
+
+------------------------------------------
+Time for Sparse Normal topsort: 
+0.0009770393371582031
+
+Time for Sparse compression aware topsort: 
+0.0010480880737304688
+
+Time for compression of sparse graph:  
+0.008324861526489258
+Time for Sparse Compression aware topsort: 
+0.014156103134155273
+
+Time for actual decompression of sparse graph:  
+0.010541200637817383
+Time for DECOMPRESSED Sparse 'normal' topsort: 
+0.0009670257568359375
+
+Time for actual decompression of sparse graph:  
+0.01046609878540039
+Time for DECOMPRESSED Sparse compression aware topsort: 
+0.0010690689086914062
+

@@ -1,9 +1,0 @@
-Number of total nodes + edges before compression: 400 and 159600
-Ratio of uncompressed/compressed dense nodes and edges: 0.338409475465313 and 57.82608695652174
-Size of COMPRESSED dense graph (num_edges+num_nodes): 3942
-After compression number of dense nodes: 1182
-
-Sparse graph before compression: Number of nodes and edges: 400 and 414
-Ratio of uncompressed/compressed sparse nodes and edges: : 0.9900990099009901 and 1.0147058823529411
-Size of COMPRESSED sparse graph (num_edges+num_nodes): 812
-After compression number of sparse nodes: 404

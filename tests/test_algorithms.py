@@ -7,6 +7,7 @@ from graphs.graph import Graph
 from nodes.nodes import EventType, Node, RepairNode
 from repair.repair import Repair, RepairPriorityQueue
 import time
+import csv
 from unittest import TestCase
 
 
@@ -166,95 +167,233 @@ class TestTopologicalSort(unittest.TestCase):
 
 
     def testTopologicalSorts(self): #tests topsort algorithm, both normal and compression aware on dense graphs (normal and compressed)
-        self.setUpDenseGraph(100)
 
+        # self.setUpDenseGraph(800)
+        #
+        # ret_str = ""
+        # dense_graph = self.real_dense_graph
+        # # ret_str += (dense_graph)
+        # # ret_str += ("Topsort Dense Graph: ")
+        # start = time.time()
+        # dense_normal_result = topSort(dense_graph)
+        # end = time.time()
+        # ret_str += ("Time for Dense Normal topsort: \n" + str(end - start) + '\n')
+        # ret_str += ("")
+        #
+        # start = time.time()
+        # compressed_algo = repair_topological(dense_graph)
+        # end = time.time()
+        # ret_str += ("Time for normal graph using compression aware topsort: \n" + str(end - start) + '\n')
+        # ret_str += ("")
+        # # ret_str += ("Dense normal topsort result:\n", dense_normal_result)
+        #
+        #
+        # # ret_str += ("Topsort compressed: ")
+        # dense_repair = Repair(dense_graph)
+        # start = time.time()
+        # compressed_dense = dense_repair.compress()
+        # end = time.time()
+        # ret_str += ("Time for compression of dense graph: \n" + str(end - start) + '\n')
+        #
+        # start = time.time()
+        # # ret_str += (compressed_dense)
+        # dense_compressed_result = repair_topological(compressed_dense)
+        # end = time.time()
+        # ret_str += ("Time for compressed graph ran in compression aware topsort:\n " + str(end - start) + '\n')
+        # ret_str += ("")
+        # # ret_str += ("Dense compression aware topsort result:\n", dense_compressed_result)
+        #
+        # start = time.time()
+        # decompressed_dense = dense_repair.decompress()
+        # end = time.time()
+        # ret_str += ("Time for actual decompression of dense graph:  \n" + str(end - start) + '\n')
+        #
+        # start = time.time()
+        # dense_decompressed_result2 = topSort(decompressed_dense)
+        # end = time.time()
+        # ret_str += ("Time for Decompressed dense graph ran in normal topsort:\n " + str(end - start) + '\n')
+        # ret_str += ("")
+        #
+        # start = time.time()
+        # decompressed_dense = dense_repair.decompress()
+        # end = time.time()
+        # ret_str += ("Time for actual decompression of dense graph:  \n" + str(end - start) + '\n')
+        #
+        # start = time.time()
+        # dense_decompressed_compression_aware = repair_topological(decompressed_dense)
+        # end = time.time()
+        # ret_str += ("Time for Decompressed dense graph ran in compression aware topsort:\n " + str(end - start) + '\n')
+        # ret_str += ("")
+        #
+        # ret_str += ("------------------------------------------")
+        # return ret_str
 
+        # dense_graph = self.real_dense_graph
+        # # print(dense_graph)
+        # # print("Topsort Dense Graph: ")
+        # start = time.time()
+        # dense_normal_result = topSort(dense_graph)
+        # end = time.time()
+        # print("Time for Dense Normal topsort: \n" + str(end - start))
+        # print("")
+        #
+        # start = time.time()
+        # compressed_algo = repair_topological(dense_graph)
+        # end = time.time()
+        # print("Time for normal graph using compression aware topsort: \n" + str(end - start))
+        # print("")
+        # # print("Dense normal topsort result:\n", dense_normal_result)
+        #
+        #
+        # # print("Topsort compressed: ")
+        # dense_repair = Repair(dense_graph)
+        # start = time.time()
+        # compressed_dense = dense_repair.compress()
+        # end = time.time()
+        # print("Time for compression of dense graph: \n" + str(end - start))
+        #
+        # start = time.time()
+        # # print(compressed_dense)
+        # dense_compressed_result = repair_topological(compressed_dense)
+        # end = time.time()
+        # print("Time for compressed graph ran in compression aware topsort:\n " + str(end - start))
+        # print("")
+        # # print("Dense compression aware topsort result:\n", dense_compressed_result)
+        #
+        # start = time.time()
+        # decompressed_dense = dense_repair.decompress()
+        # end = time.time()
+        # print("Time for actual decompression of dense graph:  \n" + str(end - start))
+        #
+        # start = time.time()
+        # dense_decompressed_result2 = topSort(decompressed_dense)
+        # end = time.time()
+        # print("Time for Decompressed dense graph ran in normal topsort:\n " + str(end - start))
+        # print("")
+        #
+        # start = time.time()
+        # decompressed_dense = dense_repair.decompress()
+        # end = time.time()
+        # print("Time for actual decompression of dense graph:  \n" + str(end - start))
+        #
+        # start = time.time()
+        # dense_decompressed_compression_aware = repair_topological(decompressed_dense)
+        # end = time.time()
+        # print("Time for Decompressed dense graph ran in compression aware topsort:\n " + str(end - start))
+        # print("")
+        #
+        # print("------------------------------------------")
 
-        dense_graph = self.real_dense_graph
-        # print(dense_graph)
-        # print("Topsort Dense Graph: ")
-        start = time.time()
-        dense_normal_result = topSort(dense_graph)
-        end = time.time()
-        print("Time for Dense Normal topsort: \n" + str(end - start))
-        print("")
+        self.setUpSparseGraph(500)
 
-        start = time.time()
-        compressed_algo = repair_topological(dense_graph)
-        end = time.time()
-        print("Time for normal graph using compression aware topsort: \n" + str(end - start))
-        print("")
-        # print("Dense normal topsort result:\n", dense_normal_result)
-
-
-        # print("Topsort compressed: ")
-        dense_repair = Repair(dense_graph)
-        start = time.time()
-        compressed_dense = dense_repair.compress()
-        # print(compressed_dense)
-        dense_compressed_result = repair_topological(compressed_dense)
-        end = time.time()
-        print("Time for compressed graph ran in compression aware topsort:\n " + str(end - start))
-        print("")
-        # print("Dense compression aware topsort result:\n", dense_compressed_result)
-
-        start = time.time()
-        decompressed_dense = dense_repair.decompress()
-        dense_decompressed_result2 = topSort(decompressed_dense)
-        end = time.time()
-        print("Time for Decompressed dense graph ran in normal topsort:\n " + str(end - start))
-        print("")
-
-        start = time.time()
-        decompressed_dense = dense_repair.decompress()
-        dense_decompressed_compression_aware = repair_topological(decompressed_dense)
-        end = time.time()
-        print("Time for Decompressed dense graph ran in compression aware topsort:\n " + str(end - start))
-        print("")
-
-        print("------------------------------------------")
-        self.setUpSparseGraph(100)
+        string_to_ret = ""
         sparse_graph = self.sparse_graph
-        # print(sparse_graph)
+        # string_to_ret += (sparse_graph)
         start = time.time()
         sparse_normal_result = topSort(sparse_graph)
         end = time.time()
-        print("Time for Sparse Normal topsort: \n" + str(end - start))
-        print("")
+        string_to_ret += ("Time for Sparse Normal topsort: \n" + str(end - start) + '\n')
+        string_to_ret += ("")
 
         start = time.time()
         sparse_compressed_algo = repair_topological(sparse_graph)
         end = time.time()
-        print("Time for Sparse compression aware topsort: \n" + str(end - start))
-        print("")
-        # print("Sparse normal topsort result:\n", sparse_normal_result)
+        string_to_ret += ("Time for Sparse compression aware topsort: \n" + str(end - start) + '\n')
+        string_to_ret += ("")
+        # string_to_ret += ("Sparse normal topsort result:\n", sparse_normal_result)
 
 
         sparse_repair = Repair(sparse_graph)
 
-
         start = time.time()
         compressed_sparse = sparse_repair.compress()
+        end = time.time()
+        string_to_ret += ("Time for compression of sparse graph:  \n" + str(end - start) + '\n')
+
+        start = time.time()
         sparse_compressed_result = repair_topological(compressed_sparse)
         end = time.time()
-        print("Time for Sparse Compression aware topsort: \n" + str(end - start))
-        print("")
+        string_to_ret += ("Time for Sparse Compression aware topsort: \n" + str(end - start) + '\n')
+        string_to_ret += ("")
 
-        # print("Sparse compression aware topsort result:\n", sparse_compressed_result)
+        # string_to_ret += ("Sparse compression aware topsort result:\n", sparse_compressed_result)
 
         start = time.time()
         decompressed_sparse_graph = sparse_repair.decompress()
+        end = time.time()
+        string_to_ret += ("Time for actual decompression of sparse graph:  \n" + str(end - start) + '\n')
+
+        start = time.time()
         decompressed_normal_result = topSort(decompressed_sparse_graph)
         end = time.time()
-        print("Time for DECOMPRESSED Sparse 'normal' topsort: \n" + str(end - start))
-        print("")
+        string_to_ret += ("Time for DECOMPRESSED Sparse 'normal' topsort: \n" + str(end - start) + '\n')
+        string_to_ret += ("")
 
         start = time.time()
         decompressed_sparse_graph = sparse_repair.decompress()
+        end = time.time()
+        string_to_ret += ("Time for actual decompression of sparse graph:  \n" + str(end - start) + '\n')
+
+        start = time.time()
         decompressed_normal_result2 = repair_topological(decompressed_sparse_graph)
         end = time.time()
-        print("Time for DECOMPRESSED Sparse compression aware topsort: \n" + str(end - start))
-        print("")
+        string_to_ret += ("Time for DECOMPRESSED Sparse compression aware topsort: \n" + str(end - start) + '\n')
+        string_to_ret += ("")
+
+        return string_to_ret
+        # sparse_graph = self.sparse_graph
+        # # print(sparse_graph)
+        # start = time.time()
+        # sparse_normal_result = topSort(sparse_graph)
+        # end = time.time()
+        # print("Time for Sparse Normal topsort: \n" + str(end - start))
+        # print("")
+        #
+        # start = time.time()
+        # sparse_compressed_algo = repair_topological(sparse_graph)
+        # end = time.time()
+        # print("Time for Sparse compression aware topsort: \n" + str(end - start))
+        # print("")
+        # # print("Sparse normal topsort result:\n", sparse_normal_result)
+        #
+        #
+        # sparse_repair = Repair(sparse_graph)
+        #
+        #
+        # start = time.time()
+        # compressed_sparse = sparse_repair.compress()
+        # end = time.time()
+        # print("Time for compression of sparse graph:  \n" + str(end - start))
+        #
+        # start = time.time()
+        # sparse_compressed_result = repair_topological(compressed_sparse)
+        # end = time.time()
+        # print("Time for Sparse Compression aware topsort: \n" + str(end - start))
+        # print("")
+        #
+        # # print("Sparse compression aware topsort result:\n", sparse_compressed_result)
+        #
+        # start = time.time()
+        # decompressed_sparse_graph = sparse_repair.decompress()
+        # end = time.time()
+        # print("Time for actual decompression of sparse graph:  \n" + str(end - start))
+        #
+        # start = time.time()
+        # decompressed_normal_result = topSort(decompressed_sparse_graph)
+        # end = time.time()
+        # print("Time for DECOMPRESSED Sparse 'normal' topsort: \n" + str(end - start))
+        # print("")
+        #
+        # start = time.time()
+        # decompressed_sparse_graph = sparse_repair.decompress()
+        # end = time.time()
+        # print("Time for actual decompression of sparse graph:  \n" + str(end - start))
+        #
+        # start = time.time()
+        # decompressed_normal_result2 = repair_topological(decompressed_sparse_graph)
+        # end = time.time()
+        # print("Time for DECOMPRESSED Sparse compression aware topsort: \n" + str(end - start))
+        # print("")
 
 
         self.assertEqual(decompressed_normal_result, decompressed_normal_result2, sparse_compressed_result)
@@ -281,6 +420,10 @@ class TestTopologicalSort(unittest.TestCase):
         dense_repair = Repair(dense_graph)
         start = time.time()
         compressed_dense = dense_repair.compress()
+        end = time.time()
+        print("Time for compression of dense graph:  \n" + str(end - start))
+
+        start = time.time()
         # print(compressed_dense)
         dense_compressed_result = compression_aware_bipartite(compressed_dense)
         end = time.time()
@@ -309,6 +452,10 @@ class TestTopologicalSort(unittest.TestCase):
         sparse_repair = Repair(sparse_graph)
         start = time.time()
         compressed_sparse = sparse_repair.compress()
+        end = time.time()
+        print("Time for compression of sparse graph:  \n" + str(end - start))
+
+        start = time.time()
         sparse_compressed_result = compression_aware_bipartite(compressed_sparse)
         end = time.time()
         print("Time for Sparse Compression aware bipartite: \n" + str(end - start))
@@ -329,7 +476,7 @@ class TestTopologicalSort(unittest.TestCase):
 
 
     def testCompleteBipartite(self):
-
+        return
         self.setUpCompleteBipartite(50)
         complete_bipartite = self.complete_bipartite
 
@@ -360,6 +507,10 @@ class TestTopologicalSort(unittest.TestCase):
 
         start = time.time()
         compressed_graph = complete_bipartite_repair.compress()
+        end = time.time()
+        print("Time for actual compression of complete bipartite: \n" + str(end - start))
+
+        start = time.time()
         # compressed_complete_bipartite_result = compression_aware_bipartite(compressed_graph)
         armans_compressed_complete_bipartite_result = armans_algo(compressed_graph)
         end = time.time()
@@ -375,6 +526,10 @@ class TestTopologicalSort(unittest.TestCase):
 
         start = time.time()
         decompressed_compressed_perfect_bipartite = complete_bipartite_repair.decompress()
+        end = time.time()
+        print("Time for actual decompression of complete bipartite graph: \n" + str(end - start))
+
+        start = time.time()
         decompressed_bipartite_results = normal_bipartite(decompressed_compressed_perfect_bipartite)
         end = time.time()
 
@@ -392,6 +547,9 @@ class TestTopologicalSort(unittest.TestCase):
 
         start = time.time()
         decompressed_compressed_perfect_bipartite = complete_bipartite_repair.decompress()
+        end = time.time()
+        print("Time for actual decompression of complete bipartite graph: \n" + str(end - start))
+        start = time.time()
         decompressed_bipartite_results2 = armans_algo(decompressed_compressed_perfect_bipartite)
         end = time.time()
 

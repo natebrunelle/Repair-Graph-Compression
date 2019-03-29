@@ -1,0 +1,25 @@
+Time for perfect normal bippartite algorithm: 
+0.2027730941772461
+Result for perfect normal bippartite algorithm:  True
+
+Time for normal bippartite run using compression aware algorithm: 
+0.3220343589782715
+Result for normal bippartite run using compression aware algorithm:  True
+
+Time for actual compression of complete bipartite: 
+642.4919888973236
+Time for compressed graph ran in compression aware algorithm: 
+0.007753849029541016
+Result for compressed graph ran using compression aware algorithm:  True
+
+Time for actual decompression of complete bipartite graph: 
+0.3324887752532959
+Time for DECOMPRESSED graph ran in normal algorithm: 
+0.19800972938537598
+Results from decompressed graph ran in normal algorithm: True
+
+Time for actual decompression of complete bipartite graph: 
+0.19520998001098633
+Time for DECOMPRESSED graph ran using compression aware algorithm: 
+0.32494688034057617
+Results from decompressed graph ran using compression aware algorithm True
