@@ -171,6 +171,7 @@ class Repair:
         return decompressed_graph
 
     def decompress(self):
+        print('inside decompress func')
         ''' Decompression for Repair compressed graphs
 
         It takes the graph passed into the class and decompress it.
@@ -181,7 +182,6 @@ class Repair:
 
         # will stack up nodes and pop them while getting replacements
         stack = []
-
         for node in self.graph.list_nodes:
             for adj_node in reversed(node.edges):
                 stack.append(adj_node)
@@ -199,6 +199,7 @@ class Repair:
                 else:
                     node.edges.append(stack.pop())
 
+        # print("passed while")
         decompressed_graph = self.remove_compression_nodes()
 
         self.graph = decompressed_graph

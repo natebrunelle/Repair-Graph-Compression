@@ -11,8 +11,142 @@ import csv
 from unittest import TestCase
 
 
-
 class TestTopologicalSort(unittest.TestCase):
+
+    path_set = set()
+    visited_set = set()
+
+    def check_cycle(self, vertex):
+        if vertex in self.visited_set:
+            return False
+        self.visited_set.add(vertex)
+        self.path_set.add(vertex)
+        for neighbour in vertex.edges:
+            if neighbour in self.path_set or self.check_cycle(neighbour):
+                return True
+        self.path_set.remove(vertex)
+        return False
+
+
+    def setUpRandomCompression(self, num_nodes):
+
+
+
+        sys.setrecursionlimit(100000)
+
+        nodes_list = []
+        frequency_tracker = {}
+        for x in range(0, num_nodes):
+            num = random.randint(0, 1000)
+            tempNode = Node(num)
+            tempNode.edges = []
+            nodes_list.append(tempNode)
+            frequency_tracker[tempNode] = 0
+
+        # val_x = random.randint(0, 1000)
+        # node_x = Node(val_x)
+        #
+        # val_y = random.randint(0, 1000)
+        # val_z = random.randint(0, 1000)
+        #
+        # node_y = Node(val_y)
+        # node_y.edges = []
+        # node_z = Node(val_z)
+        # node_z.edges = []
+        #
+        # node_x.edges = [node_y, node_z]
+        # nodes_list.append(node_x)
+        # frequency_tracker[node_x] = 0
+        # frequency_tracker[node_y] = 0
+        # frequency_tracker[node_z] = 0
+
+
+        for n in nodes_list:
+            curr_index = nodes_list.index(n)
+            first_rand = random.randint(0, num_nodes-1)
+            while(first_rand == curr_index):
+                first_rand = random.randint(0, num_nodes - 1)
+            second_rand = random.randint(0, (num_nodes-1)//4)
+            while(second_rand == first_rand or second_rand == curr_index):
+                second_rand = random.randint(0, (num_nodes - 1)//4)
+            n.edges.append(nodes_list[first_rand])
+            n.edges.append(nodes_list[second_rand])
+        #     n.edges.append(node_x)
+        #
+        # nodes_list.append(node_x)
+        # nodes_list.append(node_y)
+        # nodes_list.append(node_z)
+
+
+        for n in nodes_list:
+            for adj in n.edges:
+                frequency_tracker[adj] += 1
+
+
+
+
+        # print(frequency_tracker)
+        # new_list = []
+        list_of_dicts = []
+        current_max = max(frequency_tracker, key=frequency_tracker.get) #gets the key of the highest value in the dict frequency_tracker
+        while(frequency_tracker[current_max] > 1 and current_max.value != float('inf')):
+            temp_key = current_max
+            list_of_dicts.append(current_max)
+            if( any(self.check_cycle(v) for v in list_of_dicts) == False) :
+                list_of_dicts.remove(current_max)
+                # alt_list.append(current_max)
+                del frequency_tracker[temp_key]
+                current_max = max(frequency_tracker, key=frequency_tracker.get)
+                # print("CYCLE FOUND, skipping over it!")
+                continue
+            if((current_max.edges[0].value == float('inf') or current_max.edges[1].value == float('inf'))):
+                list_of_dicts.remove(current_max)
+                # alt_list.append(current_max)
+                del frequency_tracker[temp_key]
+                current_max = max(frequency_tracker, key=frequency_tracker.get)
+                # print("CYCLE FOUND, skipping over it!")
+                print("FOUND A CYCLE BOIII")
+                continue
+            # print("snore")
+            current_max.__class__ = RepairNode
+            current_max.value = float('inf')
+
+            # new_node = RepairNode(current_max, current_max.edges[0], current_max.edges[1])
+            # new_list.append(new_node)
+            # print("MAX", current_max)
+            del frequency_tracker[temp_key]
+            current_max = max(frequency_tracker, key=frequency_tracker.get)
+
+
+        str_to_ret = ""
+        # print('printing dict', frequency_tracker)
+        # print("printing graph:")
+        random_compressed_graph = Graph(nodes_list)
+        str_to_ret += "Length of generated compressed graph:\n"
+        str_to_ret += str((len(nodes_list))) + "\n"
+        # print(nodes_list)
+
+
+        # print(random_compressed_graph)
+
+        # print("ABOUT TO DECOMPRESS")
+        var1_repair = Repair(random_compressed_graph)
+        # print("repaired")
+        start = time.time()
+        var1 = var1_repair.decompress()
+        end = time.time()
+        str_to_ret += "Length of decompressed graph:\n"
+        str_to_ret +=str((len(var1.list_nodes))) + "\n"
+        str_to_ret += ("Time for Decompression: \n" + str(end - start) + '\n')
+
+
+        # print(var1)
+        # decompressing_manually_compressed = repaired_compressed_graph.decompress()
+        # print("DECOMPRESSED GRAPH BOIII")
+        # print(var1)
+        return str_to_ret
+
+
     def setUpCompleteBipartite(self, num_nodes):
         sys.setrecursionlimit(100000)
 
@@ -167,7 +301,7 @@ class TestTopologicalSort(unittest.TestCase):
 
 
     def testTopologicalSorts(self): #tests topsort algorithm, both normal and compression aware on dense graphs (normal and compressed)
-
+        return
         # self.setUpDenseGraph(800)
         #
         # ret_str = ""
@@ -313,7 +447,7 @@ class TestTopologicalSort(unittest.TestCase):
         start = time.time()
         sparse_compressed_result = repair_topological(compressed_sparse)
         end = time.time()
-        string_to_ret += ("Time for Sparse Compression aware topsort: \n" + str(end - start) + '\n')
+        string_to_ret += ("POO Time for Sparse Compression aware topsort: \n" + str(end - start) + '\n')
         string_to_ret += ("")
 
         # string_to_ret += ("Sparse compression aware topsort result:\n", sparse_compressed_result)
@@ -561,3 +695,8 @@ class TestTopologicalSort(unittest.TestCase):
         print("Time for DECOMPRESSED graph ran using compression aware algorithm: \n" + str(end - start))
         print("Results from decompressed graph ran using compression aware algorithm", decompressed_bipartite_results2)
 
+
+    def testRandomeCompression(self):
+        print(self.setUpRandomCompression(100))
+
+        return

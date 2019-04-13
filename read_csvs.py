@@ -55,7 +55,7 @@ for number in range(1,51):
     rows = [r for r in csv_f]
 
     # i = 0
-    # for r in rows:
+    # for r in rows:    
     #     print(i, r)
     #     i+=1
 
