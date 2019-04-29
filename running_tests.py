@@ -6,28 +6,28 @@ with a setup like this and a correct test file/function, this function and run o
 import tests.test_algorithms as testclass
 import datetime
 
-for number in range(1, 1):
-    filename = "algorithms/generating_random_compressed_results/10nodes_weighted_quarter"
+
+ret_str = ""
+for number in range(1, 1000):
+    # filename = "algorithms/generated_compressed_final_tests/1200nodes"
     # filename = "test"
-    final_file = filename + str(number) + ".csv"
+    # final_file = filename + str(number) + ".csv"
     # final_file = filename+".csv"
-    print(final_file)
-    f = open(final_file, 'w', newline='')
+    # print(final_file)
+    # f = open(final_file, 'w', newline='')
 
-    print("started: ", number)
+    # print("started: ", number)
     datetime.datetime.now().time()
     datetime.time(15, 8, 24, 78915)
-    print(datetime.datetime.now().time())
+    # print(datetime.datetime.now().time())
 
-    c = (testclass.TestTopologicalSort().setUpRandomCompression(10))
+    testclass.TestTopologicalSort().testControllingCompressionRatio(110)
 
-    f.write(c)
-    f.close()
-    print("finished: ", number)
+    # f.write(c)
+    # f.close()
+    # print("finished: ", number)
     datetime.datetime.now().time()
     datetime.time(15, 8, 24, 78915)
-    print(datetime.datetime.now().time())
+    # print(datetime.datetime.now().time())
     print("")
-
-
 

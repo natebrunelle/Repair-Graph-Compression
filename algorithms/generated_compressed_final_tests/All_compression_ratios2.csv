@@ -1,0 +1,139 @@
+0.819,,,,,,,,
+Size of generated compressed graph,3000,750,,,,,speedup=,(1-compression_aware)/standard
+Time for Compression Aware Bipartite,0.02341795,0.005854487,,,,,,
+Time for Compression Aware Topological Sort,1.366152287,0.341538072,,,,,,
+Size of decompressed graph,2441,610.25,,Bipartite,263.5245213,,,
+Time for Decompression,0.409422874,0.102355719,,,,,,
+Time for Normal Bipartite,0.015089989,0.003772497,,Topsort,1.747949784,,,
+Time for Normal Topological Sort,1.506821156,0.376705289,,,,,,
+COUNT,4,,,,,,0.819,263.5245213
+,,,,,,,0.82,185.2292572
+0.82,,,,,,,0.821,336.6882017
+Size of generated compressed graph,40900,834.6938776,,,,,0.822,343.1666872
+Time for Compression Aware Bipartite,0.355980873,0.007264916,,,,,0.823,1030.364173
+Time for Compression Aware Topological Sort,23.10131907,0.471455491,,,,,0.824,610.6002046
+Size of decompressed graph,33536,684.4081633,,Bipartite,185.2292572,,0.827,1269.773626
+Time for Decompression,6.887255192,0.140556228,,,,,0.828,2205.907895
+Time for Normal Bipartite,0.262615204,0.005359494,,Topsort,1.191107252,,0.832,2206.194737
+Time for Normal Topological Sort,21.743366,0.443742163,,,,,0.833,2248.657725
+COUNT,49,,,,,,0.833,2248.657725
+,,,,,,,0.835,2215.312896
+0.821,,,,,,,0.84,2367.924294
+Size of generated compressed graph,13700,472.4137931,,,,,0.85,1247.450893
+Time for Compression Aware Bipartite,0.127667665,0.004402333,,,,,,
+Time for Compression Aware Topological Sort,4.888195515,0.168558466,,,,,,
+Size of decompressed graph,11225,387.0689655,,Bipartite,336.6882017,,,
+Time for Decompression,1.368039608,0.04717378,,,,,0.819,1.747949784
+Time for Normal Bipartite,0.085753918,0.002957032,,Topsort,5.324283322,,0.82,1.191107252
+Time for Normal Topological Sort,4.5286479,0.156160272,,,,,0.821,5.324283322
+COUNT,29,,,,,,0.822,6.54436634
+,,,,,,,0.823,44.88349896
+0.822,,,,,,,0.824,38.88331208
+Size of generated compressed graph,6600,471.4285714,,,,,0.827,64.65673173
+Time for Compression Aware Bipartite,0.060538769,0.004324198,,,,,0.828,150.8948647
+Time for Compression Aware Topological Sort,2.28928709,0.163520506,,,,,0.832,182.2348389
+Size of decompressed graph,5453,389.5,,Bipartite,343.1666872,,0.833,208.6986243
+Time for Decompression,0.625087261,0.04464909,,,,,0.833,208.6986243
+Time for Normal Bipartite,0.040620089,0.002901435,,Topsort,6.54436634,,0.835,205.3906088
+Time for Normal Topological Sort,1.789434195,0.127816728,,,,,0.84,200.3783148
+COUNT,14,,,,,,0.85,194.7064486
+,,,,,,,,
+0.823,,,,,,,,
+Size of generated compressed graph,200,200,,,,,,
+Time for Compression Aware Bipartite,0.001646042,0.001646042,,,,,,
+Time for Compression Aware Topological Sort,0.020103931,0.020103931,,,,,,
+Size of decompressed graph,162,162,,Bipartite,1030.364173,,,
+Time for Decompression,0.006816149,0.006816149,,,,,,
+Time for Normal Bipartite,0.000968933,0.000968933,,Topsort,44.88349896,,,
+Time for Normal Topological Sort,0.021831989,0.021831989,,,,,,
+COUNT,1,,,,,,,
+,,,,,,,,
+0.824,,,,,,,,
+Size of generated compressed graph,200,200,,,,,,
+Time for Compression Aware Bipartite,0.004097939,0.004097939,,,,,,
+Time for Compression Aware Topological Sort,0.047668934,0.047668934,,,,,,
+Size of decompressed graph,161,161,,Bipartite,610.6002046,,,
+Time for Decompression,0.011303186,0.011303186,,,,,,
+Time for Normal Bipartite,0.001631021,0.001631021,,Topsort,38.88331208,,,
+Time for Normal Topological Sort,0.024492025,0.024492025,,,,,,
+COUNT,1,,,,,,,
+,,,,,,,,
+0.827,,,,,,,,
+Size of generated compressed graph,600,150,,,,,,
+Time for Compression Aware Bipartite,0.005377054,0.001344264,,,,,,
+Time for Compression Aware Topological Sort,0.064025402,0.016006351,,,,,,
+Size of decompressed graph,492,123,,Bipartite,1269.773626,,,
+Time for Decompression,0.02751112,0.00687778,,,,,,
+Time for Normal Bipartite,0.003145933,0.000786483,,Topsort,64.65673173,,,
+Time for Normal Topological Sort,0.060874939,0.015218735,,,,,,
+COUNT,4,,,,,,,
+,,,,,,,,
+0.828,,,,,,,,
+Size of generated compressed graph,200,100,,,,,,
+Time for Compression Aware Bipartite,0.001468182,0.000734091,,,,,,
+Time for Compression Aware Topological Sort,0.015304327,0.007652164,,,,,,
+Size of decompressed graph,166,83,,Bipartite,2205.907895,,,
+Time for Decompression,0.004462004,0.002231002,,,,,,
+Time for Normal Bipartite,0.000905991,0.000452995,,Topsort,150.8948647,,,
+Time for Normal Topological Sort,0.013152838,0.006576419,,,,,,
+COUNT,2,,,,,,,
+,,,,,,,,
+0.832,,,,,,,,
+Size of generated compressed graph,100,100,,,,,,
+Time for Compression Aware Bipartite,0.000604153,0.000604153,,,,,,
+Time for Compression Aware Topological Sort,0.006296873,0.006296873,,,,,,
+Size of decompressed graph,82,82,,Bipartite,2206.194737,,,
+Time for Decompression,0.001966953,0.001966953,,,,,,
+Time for Normal Bipartite,0.000452995,0.000452995,,Topsort,182.2348389,,,
+Time for Normal Topological Sort,0.005452871,0.005452871,,,,,,
+COUNT,1,,,,,,,
+,,,,,,,,
+0.833,,,,,,,,
+Size of generated compressed graph,200,100,,,,,,
+Time for Compression Aware Bipartite,0.001338005,0.000669003,,,,,,
+Time for Compression Aware Topological Sort,0.010689974,0.005344987,,,,,,
+Size of decompressed graph,166,83,,Bipartite,2248.657725,,,
+Time for Decompression,0.003994226,0.001997113,,,,,,
+Time for Normal Bipartite,0.000888824,0.000444412,,Topsort,208.6986243,,,
+Time for Normal Topological Sort,0.009531975,0.004765987,,,,,,
+COUNT,2,,,,,,,
+,,,,,,,,
+0.833,,,,,,,,
+Size of generated compressed graph,200,100,,,,,,
+Time for Compression Aware Bipartite,0.001338005,0.000669003,,,,,,
+Time for Compression Aware Topological Sort,0.010689974,0.005344987,,,,,,
+Size of decompressed graph,166,83,,Bipartite,2248.657725,,,
+Time for Decompression,0.003994226,0.001997113,,,,,,
+Time for Normal Bipartite,0.000888824,0.000444412,,Topsort,208.6986243,,,
+Time for Normal Topological Sort,0.009531975,0.004765987,,,,,,
+COUNT,2,,,,,,,
+,,,,,,,,
+0.835,,,,,,,,
+Size of generated compressed graph,100,100,,,,,,
+Time for Compression Aware Bipartite,0.000699043,0.000699043,,,,,,
+Time for Compression Aware Topological Sort,0.005098104,0.005098104,,,,,,
+Size of decompressed graph,84,84,,Bipartite,2215.312896,,,
+Time for Decompression,0.002459049,0.002459049,,,,,,
+Time for Normal Bipartite,0.000451088,0.000451088,,Topsort,205.3906088,,,
+Time for Normal Topological Sort,0.00484395,0.00484395,,,,,,
+COUNT,1,,,,,,,
+,,,,,,,,
+0.84,,,,,,,,
+Size of generated compressed graph,100,100,,,,,,
+Time for Compression Aware Bipartite,0.000733852,0.000733852,,,,,,
+Time for Compression Aware Topological Sort,0.005538225,0.005538225,,,,,,
+Size of decompressed graph,83,83,,Bipartite,2367.924294,,,
+Time for Decompression,0.001971006,0.001971006,,,,,,
+Time for Normal Bipartite,0.000422001,0.000422001,,Topsort,200.3783148,,,
+Time for Normal Topological Sort,0.004962921,0.004962921,,,,,,
+COUNT,1,,,,,,,
+,,,,,,,,
+0.85,,,,,,,,
+Size of generated compressed graph,100,100,,,,,,
+Time for Compression Aware Bipartite,0.000684023,0.000684023,,,,,,
+Time for Compression Aware Topological Sort,0.006577015,0.006577015,,,,,,
+Size of decompressed graph,85,85,,Bipartite,1247.450893,,,
+Time for Decompression,0.00235796,0.00235796,,,,,,
+Time for Normal Bipartite,0.000801086,0.000801086,,Topsort,194.7064486,,,
+Time for Normal Topological Sort,0.005102158,0.005102158,,,,,,
+COUNT,1,,,,,,,

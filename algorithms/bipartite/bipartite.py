@@ -117,7 +117,7 @@ def compression_aware_bipartite(compressed_graph):
     #     print(each.vertex)
     V[0].color = "GRAY"
     V[0].predecessor = None
-    print("size of graph: ", len(V))
+    # print("size of graph: ", len(V))
     Q.append(V[0])
     #compressed_graph.todot()
 
@@ -132,15 +132,15 @@ def compression_aware_bipartite(compressed_graph):
                 v.predecessor = u
                 Q.append(v)
             elif((v.color == u.color and u.vertex not in D ) or (v.color != u.color and u.vertex in D)):
-                print("u", u.vertex, u.color)
-                print("v", v.vertex, v.color)
-                print("Sad, graph is not a bipartite :(")
+                # print("u", u.vertex, u.color)
+                # print("v", v.vertex, v.color)
+                # print("Sad, graph is not a bipartite :(")
 
-                compressed_graph.todot()
-
-                for each in V:
-                    print(str(each.vertex.uid)[-4:], "[color = ", each.color.lower(), "];")
-                print("}")
+                # compressed_graph.todot()
+                #
+                # for each in V:
+                #     print(str(each.vertex.uid)[-4:], "[color = ", each.color.lower(), "];")
+                # print("}")
 
                 return False
         if(u.predecessor != None):
@@ -151,7 +151,7 @@ def compression_aware_bipartite(compressed_graph):
                 u.color = "RED"
         else:
             u.color = "RED"
-        print("u", u.vertex, u.color)
+        # print("u", u.vertex, u.color)
         colored_nodes.append(u)
 
 
@@ -161,11 +161,11 @@ def compression_aware_bipartite(compressed_graph):
     # for each in V:
     #     print(each.color)
 
-    compressed_graph.todot()
-
-    for each in V:
-        print(str(each.vertex.uid)[-4:], "[color = ", each.color.lower(), "];")
-    print("}")
+    # compressed_graph.todot()
+    #
+    # for each in V:
+    #     print(str(each.vertex.uid)[-4:], "[color = ", each.color.lower(), "];")
+    # print("}")
 
     return True
     # return colored_nodes

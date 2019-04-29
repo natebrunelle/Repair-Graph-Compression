@@ -1,0 +1,14 @@
+Size of generated compressed graph:
+200
+Time for Compression Aware Bipartite: 
+0.002705097198486328
+Time for Compression Aware Topological Sort: 
+0.027989864349365234
+Size of decompressed graph:
+165
+Time for Decompression: 
+0.008661985397338867
+Time for Normal Bipartite: 
+0.0054509639739990234
+Time for Normal Topological Sort: 
+0.022750139236450195

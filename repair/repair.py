@@ -171,7 +171,6 @@ class Repair:
         return decompressed_graph
 
     def decompress(self):
-        print('inside decompress func')
         ''' Decompression for Repair compressed graphs
 
         It takes the graph passed into the class and decompress it.
