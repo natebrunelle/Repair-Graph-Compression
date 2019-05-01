@@ -1,4 +1,4 @@
-import queue
+from nodes.nodes import EventType, Node, RepairNode
 
 def breadthFirstSearch(graph, s):
     visited={}
@@ -7,19 +7,25 @@ def breadthFirstSearch(graph, s):
     for node in graph.list_nodes:
         visited[node]=False
 
-    nodeQueue = queue.Queue(maxsize=500)
+    queue = []
 
-    visited[s] = true;
-    nodeQueue.push_back(s)
+    curNode = graph.list_nodes[0]
 
-    while not nodeQueue.empty():
-        s = nodeQueue.get()
+    visited[curNode] = true;
+    nodeQueue.push_back(curNode)
+
+    stack = []
+
+    while queue:
+        curNode = queue.pop(0)
+        stack.insert(0, curNode)
+
         for node in graph.list_nodes:
             if visited[node] == False:
-                queue.put(node)
-                visited[i] = True
+                queue.append(node)
+                visited[node] = True
 
-    return nodeQueue
+    return stack
 
 def repair_breadth(compressed_graph):
     breadth_sort_nodes = []
@@ -27,5 +33,6 @@ def repair_breadth(compressed_graph):
     for node in breadth_compressed:
         if node.value != float('inf'):
             breadth_sort_nodes.append(node)
+            print(node)
 
     return breadth_sort_nodes

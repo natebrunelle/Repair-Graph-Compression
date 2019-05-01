@@ -703,8 +703,8 @@ class TestTopologicalSort(unittest.TestCase):
 
         return
 
-    def testDepthFirstSearch(self):
-        print("NOW STARTING DFS TEST...")
+    def testDepthFirstSearchSparse(self):
+        print("NOW STARTING SPARSE DFS TEST...")
         print("-----------------------------------------------------------")
         self.setUpSparseGraph(500)
 
@@ -714,49 +714,60 @@ class TestTopologicalSort(unittest.TestCase):
         start = time.time()
         sparse_normal_result = depthFirstSearch(sparse_graph)
         end = time.time()
-        string_to_ret += ("Time for Sparse Normal DFS: \n" + str(end - start) + '\n')
-        string_to_ret += ("")
+        print("Time for Sparse Normal DFS: \n" + str(end - start) + '\n')
+        print("Test 1 Done")
+        print("")
 
         start = time.time()
         sparse_compressed_algo = repair_depth(sparse_graph)
         end = time.time()
-        string_to_ret += ("Time for Sparse compression aware DFS: \n" + str(end - start) + '\n')
-        string_to_ret += ("")
+        print("Time for Sparse compression aware DFS: \n" + str(end - start) + '\n')
+        print("Test 2 Done")
+        print("")
 
         sparse_repair = Repair(sparse_graph)
 
         start = time.time()
         compressed_sparse = sparse_repair.compress()
         end = time.time()
-        string_to_ret += ("Time for compression of sparse graph:  \n" + str(end - start) + '\n')
+        print("Time for compression of sparse graph:  \n" + str(end - start) + '\n')
+        print("Test 3 Done")
+        print("")
 
         start = time.time()
         sparse_compressed_result = repair_depth(compressed_sparse)
         end = time.time()
-        string_to_ret += ("POO Time for Sparse Compression aware DFS: \n" + str(end - start) + '\n')
-        string_to_ret += ("")
+        print("POO Time for Sparse Compression aware DFS: \n" + str(end - start) + '\n')
+        print("Test 4 Done")
+        print("")
 
         start = time.time()
         decompressed_sparse_graph = sparse_repair.decompress()
         end = time.time()
-        string_to_ret += ("Time for actual decompression of sparse graph:  \n" + str(end - start) + '\n')
+        print("Time for actual decompression of sparse graph:  \n" + str(end - start) + '\n')
+        print("Test 5 Done")
+        print("")
 
         start = time.time()
         decompressed_normal_result = depthFirstSearch(decompressed_sparse_graph)
         end = time.time()
-        string_to_ret += ("Time for DECOMPRESSED Sparse 'normal' DFS: \n" + str(end - start) + '\n')
-        string_to_ret += ("")
+        print("Time for DECOMPRESSED Sparse 'normal' DFS: \n" + str(end - start) + '\n')
+        print("Test 6 Done")
+        print("")
 
         start = time.time()
         decompressed_sparse_graph = sparse_repair.decompress()
         end = time.time()
-        string_to_ret += ("Time for actual decompression of sparse graph:  \n" + str(end - start) + '\n')
+        print("Time for actual decompression of sparse graph:  \n" + str(end - start) + '\n')
+        print("Test 7 Done")
+        print("")
 
         start = time.time()
         decompressed_normal_result2 = repair_depth(decompressed_sparse_graph)
         end = time.time()
-        string_to_ret += ("Time for DECOMPRESSED Sparse compression aware DFS: \n" + str(end - start) + '\n')
-        string_to_ret += ("")
+        print("Time for DECOMPRESSED Sparse compression aware DFS: \n" + str(end - start) + '\n')
+        print("Test 8 Done")
+        print("")
 
         return string_to_ret
 
@@ -764,3 +775,4 @@ class TestTopologicalSort(unittest.TestCase):
         self.assertEqual(sparse_compressed_algo, sparse_normal_result )
         self.assertEqual(dense_normal_result, compressed_algo, dense_compressed_result)
         self.assertEqual(dense_decompressed_result2, dense_decompressed_compression_aware)
+        self.assertEqual(1, 2)
