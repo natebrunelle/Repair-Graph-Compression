@@ -1,32 +1,44 @@
 import queue
-from priorityQueue import PriorityQueue
+from nodes.nodes import EventType, Node, RepairNode
 
-def breadthFirstSearch(graph, s):
+def aStarSearch(graph):
     visited={}
 
     # mark all nodes not visited
     for node in graph.list_nodes:
         visited[node]=False
 
-    nodeQueue = queue.Queue(maxsize=500)
+    nodeQueue = queue.PriorityQueue()
 
-    visited[s] = true;
-    nodeQueue.push_back(s)
+    curNode = graph.list_nodes[0]
+    i = 0
+
+    # call function recursively on itself
+    while(len(graph.list_nodes[i].edges) <= 0):
+        i += 1
+        curNode = graph.list_nodes[i]
+
+    visited[curNode] = True;
+    nodeQueue.put((len(curNode.edges), curNode))
+
+    stack = []
 
     while not nodeQueue.empty():
-        s = nodeQueue.get()
+        curNode = nodeQueue.get()
+        stack.insert(0, curNode)
+
         for node in graph.list_nodes:
             if visited[node] == False:
-                queue.put(node)
-                visited[i] = True
+                nodeQueue.put((len(node.edges), node))
+                visited[node] = True
 
-    return nodeQueue
+    return stack
 
-def repair_breadth(compressed_graph):
-    topological_sort_nodes = []
-    topsort_compressed = topSort(compressed_graph)
-    for node in topsort_compressed:
-        if node.value != float('inf'):
-            topological_sort_nodes.append(node)
+def repair_star(compressed_graph):
+    star_sort_nodes = []
+    star_compressed = aStarSearch(compressed_graph)
+    for node in star_compressed:
+        if node[1] != float('inf'):
+            star_sort_nodes.append(node)
 
-    return topological_sort_nodes
+    return star_sort_nodes

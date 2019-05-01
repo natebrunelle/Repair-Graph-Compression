@@ -1,0 +1,222 @@
+NOW STARTING DENSE A STAR TEST...
+-----------------------------------------------------------
+Time for dense Normal A Star: 
+0.023446321487426758
+
+Test 1 Done
+
+Time for dense compression aware A Star: 
+0.02342391014099121
+
+Test 2 Done
+
+Time for compression of dense graph:  
+66.75540733337402
+
+Test 3 Done
+
+Time for dense Compression aware A Star: 
+0.17878293991088867
+
+Test 4 Done
+
+Time for actual decompression of dense graph:  
+0.11208677291870117
+
+Test 5 Done
+
+Time for DECOMPRESSED dense 'normal' A Star: 
+0.02342391014099121
+
+Test 6 Done
+
+Time for DECOMPRESSED dense compression aware A Star: 
+0.04196953773498535
+
+Test 7 Done
+
+NOW STARTING SPARSE A STAR TEST...
+-----------------------------------------------------------
+Time for Sparse Normal A Star: 
+0.12785577774047852
+
+Test 1 Done
+
+Time for Sparse compression aware A Star: 
+0.12199974060058594
+
+Test 2 Done
+
+Time for compression of sparse graph:  
+0.03708839416503906
+
+Test 3 Done
+
+Time for Sparse Compression aware A Star: 
+0.12687969207763672
+
+Test 4 Done
+
+Time for actual decompression of sparse graph:  
+0.06734633445739746
+
+Test 5 Done
+
+Time for DECOMPRESSED Sparse 'normal' A Star: 
+0.11321377754211426
+
+Test 6 Done
+
+Time for DECOMPRESSED Sparse compression aware A Star: 
+0.13176727294921875
+
+Test 7 Done
+
+NOW STARTING DENSE BFS TEST...
+-----------------------------------------------------------
+Time for dense Normal DFS: 
+0.014641284942626953
+
+Test 1 Done
+
+Time for dense compression aware DFS: 
+0.015586376190185547
+
+Test 2 Done
+
+Time for compression of dense graph:  
+70.40600204467773
+
+Test 3 Done
+
+Time for dense Compression aware DFS: 
+0.15027666091918945
+
+Test 4 Done
+
+Time for actual decompression of dense graph:  
+0.09666204452514648
+
+Test 5 Done
+
+Time for DECOMPRESSED dense 'normal' DFS: 
+0.0146026611328125
+
+Test 6 Done
+
+Time for DECOMPRESSED dense compression aware DFS: 
+0.018571138381958008
+
+Test 7 Done
+
+NOW STARTING SPARSE BFS TEST...
+-----------------------------------------------------------
+Time for Sparse Normal DFS: 
+0.11126303672790527
+
+Test 1 Done
+
+Time for Sparse compression aware DFS: 
+0.11907148361206055
+
+Test 2 Done
+
+Time for compression of sparse graph:  
+0.04489850997924805
+
+Test 3 Done
+
+Time for Sparse Compression aware DFS: 
+0.11028766632080078
+
+Test 4 Done
+
+Time for actual decompression of sparse graph:  
+0.06930088996887207
+
+Test 5 Done
+
+Time for DECOMPRESSED Sparse 'normal' DFS: 
+0.10150718688964844
+
+Test 6 Done
+
+Time for DECOMPRESSED Sparse compression aware DFS: 
+0.10056710243225098
+
+Test 7 Done
+
+NOW STARTING DENSE DFS TEST...
+-----------------------------------------------------------
+Time for dense Normal DFS: 
+2.468355894088745
+
+Test 1 Done
+
+Time for dense compression aware DFS: 
+2.4970717430114746
+
+Test 2 Done
+
+Time for compression of dense graph:  
+71.04148316383362
+
+Test 3 Done
+
+Time for dense Compression aware DFS: 
+0.26949071884155273
+
+Test 4 Done
+
+Time for actual decompression of dense graph:  
+0.09074234962463379
+
+Test 5 Done
+
+Time for DECOMPRESSED dense 'normal' DFS: 
+2.4399452209472656
+
+Test 6 Done
+
+Time for DECOMPRESSED dense compression aware DFS: 
+2.47381854057312
+
+Test 7 Done
+
+NOW STARTING SPARSE DFS TEST...
+-----------------------------------------------------------
+Time for Sparse Normal DFS: 
+0.0
+
+Test 1 Done
+
+Time for Sparse compression aware DFS: 
+0.0
+
+Test 2 Done
+
+Time for compression of sparse graph:  
+0.040021419525146484
+
+Test 3 Done
+
+Time for Sparse Compression aware DFS: 
+0.0009694099426269531
+
+Test 4 Done
+
+Time for actual decompression of sparse graph:  
+0.06734824180603027
+
+Test 5 Done
+
+Time for DECOMPRESSED Sparse 'normal' DFS: 
+0.0
+
+Test 6 Done
+
+Time for DECOMPRESSED Sparse compression aware DFS: 
+0.0010161399841308594
+
+Test 7 Done
+

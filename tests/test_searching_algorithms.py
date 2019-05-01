@@ -3,6 +3,7 @@ import sys
 import random
 from algorithms.search_breadth_first.breadthFirstSearch import breadthFirstSearch, repair_breadth
 from algorithms.search_depth_first.depthFirstSearch import depthFirstSearch, repair_depth
+from algorithms.search_a_star.aStarSearch import aStarSearch, repair_star
 from graphs.graph import Graph
 from nodes.nodes import EventType, Node, RepairNode
 from repair.repair import Repair, RepairPriorityQueue
@@ -230,15 +231,13 @@ class TestSearchingAlgorithms(unittest.TestCase):
         print("Test 7 Done")
         print("")
 
-        print(dense_compressed_result)
-
         self.assertEqual(decompressed_normal_result, decompressed_normal_result2, dense_compressed_result)
         self.assertEqual(dense_normal_result, dense_compressed_algo, dense_compressed_result)
 
         return string_to_ret
 
+
     def testDepthFirstSearchSparse(self):
-        return
         print("NOW STARTING SPARSE DFS TEST...")
         print("-----------------------------------------------------------")
         self.setUpSparseGraph(500)
@@ -294,6 +293,266 @@ class TestSearchingAlgorithms(unittest.TestCase):
         decompressed_normal_result2 = repair_depth(decompressed_sparse_graph)
         end = time.time()
         print("Time for DECOMPRESSED Sparse compression aware DFS: \n" + str(end - start) + '\n')
+        print("Test 7 Done")
+        print("")
+
+        self.assertEqual(decompressed_normal_result, decompressed_normal_result2, sparse_compressed_result)
+        self.assertEqual(sparse_normal_result, sparse_compressed_algo, sparse_compressed_result)
+
+        return string_to_ret
+
+
+    def testBreadthFirstSearchDense(self):
+        print("NOW STARTING DENSE BFS TEST...")
+        print("-----------------------------------------------------------")
+        self.setUpDenseGraph(200)
+
+        string_to_ret = ""
+        dense_graph = self.real_dense_graph
+
+        start = time.time()
+        dense_normal_result = breadthFirstSearch(dense_graph)
+        end = time.time()
+        print("Time for dense Normal DFS: \n" + str(end - start) + '\n')
+        print("Test 1 Done")
+        print("")
+
+        start = time.time()
+        dense_compressed_algo = repair_breadth(dense_graph)
+        end = time.time()
+        print("Time for dense compression aware DFS: \n" + str(end - start) + '\n')
+        print("Test 2 Done")
+        print("")
+
+        dense_repair = Repair(dense_graph)
+
+        start = time.time()
+        compressed_dense = dense_repair.compress()
+        end = time.time()
+        print("Time for compression of dense graph:  \n" + str(end - start) + '\n')
+        print("Test 3 Done")
+        print("")
+
+        start = time.time()
+        dense_compressed_result = repair_breadth(compressed_dense)
+        end = time.time()
+        print("Time for dense Compression aware DFS: \n" + str(end - start) + '\n')
+        print("Test 4 Done")
+        print("")
+
+        start = time.time()
+        decompressed_dense_graph = dense_repair.decompress()
+        end = time.time()
+        print("Time for actual decompression of dense graph:  \n" + str(end - start) + '\n')
+        print("Test 5 Done")
+        print("")
+
+        start = time.time()
+        decompressed_normal_result = breadthFirstSearch(decompressed_dense_graph)
+        end = time.time()
+        print("Time for DECOMPRESSED dense 'normal' DFS: \n" + str(end - start) + '\n')
+        print("Test 6 Done")
+        print("")
+
+        start = time.time()
+        decompressed_normal_result2 = repair_breadth(decompressed_dense_graph)
+        end = time.time()
+        print("Time for DECOMPRESSED dense compression aware DFS: \n" + str(end - start) + '\n')
+        print("Test 7 Done")
+        print("")
+
+        self.assertEqual(decompressed_normal_result, decompressed_normal_result2, dense_compressed_result)
+        self.assertEqual(dense_normal_result, dense_compressed_algo, dense_compressed_result)
+
+        return string_to_ret
+
+
+    def testBreadthFirstSearchSparse(self):
+        print("NOW STARTING SPARSE BFS TEST...")
+        print("-----------------------------------------------------------")
+        self.setUpSparseGraph(500)
+
+        string_to_ret = ""
+        sparse_graph = self.sparse_graph
+
+        start = time.time()
+        sparse_normal_result = breadthFirstSearch(sparse_graph)
+        end = time.time()
+        print("Time for Sparse Normal DFS: \n" + str(end - start) + '\n')
+        print("Test 1 Done")
+        print("")
+
+        start = time.time()
+        sparse_compressed_algo = repair_breadth(sparse_graph)
+        end = time.time()
+        print("Time for Sparse compression aware DFS: \n" + str(end - start) + '\n')
+        print("Test 2 Done")
+        print("")
+
+        sparse_repair = Repair(sparse_graph)
+
+        start = time.time()
+        compressed_sparse = sparse_repair.compress()
+        end = time.time()
+        print("Time for compression of sparse graph:  \n" + str(end - start) + '\n')
+        print("Test 3 Done")
+        print("")
+
+        start = time.time()
+        sparse_compressed_result = repair_breadth(compressed_sparse)
+        end = time.time()
+        print("Time for Sparse Compression aware DFS: \n" + str(end - start) + '\n')
+        print("Test 4 Done")
+        print("")
+
+        start = time.time()
+        decompressed_sparse_graph = sparse_repair.decompress()
+        end = time.time()
+        print("Time for actual decompression of sparse graph:  \n" + str(end - start) + '\n')
+        print("Test 5 Done")
+        print("")
+
+        start = time.time()
+        decompressed_normal_result = breadthFirstSearch(decompressed_sparse_graph)
+        end = time.time()
+        print("Time for DECOMPRESSED Sparse 'normal' DFS: \n" + str(end - start) + '\n')
+        print("Test 6 Done")
+        print("")
+
+        start = time.time()
+        decompressed_normal_result2 = repair_breadth(decompressed_sparse_graph)
+        end = time.time()
+        print("Time for DECOMPRESSED Sparse compression aware DFS: \n" + str(end - start) + '\n')
+        print("Test 7 Done")
+        print("")
+
+        self.assertEqual(decompressed_normal_result, decompressed_normal_result2, sparse_compressed_result)
+        self.assertEqual(sparse_normal_result, sparse_compressed_algo, sparse_compressed_result)
+
+        return string_to_ret
+
+
+    def testAStarSearchDense(self):
+        print("NOW STARTING DENSE A STAR TEST...")
+        print("-----------------------------------------------------------")
+        self.setUpDenseGraph(200)
+
+        string_to_ret = ""
+        dense_graph = self.real_dense_graph
+
+        start = time.time()
+        dense_normal_result = aStarSearch(dense_graph)
+        end = time.time()
+        print("Time for dense Normal A Star: \n" + str(end - start) + '\n')
+        print("Test 1 Done")
+        print("")
+
+        start = time.time()
+        dense_compressed_algo = repair_star(dense_graph)
+        end = time.time()
+        print("Time for dense compression aware A Star: \n" + str(end - start) + '\n')
+        print("Test 2 Done")
+        print("")
+
+        dense_repair = Repair(dense_graph)
+
+        start = time.time()
+        compressed_dense = dense_repair.compress()
+        end = time.time()
+        print("Time for compression of dense graph:  \n" + str(end - start) + '\n')
+        print("Test 3 Done")
+        print("")
+
+        start = time.time()
+        dense_compressed_result = repair_star(compressed_dense)
+        end = time.time()
+        print("Time for dense Compression aware A Star: \n" + str(end - start) + '\n')
+        print("Test 4 Done")
+        print("")
+
+        start = time.time()
+        decompressed_dense_graph = dense_repair.decompress()
+        end = time.time()
+        print("Time for actual decompression of dense graph:  \n" + str(end - start) + '\n')
+        print("Test 5 Done")
+        print("")
+
+        start = time.time()
+        decompressed_normal_result = aStarSearch(decompressed_dense_graph)
+        end = time.time()
+        print("Time for DECOMPRESSED dense 'normal' A Star: \n" + str(end - start) + '\n')
+        print("Test 6 Done")
+        print("")
+
+        start = time.time()
+        decompressed_normal_result2 = repair_star(decompressed_dense_graph)
+        end = time.time()
+        print("Time for DECOMPRESSED dense compression aware A Star: \n" + str(end - start) + '\n')
+        print("Test 7 Done")
+        print("")
+
+        self.assertEqual(decompressed_normal_result, decompressed_normal_result2, dense_compressed_result)
+        self.assertEqual(dense_normal_result, dense_compressed_algo, dense_compressed_result)
+
+        return string_to_ret
+
+
+    def testAStarSearchSparse(self):
+        print("NOW STARTING SPARSE A STAR TEST...")
+        print("-----------------------------------------------------------")
+        self.setUpSparseGraph(500)
+
+        string_to_ret = ""
+        sparse_graph = self.sparse_graph
+
+        start = time.time()
+        sparse_normal_result = aStarSearch(sparse_graph)
+        end = time.time()
+        print("Time for Sparse Normal A Star: \n" + str(end - start) + '\n')
+        print("Test 1 Done")
+        print("")
+
+        start = time.time()
+        sparse_compressed_algo = repair_star(sparse_graph)
+        end = time.time()
+        print("Time for Sparse compression aware A Star: \n" + str(end - start) + '\n')
+        print("Test 2 Done")
+        print("")
+
+        sparse_repair = Repair(sparse_graph)
+
+        start = time.time()
+        compressed_sparse = sparse_repair.compress()
+        end = time.time()
+        print("Time for compression of sparse graph:  \n" + str(end - start) + '\n')
+        print("Test 3 Done")
+        print("")
+
+        start = time.time()
+        sparse_compressed_result = repair_star(compressed_sparse)
+        end = time.time()
+        print("Time for Sparse Compression aware A Star: \n" + str(end - start) + '\n')
+        print("Test 4 Done")
+        print("")
+
+        start = time.time()
+        decompressed_sparse_graph = sparse_repair.decompress()
+        end = time.time()
+        print("Time for actual decompression of sparse graph:  \n" + str(end - start) + '\n')
+        print("Test 5 Done")
+        print("")
+
+        start = time.time()
+        decompressed_normal_result = aStarSearch(decompressed_sparse_graph)
+        end = time.time()
+        print("Time for DECOMPRESSED Sparse 'normal' A Star: \n" + str(end - start) + '\n')
+        print("Test 6 Done")
+        print("")
+
+        start = time.time()
+        decompressed_normal_result2 = repair_star(decompressed_sparse_graph)
+        end = time.time()
+        print("Time for DECOMPRESSED Sparse compression aware A Star: \n" + str(end - start) + '\n')
         print("Test 7 Done")
         print("")
 

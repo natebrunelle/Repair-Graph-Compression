@@ -1,6 +1,6 @@
 from nodes.nodes import EventType, Node, RepairNode
 
-def breadthFirstSearch(graph, s):
+def breadthFirstSearch(graph):
     visited={}
 
     # mark all nodes not visited
@@ -10,9 +10,15 @@ def breadthFirstSearch(graph, s):
     queue = []
 
     curNode = graph.list_nodes[0]
+    i = 0
 
-    visited[curNode] = true;
-    nodeQueue.push_back(curNode)
+    # call function recursively on itself
+    while(len(graph.list_nodes[i].edges) <= 0):
+        i += 1
+        curNode = graph.list_nodes[i]
+
+    visited[curNode] = True;
+    queue.append(curNode)
 
     stack = []
 
@@ -33,6 +39,5 @@ def repair_breadth(compressed_graph):
     for node in breadth_compressed:
         if node.value != float('inf'):
             breadth_sort_nodes.append(node)
-            print(node)
 
     return breadth_sort_nodes
