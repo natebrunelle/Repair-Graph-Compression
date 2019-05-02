@@ -195,7 +195,9 @@ class Repair:
                         stack.append(rep_node)
 
                 # data node, put it back
+
                 else:
+
                     node.edges.append(stack.pop())
 
         # print("passed while")

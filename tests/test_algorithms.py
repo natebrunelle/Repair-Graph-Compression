@@ -66,13 +66,15 @@ class TestTopologicalSort(unittest.TestCase):
         for n in nodes_list:
             curr_index = nodes_list.index(n)
             # first_rand = random.randint(0, num_nodes-1)
-            first_rand = int(random.expovariate(num_nodes) * num_nodes * 10 * num_nodes)
+            first_rand = int(random.expovariate(num_nodes))
             while(first_rand == curr_index):
-                first_rand = int(random.expovariate(num_nodes) * num_nodes * 10 *num_nodes)
+                first_rand = int(random.expovariate(num_nodes))
             # second_rand = random.randint(0, (num_nodes-1))
-            second_rand = int(random.expovariate(num_nodes) * num_nodes * 10 * num_nodes)
+            second_rand = int(random.expovariate(num_nodes))
             while(second_rand == first_rand or second_rand == curr_index):
-                second_rand = int(random.expovariate(num_nodes) * num_nodes * 10 * num_nodes)
+                second_rand = int(random.expovariate(num_nodes))
+            print("first:", first_rand)
+            print("second:", second_rand)
             n.edges.append(nodes_list[first_rand])
             n.edges.append(nodes_list[second_rand])
         #     n.edges.append(node_x)
@@ -150,7 +152,8 @@ class TestTopologicalSort(unittest.TestCase):
         # print(var1)
         return str_to_ret
 
-    def controling_compression_ratio(self, num_nodes):
+    def controling_compression_ratio(self, num_nodes, num_extra_nodes):
+
 
 
 
@@ -164,6 +167,16 @@ class TestTopologicalSort(unittest.TestCase):
             tempNode.edges = []
             nodes_list.append(tempNode)
             frequency_tracker[tempNode] = 0
+
+        for y in range(0, num_extra_nodes):
+            num = random.randint(0, 1000)
+            tempNode = Node(num)
+            tempNode.edges = []
+            tempNode.edge = []
+            nodes_list.append(tempNode)
+            frequency_tracker[tempNode] = 0
+
+
 
         # nodes_list_2 = []
         # frequency_tracker_2 = {}
@@ -210,18 +223,53 @@ class TestTopologicalSort(unittest.TestCase):
         # frequency_tracker[node_y] = 0
         # frequency_tracker[node_z] = 0
 
+        index_to_go_to = list(range(0, num_extra_nodes//2)) #4/2 = 2
+        index_of_extra_nodes = 0
+        extra_node_pos = num_extra_nodes * -1
+        # print(index_to_go_to)
 
 
-        for n in nodes_list:
+        for n in nodes_list[0:num_nodes]:
             curr_index = nodes_list.index(n)
-            first_rand = random.randint(0, (num_nodes-1)//1)
-            while(first_rand == curr_index):
-                first_rand = random.randint(0, (num_nodes - 1)//1)
-            second_rand = random.randint(0, (num_nodes-1)//1)
-            while(second_rand == first_rand or second_rand == curr_index):
-                second_rand = random.randint(0, (num_nodes - 1)//1)
-            n.edges.append(nodes_list[first_rand])
-            n.edges.append(nodes_list[second_rand])
+            if curr_index in index_to_go_to:
+                if curr_index == index_to_go_to[index_of_extra_nodes]:
+                    # print("position of extra node index:", extra_node_pos)
+                    n.edges.append(nodes_list[extra_node_pos])
+                    extra_node_pos+=1
+                    n.edges.append(nodes_list[extra_node_pos])
+                    extra_node_pos+=1
+                index_of_extra_nodes+=1
+                continue
+            # if curr_index == 0:
+            #     n.edges.append(nodes_list[-4])
+            #     n.edges.append(nodes_list[-3])
+            #     continue
+            # if curr_index == 1:
+            #     n.edges.append(nodes_list[-2])
+            #     n.edges.append(nodes_list[-1])
+            #     continue
+            # if curr_index == 2:
+            #     n.edges.append(nodes_list[-6])
+            #     n.edges.append(nodes_list[-5])
+            #     continue
+            # if curr_index == 3:
+            #     n.edges.append(nodes_list[-8])
+            #     n.edges.append(nodes_list[-7])
+            #     continue
+            # first_rand = random.randint(0, num_nodes-1)
+            # first_rand = int(random.expovariate(.1))
+            # while (first_rand == curr_index):
+            #     first_rand = int(random.expovariate(.1))
+            # # second_rand = random.randint(0, (num_nodes-1))
+            # second_rand = int(random.expovariate(1))
+            # while (second_rand == first_rand or second_rand == curr_index):
+            #     second_rand = int(random.expovariate(1))
+            # print("second:", second_rand)
+            n.edges.append(nodes_list[0])
+            n.edges.append(nodes_list[1])
+
+
+
 
         # for n in nodes_list_2:
         #     curr_index = nodes_list_2.index(n)
@@ -288,21 +336,23 @@ class TestTopologicalSort(unittest.TestCase):
         while(frequency_tracker[current_max] > 1 and current_max.value != float('inf')):
             temp_key = current_max
             list_of_dicts.append(current_max)
-            if( any(self.check_cycle(v) for v in list_of_dicts) == False) :
-                list_of_dicts.remove(current_max)
-                # alt_list.append(current_max)
-                del frequency_tracker[temp_key]
-                current_max = max(frequency_tracker, key=frequency_tracker.get)
-                # print("CYCLE FOUND, skipping over it!")
-                continue
-            if((current_max.edges[0].value == float('inf') or current_max.edges[1].value == float('inf'))):
-                list_of_dicts.remove(current_max)
-                # alt_list.append(current_max)
-                del frequency_tracker[temp_key]
-                current_max = max(frequency_tracker, key=frequency_tracker.get)
-                # print("CYCLE FOUND, skipping over it!")
-                # print("FOUND A CYCLE BOIII")
-                continue
+            # if( any(self.check_cycle(v) for v in list_of_dicts) == False) :
+            #     list_of_dicts.remove(current_max)
+            #     # alt_list.append(current_max)
+            #     del frequency_tracker[temp_key]
+            #     current_max = max(frequency_tracker, key=frequency_tracker.get)
+            #     # print("CYCLE FOUND, skipping over it!")
+            #     print("big snore")
+            #     continue
+            # if((current_max.edges[0].value == float('inf') or current_max.edges[1].value == float('inf'))):
+            #     list_of_dicts.remove(current_max)
+            #     # alt_list.append(current_max)
+            #     del frequency_tracker[temp_key]
+            #     current_max = max(frequency_tracker, key=frequency_tracker.get)
+            #     # print("CYCLE FOUND, skipping over it!")
+            #     # print("FOUND A CYCLE BOIII")
+            #     print("big snore")
+            #     continue
             # print("snore")
             current_max.__class__ = RepairNode
             count_of_repaired_nodes += 1
@@ -414,8 +464,14 @@ class TestTopologicalSort(unittest.TestCase):
         #
 
         # print("count of repaired nodes:", count_of_repaired_nodes)
-        print("Compression ratio:", (num_nodes-count_of_repaired_nodes)/num_nodes * 100, "%")
-        return
+
+
+        # size = num_nodes + (2 * num_nodes)
+        # new_size = num_nodes-count_of_repaired_nodes + total_edges
+        #
+        # print("compression ratio?:", new_size/size * 100, "%")
+        # print("Compression ratio:", (num_nodes-count_of_repaired_nodes)/num_nodes * 100, "%")
+
 
         # print("count of repaired nodes2:", count_of_repaired_nodes_2)
         # print("count of repaired nodes3:", count_of_repaired_nodes_3)
@@ -461,13 +517,13 @@ class TestTopologicalSort(unittest.TestCase):
         # print((len(nodes_list)))
 
         # print(nodes_list)
-
+        # print(self.random_compressed_graph)
 
         # print(random_compressed_graph)
 
-        print("ABOUT TO DECOMPRESS")
+        # print("ABOUT TO DECOMPRESS")
         var1_repair = Repair(self.random_compressed_graph)
-        print("repaired")
+        # print("repaired")
         # start = time.time()
         var1 = var1_repair.decompress()
         # end = time.time()
@@ -477,7 +533,16 @@ class TestTopologicalSort(unittest.TestCase):
         # print("Length of decompressed graph")
         decompressed_size = len(var1.list_nodes)
 
-        print("Compression ratio:", decompressed_size/num_nodes * 100, "%")
+        total_edges = 0
+        for node in var1.list_nodes:
+            total_edges += len(node.edges)
+        # print(var1)
+
+        print("decompressed size:", decompressed_size)
+        print("total num edges:", total_edges)
+        print("count of repair nodes:", count_of_repaired_nodes)
+        print("num nodes", num_nodes)
+        print("Compression ratio:", (((num_nodes*3)+4)/(decompressed_size + total_edges)) * 100, "%")
         # print(var1)
         # decompressing_manually_compressed = repaired_compressed_graph.decompress()
         # print("DECOMPRESSED GRAPH BOIII")
@@ -1094,7 +1159,7 @@ class TestTopologicalSort(unittest.TestCase):
         return str_to_ret
 
 
-    def testControllingCompressionRatio(self, num):
-        self.controling_compression_ratio(num)
+    def testControllingCompressionRatio(self, num_of_nodes, extra_nodes):
+        self.controling_compression_ratio(num_of_nodes, extra_nodes)
 
 

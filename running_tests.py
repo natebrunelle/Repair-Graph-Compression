@@ -8,7 +8,7 @@ import datetime
 
 
 ret_str = ""
-for number in range(1, 1000):
+for number in range(1, 3):
     # filename = "algorithms/generated_compressed_final_tests/1200nodes"
     # filename = "test"
     # final_file = filename + str(number) + ".csv"
@@ -21,7 +21,7 @@ for number in range(1, 1000):
     datetime.time(15, 8, 24, 78915)
     # print(datetime.datetime.now().time())
 
-    testclass.TestTopologicalSort().testControllingCompressionRatio(110)
+    testclass.TestTopologicalSort().testControllingCompressionRatio(100, 4) #second param: extra_nodes only works for even numbers
 
     # f.write(c)
     # f.close()
